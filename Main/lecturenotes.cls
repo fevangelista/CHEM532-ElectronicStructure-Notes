@@ -1,3 +1,7 @@
+% This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+% or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{lecturenotes}[2019/01/12 Lecture notes class]
 \LoadClass{book}
@@ -38,11 +42,28 @@
 \RequirePackage{booktabs}
 
 % Set fonts
-\setmainfont{Adobe Caslon Pro}
-\newfontfamily\headingfont[]{RobotoSlab-Regular.ttf}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont[ExternalLocation=../Fonts/]{CrimsonText}[ 
+  Extension = .ttf,
+  UprightFont = *-Regular,
+  BoldFont= *-Bold,
+  ItalicFont= *-Italic,
+  BoldItalicFont= *-BoldItalic
+]
+\newfontfamily\headingfont[ExternalLocation=../Fonts/]{RobotoSlab}[ 
+  Extension = .ttf,
+  UprightFont = *-Regular,
+  BoldFont= *-Bold
+]
+
+% Chapter format
 \titleformat{\chapter}[display]
-  {\huge\headingfont}{\chaptertitlename\ \thechapter}{20pt}{\LARGE}
-\titleformat*{\section}{\large\headingfont}
+  {\huge\headingfont}{{\bfseries\chaptertitlename\ \thechapter}}{32pt}{\huge}
+  
+% Section format
+\titleformat*{\section}{\large\headingfont\bfseries}
+
+% Subsection format
 \titleformat*{\subsection}{\normalsize\headingfont}
 %\renewcommand{\maketitlehooka}{\headingfont}
 \captionsetup[figure]{margin=0pt,font=small,labelfont=bf,name=Fig.}
