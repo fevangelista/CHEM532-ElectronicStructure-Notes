@@ -58,10 +58,10 @@
 
 % Chapter format
 \titleformat{\chapter}[display]
-  {\huge\headingfont}{{\bfseries\chaptertitlename\ \thechapter}}{32pt}{\huge}
+  {\color{white!20!black} \huge\headingfont}{\color{white!20!black} \bfseries\chaptertitlename\ \thechapter}{32pt}{\huge}
   
 % Section format
-\titleformat*{\section}{\large\headingfont\bfseries}
+\titleformat*{\section}{\color{white!20!black} \large\headingfont\bfseries}
 
 % Subsection format
 \titleformat*{\subsection}{\normalsize\headingfont}
@@ -98,11 +98,11 @@ innerbottommargin=5pt]{ImportantBox}
 {0pt}% Space below
 {\normalfont}% % Body font
 {}% Indent amount
-{\small\bf\sffamily\color{gray}}% % Theorem head font
+{\small\bf\color{gray}}% % Theorem head font
 {\;}% Punctuation after theorem head
 {0.25em}% Space after theorem head
 {\small\headingfont\color{gray}\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
-\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries\color{black}---\nobreakspace#3.}} % Optional theorem note
+\thmnote{\nobreakspace\the\thm@notefont\bfseries\color{black}---\nobreakspace#3.}} % Optional theorem note
 \renewcommand{\qedsymbol}{$\blacksquare$}% Optional qed square
 
 \newtheoremstyle{blacknumex}% Theorem style name

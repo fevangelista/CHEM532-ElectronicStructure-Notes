@@ -138,32 +138,32 @@ Now let us assume that we are given a complete spin orbital basis $\{ \psi_{i}(x
 We can think of $\Phi(x_1,x_2)$ with $x_2$ held constant as a function only of the variable $x_1$.
 Therefore, we may expand $\Phi(x_1,x_2)$ using the spin orbital basis as:
 \begin{equation}\label{eq:two_electron_wfn_expansion1}
-\Phi(x_1,x_2) = \sum_{i}^{\infty} a_i(x_2) \phi_i(x_1),
+\Phi(x_1,x_2) = \sum_{i}^{\infty} a_i(x_2) \psi_i(x_1),
 \end{equation}
 notice, however, that the expansions coefficients $a_i(x_2)$ will depend on the value of $x_2$, in other words, $a_i$ is a function of $x_2$.
 We can now expand $a_i(x_2)$ using the same spin orbital basis:
 \begin{equation}\label{eq:two_electron_wfn_expansion2}
-a_i(x_2) = \sum_{j}^{\infty} a_{ij} \phi_j(x_2),
+a_i(x_2) = \sum_{j}^{\infty} a_{ij} \psi_j(x_2),
 \end{equation}
 and introduced the quantity $a_{ij}$, which carries both the indices for the $x_1$ and $x_2$ expansions.
 Combining Eqs.~\eqref{eq:two_electron_wfn_expansion1}--\eqref{eq:two_electron_wfn_expansion2} we obtain:
 \begin{equation}
-\Phi(x_1,x_2) = \sum_{ij}^{\infty} a_{ij} \phi_i(x_1) \phi_j(x_2).
+\Phi(x_1,x_2) = \sum_{ij}^{\infty} a_{ij} \psi_i(x_1) \psi_j(x_2).
 \end{equation}
 This functions may satisfy the antisymmetry condition if:
 \begin{equation}
-\sum_{ij}^{\infty} a_{ij} \phi_i(x_1) \phi_j(x_2) = -\sum_{ij}^{\infty} a_{ij} \phi_i(x_2) \phi_j(x_1).
+\sum_{ij}^{\infty} a_{ij} \psi_i(x_1) \psi_j(x_2) = -\sum_{ij}^{\infty} a_{ij} \psi_i(x_2) \psi_j(x_1).
 \end{equation}
 To find out the implication of this condition onto the coefficients $a_{ij}$, first perform the index interchange $i \leftrightarrow j$ on the left hand side:
 \begin{equation}
-\sum_{ij}^{\infty} a_{ij} \phi_i(x_1) \phi_j(x_2) = -\sum_{ij}^{\infty} a_{ji} \phi_j(x_2) \phi_i(x_1),
+\sum_{ij}^{\infty} a_{ij} \psi_i(x_1) \psi_j(x_2) = -\sum_{ij}^{\infty} a_{ji} \psi_j(x_2) \psi_i(x_1),
 \end{equation}
-and the collect terms that multiply the factor $\phi_i(x_1) \phi_j(x_2)$ to obtain the condition:
+and the collect terms that multiply the factor $\psi_i(x_1) \psi_j(x_2)$ to obtain the condition:
 \begin{equation}
 \label{eq:two_electron_wfn_expansion4}
-\sum_{ij}^{\infty} (a_{ij} + a_{ji}) \phi_i(x_1) \phi_j(x_2) = 0.
+\sum_{ij}^{\infty} (a_{ij} + a_{ji}) \psi_i(x_1) \psi_j(x_2) = 0.
 \end{equation}
-Equation~\eqref{eq:two_electron_wfn_expansion4} must hold for any value of $\phi_i(x_1) \phi_j(x_2)$, and this is possible only if
+Equation~\eqref{eq:two_electron_wfn_expansion4} must hold for any value of $\psi_i(x_1) \psi_j(x_2)$, and this is possible only if
 \begin{equation} \label{eq:two_electron_wfn_expansion3}
 a_{ij} + a_{ji} = 0.
 \end{equation}
@@ -178,33 +178,33 @@ Eq.~\eqref{eq:two_electron_wfn_expansion3} shows that the when we expand an anti
 Using Eq.~\eqref{eq:two_electron_wfn_expansion3} we may write the two-electron wave function as:
 \begin{equation}
 \begin{split}
-\Phi(x_1,x_2) &= \sum_{i<j}^{\infty} a_{ij} \phi_i(x_1) \phi_j(x_2) + \sum_{i>j}^{\infty} a_{ij} \phi_i(x_1) \phi_j(x_2) \\
-&= \sum_{i<j}^{\infty} a_{ij} \phi_i(x_1) \phi_j(x_2) + \sum_{j>i}^{\infty} a_{ji} \phi_j(x_1) \phi_i(x_2) \\
-&= \sum_{i<j}^{\infty} a_{ij} \phi_i(x_1) \phi_j(x_2) - \sum_{i<j}^{\infty} a_{ij} \phi_i(x_2) \phi_j(x_1) \\
-&= \sum_{i<j}^{\infty} a_{ij} [ \phi_i(x_1) \phi_j(x_2) - \phi_i(x_2) \phi_j(x_1)].
+\Phi(x_1,x_2) &= \sum_{i<j}^{\infty} a_{ij} \psi_i(x_1) \psi_j(x_2) + \sum_{i>j}^{\infty} a_{ij} \psi_i(x_1) \psi_j(x_2) \\
+&= \sum_{i<j}^{\infty} a_{ij} \psi_i(x_1) \psi_j(x_2) + \sum_{j>i}^{\infty} a_{ji} \psi_j(x_1) \psi_i(x_2) \\
+&= \sum_{i<j}^{\infty} a_{ij} \psi_i(x_1) \psi_j(x_2) - \sum_{i<j}^{\infty} a_{ij} \psi_i(x_2) \psi_j(x_1) \\
+&= \sum_{i<j}^{\infty} a_{ij} [ \psi_i(x_1) \psi_j(x_2) - \psi_i(x_2) \psi_j(x_1)].
 \end{split}
 \end{equation}
-The quantity $\phi_i(x_1) \phi_j(x_2) - \phi_i(x_2) \phi_j(x_1)$ can also be expressed as the determinant of a matrix since:
+The quantity $\psi_i(x_1) \psi_j(x_2) - \psi_i(x_2) \psi_j(x_1)$ can also be expressed as the determinant of a matrix since:
 \begin{equation}
 \det
 \begin{bmatrix}
-\phi_i(x_1) & \phi_i(x_2) \\
-\phi_j(x_1) & \phi_j(x_2) 
+\psi_i(x_1) & \psi_i(x_2) \\
+\psi_j(x_1) & \psi_j(x_2) 
 \end{bmatrix}
 \equiv
 \begin{vmatrix}
-\phi_i(x_1) & \phi_i(x_2) \\
-\phi_j(x_1) & \phi_j(x_2) 
+\psi_i(x_1) & \psi_i(x_2) \\
+\psi_j(x_1) & \psi_j(x_2) 
 \end{vmatrix}
 =
-\phi_i(x_1) \phi_j(x_2) - \phi_i(x_2) \phi_j(x_1).
+\psi_i(x_1) \psi_j(x_2) - \psi_i(x_2) \psi_j(x_1).
 \end{equation}
 Hence we discover that $\Phi(x_1,x_2)$ must be a linear combination of determinants:
 \begin{equation}
 \Phi(x_1,x_2) = \sum_{i<j}^{\infty} a_{ij} 
 \begin{vmatrix}
-\phi_i(x_1) & \phi_i(x_2) \\
-\phi_j(x_1) & \phi_j(x_2)
+\psi_i(x_1) & \psi_i(x_2) \\
+\psi_j(x_1) & \psi_j(x_2)
 \end{vmatrix}.
 \end{equation}
 \end{example}
@@ -213,9 +213,9 @@ A convenient way to represent antisymmetric wave functions for $N$ electrons is 
 \begin{equation}
 \Phi_{ijk\cdots}(x_1,x_2,\ldots,x_N) = \frac{1}{\sqrt{N!}} 
 \begin{vmatrix}
-\phi_i(x_1) & \phi_i(x_2) & \cdots & \phi_i(x_N) \\
-\phi_j(x_1) & \phi_j(x_2) & \cdots & \phi_j(x_N) \\
-\phi_k(x_1) & \phi_k(x_2) & \cdots & \phi_k(x_N) \\
+\psi_i(x_1) & \psi_i(x_2) & \cdots & \psi_i(x_N) \\
+\psi_j(x_1) & \psi_j(x_2) & \cdots & \psi_j(x_N) \\
+\psi_k(x_1) & \psi_k(x_2) & \cdots & \psi_k(x_N) \\
 \vdots & \vdots & \vdots & \vdots
 \end{vmatrix}.
 \end{equation}
@@ -223,15 +223,15 @@ Slater determinants automatically satisfy the antisymmetry requirement of fermio
 For convenience we will write a Slater determinant, \textbf{including its normalization factor}, with the compact notation
 \begin{equation}
 \ket{\Phi_{ijk\cdots}} =\ket{
-\phi_i \phi_j \phi_k \cdots},
+\psi_i \psi_j \psi_k \cdots},
 \end{equation}
 omitting the labels of the electrons.
 The basis of Slater determinants $\{ \ket{
-\phi_i \phi_j \phi_k \cdots} \}$ with $i, j, k, \ldots \in \{0, 1, 2, \ldots \}$ is complete.\mnote{This property is inherited from the fact that the one-electron spin orbital basis is complete.}
+\psi_i \psi_j \psi_k \cdots} \}$ with $i, j, k, \ldots \in \{0, 1, 2, \ldots \}$ is complete.\mnote{This property is inherited from the fact that the one-electron spin orbital basis is complete.}
 Therefore, we may expand any electronic wave function using the Slater determinant basis:
 \begin{equation}
 \ket{\Psi} = \sum_{i<j<k\cdots} C_{ijk\cdots} \ket{
-\phi_i \phi_j \phi_k \cdots}.
+\psi_i \psi_j \psi_k \cdots}.
 \end{equation}
 This expansion is called a \textbf{full configuration interaction} (FCI) wave function.
 The FCI wave function can provide the exact solution to the electronic Schr\"{o}dinger equation.
@@ -281,7 +281,7 @@ If electrons have \textit{different} spin then the probability distribution is s
 P(\mathbf{r}_1,\mathbf{r}_2) = \frac{1}{2} [
 P_i(\mathbf{r}_1) P_j(\mathbf{r}_2) +  P_j(\mathbf{r}_1) P_i(\mathbf{r}_2) ].
 \end{equation}
-If instead the two electrons have different spin, then the cross terms [$\phi_i^*(\mathbf{r}_1)\phi_j(\mathbf{r}_1)  \phi_j^*(\mathbf{r}_2) \phi_i(\mathbf{r}_2)$] survive and introduce correlation in the probability distribution
+If instead the two electrons have different spin, then the cross terms [$\psi_i^*(\mathbf{r}_1)\psi_j(\mathbf{r}_1)  \psi_j^*(\mathbf{r}_2) \psi_i(\mathbf{r}_2)$] survive and introduce correlation in the probability distribution
 \begin{equation}
 \begin{split}
 P(\mathbf{r}_1,\mathbf{r}_2) = \frac{1}{2} [&
@@ -299,11 +299,22 @@ This form of correlation prevents two electrons with same spin to be found at th
 In this section we will do an extensive study of the wave function of H$_2$ in a minimal basis set.
 Consider two hydrogen atoms (H$_\mathrm{A}$ and H$_\mathrm{B}$) separated by a distance $R_\mathrm{AB}$.
 We will assume that each atom has one atomic basis function, $\chi_{1\rm s}^{\rm A}(\mathbf{r})$ and $\chi_{1\rm s}^{\rm B}(\mathbf{r})$.
+Note that these two orbitals are not necessarily orthogonal as their overlap ($S$) is in general not equal to zero
+\begin{equation}
+S = \int d\mathbf{r} \chi_{1\rm s}^{\rm A}*(\mathbf{r}) \chi_{1\rm s}^{\rm B}(\mathbf{r}) \neq 0.
+\end{equation}
+
+
 From these atomic orbitals we can form two spatial orbitals:
 \begin{align}
 \phi_{\mathrm{g}}(\mathbf{r}) &= N_\mathrm{g} [\chi_{1\rm s}^{\rm A}(\mathbf{r}) + \chi_{1\rm s}^{\rm B}(\mathbf{r})],\\
-\phi_{\mathrm{u}}(\mathbf{r}) &= N_\mathrm{g} [\chi_{1\rm s}^{\rm A}(\mathbf{r}) - \chi_{1\rm s}^{\rm B}(\mathbf{r})].
+\phi_{\mathrm{u}}(\mathbf{r}) &= N_\mathrm{u} [\chi_{1\rm s}^{\rm A}(\mathbf{r}) - \chi_{1\rm s}^{\rm B}(\mathbf{r})].
 \end{align}
+
+\begin{problem}[Normalization of the molecular orbitals of H$_2$]
+Express the value of the normalization constants ($N_\mathrm{g}$ and $N_\mathrm{u}$) for the wave function $\phi_{\mathrm{g}}(\mathbf{r})$ and $\phi_{\mathrm{u}}(\mathbf{r})$ in terms of the overlap integral $S$. 
+\end{problem}
+
 By combining the spatial orbitals with spin functions we obtain four spin orbitals:
 \begin{align}
 \psi_1(x) = \psi_{\mathrm{g}}(x) = \phi_{\mathrm{g}}(\mathbf{r}) \alpha(\omega),\\
@@ -473,7 +484,10 @@ Expanding $\Phi_5$ in terms of spin orbital we find:
 &= 2 N_{\mathrm{g}} N_{\mathrm{u}}  \ket{\chi_{1\rm s}^{\rm B}\alpha \chi_{1\rm s}^{\rm A}\alpha} .
 \end{split}
 \end{equation}
-Where in the last step we used the antisymmetry property of Slater determinants.\mnote{$\ket{\chi_{1\rm s}^{\rm A}\alpha \chi_{1\rm s}^{\rm B}\alpha} = -\ket{\chi_{1\rm s}^{\rm B}\alpha \chi_{1\rm s}^{\rm A}\alpha}$.}
+Where in the last step we used the antisymmetry property of Slater determinants and swapped the two spin orbitals
+\begin{equation}
+\ket{\chi_{1\rm s}^{\rm A}\alpha \chi_{1\rm s}^{\rm B}\alpha} = -\ket{\chi_{1\rm s}^{\rm B}\alpha \chi_{1\rm s}^{\rm A}\alpha}.
+\end{equation}
 We also eliminated the Pauli-principle violating terms like this:
 \begin{equation}
  \ket{\chi_{1\rm s}^{\rm A}\alpha \chi_{1\rm s}^{\rm A}\alpha} \equiv 
@@ -497,7 +511,7 @@ Apply the operator $\hat{S}^2$ to determinant $\Phi_5$:
 = (\hat{S}_{+} \hat{S}_{-}  + \hat{S}_{z}^2 - \hat{S}_{z}) \ket{\psi_{\mathrm{g}} \psi_{\mathrm{u}}}.
 \end{split}
 \end{equation}
-Let us consider these terms in detail:\mnote{$\hat{S}_{-}=\hat{s}_{-}(1) + \hat{s}_{-}(2)$.}
+Let us consider these terms in detail\mnote{$\hat{S}_{-}=\hat{s}_{-}(1) + \hat{s}_{-}(2)$.}
 \begin{equation}
 \hat{S}_{+} \hat{S}_{-} \ket{\psi_{\mathrm{g}} \psi_{\mathrm{u}}}
 = \hat{S}_{+} (\ket{\psi_{\bar{\mathrm{g}}} \psi_{\mathrm{u}}} + \ket{\psi_{\mathrm{g}} \psi_{\bar{\mathrm{u}}}}
@@ -507,7 +521,7 @@ Let us consider these terms in detail:\mnote{$\hat{S}_{-}=\hat{s}_{-}(1) + \hat{
 \begin{equation}
 \hat{S}_{z} \ket{\psi_{\mathrm{g}} \psi_{\mathrm{u}}} = \left(\frac{1}{2} + \frac{1}{2}\right) \ket{\psi_{\mathrm{g}} \psi_{\mathrm{u}}} = \ket{\psi_{\mathrm{g}} \psi_{\mathrm{u}}}.
 \end{equation}
-Putting all together:
+Putting all together we get
 \begin{equation}
 \begin{split}
 \hat{S}^2 \ket{\Phi_5} &= (\hat{S}_{+} \hat{S}_{-}  + \hat{S}_{z}^2 - \hat{S}_{z}) \ket{\psi_{\mathrm{g}} \psi_{\mathrm{u}}} \\
@@ -551,10 +565,14 @@ suggests that we consider the plus and minus combination of $\Phi_2$ and $\Phi_3
 \begin{equation}
 \ket{\Phi_\pm} = \frac{1}{\sqrt{2}} \left(  \ket{\Phi_2} \pm \ket{\Phi_3} \right).
 \end{equation}
-These two states are such that:
+These two states are such that
 \begin{equation}
-\hat{S}^2 \ket{\Phi_\pm} = (1 \pm 1) \ket{\Phi_\pm}.
+\hat{S}^2 \ket{\Phi_+} = 0,
 \end{equation}
-Therefore, $\Phi_{+}$ is a triplet state while $\Phi_{-}$ is a singlet state.
+and
+\begin{equation}
+\hat{S}^2 \ket{\Phi_{-}} = 2 \ket{\Phi_{-}}.
+\end{equation}
+Therefore, $\Phi_{-}$ is a triplet state while $\Phi_{+}$ is a singlet state.
 
 \end{document}
