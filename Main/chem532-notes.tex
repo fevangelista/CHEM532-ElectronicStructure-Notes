@@ -1,0 +1,183 @@
+% This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+% or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% !TEX TS-program = xelatex
+
+\documentclass{../Main/lecturenotes}
+\usepackage{subfiles}
+
+\title{\Huge \headingfont CHEM 532 \\ Lecture Notes \vspace{1in}}
+\author{{\LARGE Francesco Evangelista} \vspace{.125in} \\ Emory University }
+\date{Updated on \today}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\graphicspath{{../huckel/huckel/}}
+\subfile{../huckel/huckel}
+
+\graphicspath{{../electronic-wavefunctions/electronic-wavefunctions/}}
+\subfile{../electronic-wavefunctions/electronic-wavefunctions}
+
+
+
+%\pagebreak
+%\graphicspath{{../02-BohrModel/}}
+%\subfile{../02-BohrModel/BohrModel}
+
+
+\end{document}
+
+%% !TEX TS-program = xelatex
+%
+%\documentclass{lecturenotes}
+%%\usepackage{latex_qc_notation}
+%\usepackage{topcapt}
+%\usepackage{booktabs}
+%%
+%%\documentclass[11pt, oneside]{book}  	% use "amsart" instead of "article" for AMSLaTeX format
+%%%\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+%%\usepackage[letterpaper,
+%%	top= 1in, bottom= 1in, left= 1in, right= 2.75in,
+%%	marginparsep = 0.125in,
+%%	marginparwidth = 2in]{geometry}
+%%
+%%% Set size of margin notes
+%%%\usepackage{marginnote}
+%%%\renewcommand{\marginfont}{\Large}
+%%
+%%%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+%%\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+%%								% TeX will automatically convert eps --> pdf in pdflatex		
+%%\usepackage{amsmath,amssymb}
+%%
+%
+%
+%%\usepackage{xfrac}
+%%
+%%\usepackage{xcolor,lipsum} % Required for specifying colors by name
+%%\definecolor{ocre}{RGB}{51,102,0} 
+%%\definecolor{lightgray}{RGB}{229,229,229} 
+%%
+%%% Font Settings
+%%%\usepackage[cmintegrals,cmbraces]{newtxmath}
+%%%\usepackage{ebgaramond-maths}
+%%%\usepackage[T1]{fontenc}
+%%
+%%% \usepackage{MinionPro}
+%%\usepackage{avant} % Use the Avantgarde font for headings
+%%%\usepackage{times} % Use the Times font for headings
+%%%\usepackage{mathptmx} % Use the Adobe Times Roman as the default text font together with math symbols from the Sym?bol, Chancery and Com?puter Modern fonts
+%%%\usepackage{mathpazo} % add possibly `sc` and `osf` options
+%%%\usepackage{eulervm}
+%%%\usepackage{kpfonts}
+%%%\usepackage[T1]{fontenc}
+%%%\usepackage[T1]{fontenc}
+%%%\renewcommand{\rmdefault}{ptm}
+%%%\usepackage{mtpro2} 
+%%
+%%%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+%%%\usepackage[utf8]{inputenc} % Required for including letters with accents
+%%%\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%%%
+%%%%encoding
+%%%%--------------------------------------
+%%%%\usepackage[utf8]{inputenc}
+%%%\usepackage[T1]{fontenc}
+%%%--------------------------------------
+%%
+%%%German-specific commands
+%%%--------------------------------------
+%%%\usepackage[german]{babel}
+%%%--------------------------------------
+%%
+%%%\newenvironment{example}
+%%%{
+%%%	\begin{center}
+%%%	\begin{tabular}{|p{0.9\textwidth}|}
+%%%		\hline\\
+%%%}
+%%%{ 
+%%%    		\\\\\hline
+%%%    	\end{tabular} 
+%%%    	\end{center}
+%%%}
+%%
+%%%\newenvironment{problem}
+%%%{
+%%%\textparagraph
+%%%}
+%%%{ 
+%%%}
+%%
+%%
+%%
+%%\usepackage{fancyvrb}
+%%
+%%\newcounter{mnotecount}
+%%\renewcommand\themnotecount{$^{\arabic{mnotecount}}$}
+%%\newcommand\mnote[1]{\refstepcounter{mnotecount}$^{\arabic{mnotecount}}$\marginpar{\themnotecount \textmd{\footnotesize{#1}}}}
+%%
+%%\newenvironment{terminal}[0]
+%%{\VerbatimEnvironment
+%%\begin{Verbatim}[numbers=left,fontsize=\scriptsize, stepnumber=3,
+%%                 frame=single,framerule=0.4mm,samepage=true]}
+%%{\end{Verbatim}}
+%
+%\title{CHEM532\\LECTURE NOTES}
+%\author{Francesco Evangelista\\Emory University}
+%
+%%\input{structure} % Insert the commands.tex file which contains the majority of the structure behind the template
+%
+%\begin{document}
+%%----------------------------------------------------------------------------------------
+%%	TITLE PAGE
+%%----------------------------------------------------------------------------------------
+%
+%\begingroup
+%\thispagestyle{empty}
+%%\AddToShipoutPicture*{\put(0,0){\includegraphics[scale=1.25]{v}}} % Image background
+%\centering
+%
+%
+%\vspace*{5cm}
+%\par\fontsize{35}{35}\headingfont\selectfont
+%\textbf{CHEM 532 LECTURE NOTES}\\
+%{\LARGE }\par % Book title
+%\vspace*{1cm}
+%{\Large Francesco Evangelista}\par % Author name
+%\endgroup
+%
+%%\renewcommand*{\marginfont}{\color{red}\sffamily}
+%
+%%\input{preliminaries}
+%
+%\input{huckel}
+%
+%\input{molecular-hamiltonian}
+%
+%\input{electronic-wavefunctions}
+%
+%\input{hartree-fock}
+%
+%\input{properties}
+%
+%\input{dft}
+%
+%%\input{symmetry}
+%
+%%\input{second_quantization}
+%%
+%\input{electron_correlation}
+%%
+%%\input{multireference_methods}
+%
+%\end{document}  
