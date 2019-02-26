@@ -197,11 +197,29 @@ P_{\pi'}\left[
 \end{split}
 \end{equation}
 In this case the only permutations that give nonzero contributions are those for which $\pi = \pi'$.
-Otherwise, there would be one or more mismatched spin orbitals, for example
+Otherwise, there would be one or more mismatched spin orbitals. For example, consider the case of a permutation $\pi'$ that swaps coordinates $x_1 \leftrightarrow x_2$ while $\pi$ is the identity. The term with the operator $\hat{h}(x_1)$
 \begin{equation}
-\psi_{i_l}^{*}(x_k) \psi_{i_m}(x_k) \quad \text{ with } i_l \neq i_m,
+\begin{split}
+\int dx_1 dx_2 \cdots \,
+\psi_{i_1}^{*}(x_2) \psi_{i_2}^{*}(x_1) \cdots
+\hat{h}(x_1)
+\psi_{i_1}(x_1) \psi_{i_2}(x_2)\cdots  \\
+= \int dx_1 \, \psi_{i_2}^{*}(x_1) \hat{h}(x_1) \psi_{i_1}(x_1)
+\times \underbrace{\int dx_2 \, \psi_{i_1}^{*}(x_2) \psi_{i_2}(x_2)}_{= 0} \times \cdots = 0.
+\end{split}
 \end{equation}
-that when integrated over the same variable gives a factor of zero.
+We also get zero if the permutation mixes two variables not involved with the operator $\hat{h}$ as in the case of the permutation $\pi' \equiv (x_2 \leftrightarrow x_3)$ 
+
+\begin{equation}
+\begin{split}
+\int dx_1 dx_2 \cdots \,
+\psi_{i_1}^{*}(x_1) \psi_{i_3}^{*}(x_2) \cdots
+\hat{h}(x_1)
+\psi_{i_1}(x_1) \psi_{i_2}(x_2) \cdots  \\
+= \int dx_1 \, \psi_{i_1}^{*}(x_1) \hat{h}(x_1) \psi_{i_1}(x_1)
+\times \underbrace{\int dx_2 \, \psi_{i_3}^{*}(x_2) \psi_{i_2}(x_2)}_{= 0} \times \cdots = 0.
+\end{split}
+\end{equation}
 Since for any permutation $P_{\pi} \sum_j\hat{h}(x_j) = \sum_j\hat{h}(x_j)$, we may combine the permutation operators into a single term
 %Since the Slater determinant contains a sum over all permutations of indices, we can consider only the effect of the one-electron operator acting of the wave functions labeled by the coordinate $x_1$.
 %This means we can replace  $\sum_j \hat{h}(j)$ with $N \hat{h}(1)$.
@@ -219,7 +237,7 @@ P_{\pi}\left\{
 \end{equation}
 Each permutation of the integral will give a contribution equal to:
 \begin{equation}
-\sum_j^{N} \int dx \psi_{i_j}^{*}(x) \hat{h}(x) \psi_{i_j}(x) 
+\sum_j^{N} \int dx \, \psi_{i_j}^{*}(x) \hat{h}(x) \psi_{i_j}(x) 
 = \sum_j^{N} \bra{\psi_{i_j}} \hat{h} \ket{\psi_{i_j}} = \sum_i^{\rm occ} \bra{\psi_i}\hat{h}\ket{\psi_i},
 \end{equation}
 and since there are $N!$ permutations, we find that 
@@ -282,9 +300,12 @@ Let us consider the determinant:
 The energy is given by:
 \begin{equation}
 \begin{split}
-\bra{\Psi_I} \hat{H} \ket{\Psi_I} =& \bra{1}\hat{h}\ket{1} + \bra{\bar{1}} \hat{h} \ket{\bar{1}} \\
-&+ \frac{1}{2} \left[ \braket{11|11} + \braket{1\bar{1} | 1\bar{1}} + \braket{\bar{1}1|\bar{1}1} + + \braket{\bar{1}\bar{1} | \bar{1}\bar{1}}\right] \\
-=& \bra{1}\hat{h}\ket{1} + \bra{\bar{1}} \hat{h} \ket{\bar{1}}  + \braket{1\bar{1} | 1\bar{1}},
+\bra{\Psi_I} \hat{H} \ket{\Psi_I} =& \bra{\psi_1}\hat{h}\ket{\psi_1} + \bra{\psi_{\bar{1}}} \hat{h} \ket{\psi_{\bar{1}}}\\ 
+&+ \frac{1}{2} \left[ 
+\aphystei{\psi_1 \psi_1}{\psi_1 \psi_1}
++ \aphystei{\psi_1\psi_{\bar{1}}}{\psi_1\psi_{\bar{1}}} 
++ \aphystei{\psi_{\bar{1}}\psi_1}{\psi_{\bar{1}}\psi_1} + \aphystei{\psi_{\bar{1}}\psi_{\bar{1}}}{ \psi_{\bar{1}}\psi_{\bar{1}}}\right] \\
+=& 2 \bra{\phi_1}\hat{h}\ket{\phi_1} + \braket{\phi_1 \phi_1| \phi_1 \phi_1},
 \end{split}
 \end{equation}
 where we have eliminated two-electron integrals that are zero due to a mismatch in the spin function.
