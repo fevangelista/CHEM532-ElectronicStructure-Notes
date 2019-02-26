@@ -1,0 +1,592 @@
+% This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+% or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% !TEX TS-program = xelatex
+
+\documentclass[../Main/chem532-notes.tex]{subfiles}
+\begin{document}
+
+\chapter{Hartree--Fock theory}
+
+\section{The Hartree--Fock wave function}
+The main assumption of Hartree--Fock theory is that the wave functions for $N$ electrons may be approximated with a single Slater determinant built from a set of ``optimal'' spin orbitals $\{ \psi_1, \psi_2, \ldots, \psi_N \}$:
+\begin{equation}
+\ket{\Phi_0} = \ket{\psi_1, \psi_2, \ldots, \psi_N }.
+\end{equation}
+The goal is to find the best set of spin orbitals in the variational sense. 
+Let us define the functional $E[\tilde{\Phi}]$ of a trial wave function $\tilde{\Phi}$:
+\begin{equation}
+E[\Phi] = \bra{\Phi} \hat{H} \ket{\Phi},
+\end{equation}
+then the Hartree--Fock energy is given by:
+\begin{equation}
+E_0 = \min_{\Phi} E[\Phi] \quad \text{ enforcing }  \quad\braket{\Phi | \Phi} = 1,
+\end{equation}
+where we assume that the determinant $\Phi$ is normalized.
+
+In a spin orbital basis the Hartree--Fock energy is:
+\begin{equation}
+E_0[\{ \psi_i \}] = \sum_i^{\rm occ} \bra{i} \hat{h} \ket{i} + \frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{ij}{ij}.
+\end{equation}
+
+
+\subsection{Minimization of the Hartree--Fock energy functional}
+As we have seen in the previous section, if the spin orbitals are orthonormal then $\Phi$ is guaranteed to be normalized.
+How can we minimize the Hartree--Fock energy functional and at the same time impose the condition $\braket{\psi_i|\psi_j} = \delta_{ij}$?
+We will use the technique of Lagrange multipliers.
+
+\begin{example}[Minimization of a function of two variables with a constraint]
+Let us consider the problem of minimizing the function $f(x,y) = x^2 + 2 y^2$ with the constraint that $x + y = 2$.
+We rewrite the constraint as a function $g(x,y) = x + y - 2$ and we will try to impose $g(x,y) = 0$.
+Consider the Lagrangian function of three independent variables $(x,y,\lambda)$:
+\begin{equation}
+\mathcal{L}(x,y,\lambda) = f(x,y) - \lambda g(x,y) =  x^2 + 2 y^2 - \lambda (x + y - 2).
+\end{equation}
+The stationary point of $\mathcal{L}(x,y,\lambda)$ with respect to the variables $x$, $y$, and $\lambda$ corresponds to:
+\begin{align}
+\frac{\partial \mathcal{L}(x,y,\lambda)}{\partial x} &= 2 x - \lambda = 0 \label{eq:hf:lagrange1}\\
+\frac{\partial \mathcal{L}(x,y,\lambda)}{\partial y} &= 4 y - \lambda = 0 \label{eq:hf:lagrange2}\\
+\frac{\partial \mathcal{L}(x,y,\lambda)}{\partial \lambda} &= g(x,y)  = 0.\label{eq:hf:lagrange3}
+\end{align}
+From Eqs.~\eqref{eq:hf:lagrange1} and \eqref{eq:hf:lagrange2} we obtain:
+\begin{equation}
+x = 2y,
+\end{equation}
+which combined with Eq.~\eqref{eq:hf:lagrange3} gives: 
+\begin{equation}
+g(2y,y)  = 2y + y - 2 = 0 \quad \Rightarrow \quad y = \frac{2}{3},
+\end{equation}
+and $x = \frac{4}{3}$.
+\end{example}
+
+To enforce orthonormality of the spin orbitals we need to enforce the condition:
+\begin{equation}
+\braket{\psi_i | \psi_j} = \delta_{ij} \quad \forall i,j \in \mathrm{occupied}.
+\end{equation}
+To enforce this constraint we consider the following Lagrangian:
+\begin{equation}
+\mathcal{L}[\{ \psi_i \}] = E_0[\{ \psi_i \}] - \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_i | \psi_j} - \delta_{ij}),
+\end{equation}
+where $\lambda_{ji}$ is a matrix of Lagrange multipliers.\mnote{In writing the Lagrange multiplier we chose for convenience to put the index ``q'' before ``p''. This notation will be convenient later in the derivation.}
+Note that $\lambda_{ji}$ must be a Hermitian matrix\mnote{That is $\lambda_{ji} = \lambda_{ji}^*$.}, which is a consequence of requiring the Lagrangian to be a real function.\mnote{A complex Lagrangian cannot be minimized because there is no such a thing as the minimum of a complex function.}
+%Imposing 
+%$\mathcal{L}[\{ \psi_i \}]  = \mathcal{L}[\{ \psi_i \}]^*$
+%it follows that:
+%\begin{equation}
+%\sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_p}{\psi_q} - \delta_{pq})
+%= \sum_{ij}^\mathrm{occ} \lambda_{ji}^* (\braket{\psi_p}{\psi_q} - \delta_{pq})
+%\end{equation}
+%
+%\begin{equation}
+%\sum_{ij}^\mathrm{occ} ( \lambda_{ji} -  \lambda_{ji}^* )(\braket{\psi_p}{\psi_q} - \delta_{pq}) = 0
+%\end{equation}
+To find the minimum of $\mathcal{L}[\{ \psi_i \}]$ we require that the Lagrangian is stationary with respect to small variations of the spin orbitals $\{ \delta \psi_i \}$.
+This mean that for any arbitrary variation of the spin orbitals $\{ \delta \psi_i \}$ the Lagrangian must satisfy:
+\begin{equation}
+\mathcal{L}[\{ \psi_i  + \delta \psi_i \}] = \mathcal{L}[\{ \psi_i \}],\end{equation}
+up to first order in $\{ \delta \psi_i \}$.
+Let us first evaluate the variation of the energy:
+\begin{equation}
+\begin{split}
+E_0[\{ \psi_i +  \delta \psi_i\}] =&
+\sum_i^{\rm occ} \bra{\psi_i + \delta \psi_i} \hat{h} \ket{\psi_i + \delta \psi_i} \\
+&+ \frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{(\psi_i + \delta \psi_i) (\psi_j + \delta \psi_j)}{(\psi_i + \delta \psi_i) (j + \delta \psi_j)} \\
+=& E_0[\{ \psi_i \}] + \sum_i^{\rm occ} \bra{\psi_i} \hat{h} \ket{\delta \psi_i}
++ \sum_i^{\rm occ} \bra{\delta \psi_i} \hat{h} \ket{\psi_i} \\
+&+ \frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{\delta \psi_i \psi_j}{\psi_i \psi_j}
++ \frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{\psi_i \delta \psi_j}{\psi_i \psi_j} \\
+&+ \frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{\psi_i \psi_j}{\delta \psi_i \psi_j}
++ \frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{\psi_i \psi_j}{\psi_i \delta \psi_j}\\
+&+ \text{(higher order)} \\
+=& E_0[\{ \psi_i \}] + \sum_i^{\rm occ} \left[ \bra{\delta \psi_i} \hat{h} \ket{\psi_i} 
++ \sum_{j}^{\rm occ} \aphystei{\delta \psi_i \psi_j}{\psi_i \psi_j} \right]\\&+ \text{h.c.} + \text{(higher order)},
+\end{split}
+\end{equation}
+where ``h.c.'' stands for Hermitian conjugate.
+
+The variation of the constraint $- \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_p}{\psi_q} - \delta_{pq})$ is equal to:
+\begin{equation}
+\begin{split}
+- \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_i + \delta \psi_i}{\psi_j + \delta \psi_j} - \delta_{ij})
+=& - \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_i}{\psi_j} - \delta_{ij}) \\
+& - \sum_{ij}^\mathrm{occ} \lambda_{ji} \braket{\delta\psi_i}{\psi_j}  - \sum_{ij}^\mathrm{occ} \lambda_{ji} \braket{\psi_i}{\delta\psi_j} \\
+&+ \text{(higher order)}.
+\end{split}
+\end{equation}
+
+Let us identify the change in the Lagrangian up to linear terms, that is:
+\begin{equation}
+\delta \mathcal{L} = \mathcal{L}[\{ \psi_i  + \delta \psi_i \}] - \mathcal{L}[\{ \psi_i  \}]
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\delta \mathcal{L}  =
+\sum_i^{\rm occ} \left[ \bra{\delta \psi_i} \hat{h} \ket{\psi_i} 
++ \sum_{j}^{\rm occ} \aphystei{\delta \psi_i \psi_j}{\psi_i \psi_j} - \sum_{ij}^\mathrm{occ} \lambda_{ji} \braket{\delta\psi_p}{\psi_q} \right] + \text{h.c.} 
+\end{split}
+\end{equation}
+
+We now rewrite this expression in terms of integrals:
+\begin{equation}
+\begin{split}
+\delta \mathcal{L}  =&
+\sum_{i}^\mathrm{occ} \int dx_1 \delta\psi_{i}^{*}(x_1) \times \\
+& \times
+\left[
+\hat{h}\psi_{i}(x_1) 
++ \sum_{j}^\mathrm{occ} \int dx_2 \frac{|\psi_{j}(x_2)|^2 \psi_{i}(x_1) }{|\mathbf{r}_1 - \mathbf{r}_2|}
+- \sum_{j}^\mathrm{occ} \int dx_2 \frac{\psi_{j}^{*}(x_2) \psi_{i}(x_2) \psi_{j}(x_1) }{|\mathbf{r}_1 - \mathbf{r}_2|}
+- \sum_{j}^\mathrm{occ} \lambda_{ji} \psi_{j}(x_1)
+\right].
+\end{split}
+\end{equation}
+If we require $\delta \mathcal{L}$ to be null for any variation of the orbitals then the quantity inside the square bracket must be identically null. We can write this condition in the following way, which is suggestive of a eigenvalue problem:
+ \begin{equation}
+\hat{h}\psi_{i}(x_1) 
++ \sum_{j}^\mathrm{occ} \int dx_2 \frac{|\psi_{j}(x_2)|^2 \psi_{i}(x_1) }{|\mathbf{r}_1 - \mathbf{r}_2|}
+- \sum_{j}^\mathrm{occ} \int dx_2 \frac{\psi_{j}(x_2)^{*} \psi_{i}(x_2) \psi_{j}(x_1) }{|\mathbf{r}_1 - \mathbf{r}_2|}
+= \sum_{j}^\mathrm{occ} \lambda_{ji} \psi_{j}(x_1).
+\end{equation}
+If we introduce the Coulomb ($\hat{J}_j$) and exchange ($\hat{K}_j$) operators:
+\begin{align}
+\hat{J}_j(x_1)\psi_{i}(x_1)  &= \int dx_2 \frac{|\psi_{j}(x_2)|^2}{|\mathbf{r}_1 - \mathbf{r}_2|} \psi_{i}(x_1) \\
+\hat{K}_j(x_1)\psi_{i}(x_1)  &= \int dx_2 \frac{\psi_{j}^{*}(x_2) \psi_{i}(x_2)}{|\mathbf{r}_1 - \mathbf{r}_2|} \psi_{j}(x_1),
+\end{align}
+we may rewrite the stationary conditions as:
+ \begin{equation}
+\left[ \hat{h}(x_1) + \sum_{j}^\mathrm{occ} \hat{J}_j(x_1)- \hat{K}_j(x_1) \right] \psi_{i}(x_1) 
+= \sum_{j}^\mathrm{occ} \lambda_{ji} \psi_{j}(x_1),
+\end{equation}
+or
+\begin{equation} \label{eq:hf:noncanonical_hf_equation}
+\hat{f}(x_1)  \psi_{i}(x_1) 
+= \sum_{j}^\mathrm{occ} \lambda_{ji} \psi_{j}(x_1).
+\end{equation}
+Eq.~\eqref{eq:hf:noncanonical_hf_equation} is called the \textbf{Hartree--Fock equation in noncanonical form} and the operator $\hat{f}(x_1) = \hat{h}(x_1) + \sum_{j}^\mathrm{occ} \hat{J}_j(x_1)- \hat{K}_j(x_1)$ is called the Fock operator.
+Note, that this is not an eigenvalue problem because on the r.h.s. we have a sum of functions.
+Essentially this equations says that when we apply the Fock operator to any occupied orbital, we get back a linear combination of occupied orbitals.
+This implies that if we apply the Fock operator to a unoccupied (virtual) orbital, then we get back a linear combination of virtual orbitals.
+
+\subsection{Hartree--Fock equations in the canonical form}
+Consider a unitary transformation of the occupied orbitals:
+\begin{equation}
+\ket{\psi'_i} = \sum_{j}^\mathrm{occ} \ket{\psi_j} U_{ji},
+\end{equation}
+where the matrix $\mathbf{U}$ is unitary.\mnote{$\mathbf{U}^{-1} = \mathbf{U}^{\dagger}$}
+It is possible to prove that a determinant built from the spin orbitals $\psi'_i$ is related to the determinant in the original basis by a complex phase factor:
+\begin{equation}
+\ket{\Phi'} = \ket{\psi'_1 \psi'_2 \cdots \psi'_N} = e^{i\theta} \ket{\Phi}.
+\end{equation}
+From this it can be seen that any property that is given by expectation value is invariant:
+\begin{equation}
+\bra{\Phi'}\hat{A} \ket{\Phi'} = \bra{\Phi}\hat{A} \ket{\Phi} e^{-i\theta} e^{i\theta} =  \bra{\Phi}\hat{A} \ket{\Phi}.
+\end{equation}
+
+It is possible to prove that the Coulomb and exchange operators are invariant:
+\begin{align}
+\sum_j \hat{J}'_j(x_1) &= \sum_j \hat{J}_j(x_1), \\
+\sum_j \hat{K}'_j(x_1) &= \sum_j \hat{K}_j(x_1)
+\end{align}
+and consequently the Fock operator is invariant with respect to this orbital rotation, that is, $\hat{f}' = \hat{f}$. 
+From Eq.~\eqref{eq:hf:noncanonical_hf_equation} it is easy to show that:
+\begin{equation}
+\bra{\psi_j} \hat{f} \ket{\psi_i} = \lambda_{ji}.
+\end{equation}
+In the unitarily-transformed basis this condition reads:
+\begin{equation}
+\bra{\psi'_j} \hat{f}' \ket{\psi'_i} = \lambda'_{ji} = \sum_{kl} U_{lj}^* \bra{\psi_l} \hat{f}' \ket{\psi_k} U_{ki}
+= \sum_{kl} U_{lj}^* \lambda_{lk} U_{ki},
+\end{equation}
+which may be written in the equivalent form:
+\begin{equation}
+\boldsymbol\lambda' = \mathbf{U}^{\dagger} \boldsymbol\lambda \mathbf{U}.
+\end{equation}
+This result tells us that the Lagrange multipliers in the transformed basis are a unitary transformation of the original Lagrange multipliers.
+If we choose the unitary transformation in such a way that $\boldsymbol\lambda'$ is diagonal, then we can rewrite the Hartree--Fock equation as:
+ \begin{equation} \label{eq:hf:canonical_hf_equation}
+\hat{f}'(x_1)  \psi'_{i}(x_1) 
+= \lambda'_{ii} \psi'_{i}(x_1).
+\end{equation}
+Eq.~\eqref{eq:hf:canonical_hf_equation} is the \textbf{Hartree--Fock equation in canonical form}.
+The orbitals that satisfy this equation are called canonical Hartree--Fock MOs.
+In writing this equation we may assume that we are using the set of canonical orbitals so we can drop the prime and replace $\lambda'_{ii}$ with $\epsilon_{i}$:
+\begin{equation} \label{eq:hf:canonical_hf_equation}
+\hat{f}(x_1)  \psi_{i}(x_1) 
+= \epsilon_{i} \psi_{i}(x_1).
+\end{equation}
+The quantity $\epsilon_{i}$ is called the canonical orbital energy.
+
+\subsection{Meaning of the Hartree--Fock orbital energies. Koopman's theorem}
+
+From the canonical Hartree--Fock equation [Eq.~\eqref{eq:hf:canonical_hf_equation}] we can derive an expression for the energy of an orbital:
+\begin{equation}
+\epsilon_{i}
+=
+\bra{\psi_{i}} \hat{f}\ket{\psi_{i}} = \bra{i} \hat{h} \ket{i} + \sum_{k}^{\rm occ} \aphystei{ik}{ik}.
+\end{equation}
+
+By manipulation of the energy of a determinant we can relate it to the orbital energies:
+\begin{equation}
+\begin{split}
+E_0[\{ \psi_i \}] =& \sum_i^{\rm occ} \bra{i} \hat{h} \ket{i} + \frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{ij}{ij} \\
+=& \sum_i^{\rm occ} \bra{i} \hat{h} \ket{i} + \sum_{ij}^{\rm occ} \aphystei{ij}{ij}
+-\frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{ij}{ij} \\
+=& \sum_i \epsilon_i - 
+\frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{ij}{ij}.
+\end{split}
+\end{equation}
+It is important to note that the HF energy is not the sum of orbital energies.
+
+Now consider a Slater determinant built from the Hartree--Fock orbitals in which one of the spin orbitals, in this case the last one, has been removed:
+\begin{equation}
+\ket{\Phi_0^{N-1}} = \ket{\psi_1, \psi_2, \ldots, \psi_{N-1} }.
+\end{equation}
+The energy of $\Phi_0^{N-1}$ is:
+\begin{equation}
+E_0^{N-1}[\{ \psi_i \}] = \sum_i^{N-1} \bra{i} \hat{h} \ket{i} + \frac{1}{2} \sum_{ij}^{N-1} \aphystei{ij}{ij}.
+\end{equation}
+and the difference $E_0 - E_0^{N-1}$ is given by:\mnote{Note that the difference between $\sum_{ij}^N A_{ij} - \sum_{ij}^{N-1} A_{ij}$ is equal to $A_{NN} + \sum_{i}^{N-1} A_{iN} + + \sum_{j}^{N-1} A_{Nj}$.}
+\begin{equation}
+\begin{split}
+E_0 - E_0^{N-1} =& \bra{N} \hat{h} \ket{N} + \frac{1}{2} \sum_{i}^{N-1} \aphystei{iN}{iN}
++ \frac{1}{2} \sum_{j}^{N-1} \aphystei{Nj}{Nj}\\
+&+ \aphystei{NN}{NN} \\
+=& \bra{N} \hat{h} \ket{N} + \sum_{i}^{N-1} \aphystei{iN}{iN} = \epsilon_N.
+\end{split}
+\end{equation}
+This result shows that the energy of the last occupied orbital is the energy necessary to remove one electron (ionize) from the system.
+This result may be generalized to any occupied orbital. In general we find that for a general occupied spin orbital ($\psi_i$):
+\begin{equation}
+\text{Ionization potential} = \mathrm{IP} = E_0^{N-1} - E_0^{N} = -\epsilon_i.
+\end{equation}
+By a similar procedure it is possible to show that for a generic unoccupied orbital ($\psi_a$):
+\begin{equation}
+\text{Electron affinity} = \mathrm{EA} = E_0^{N} - E_0^{N+1} = -\epsilon_a.
+\end{equation}
+These results are called Koopman's theorem.
+Note that orbitals are assumed to be frozen, which means that we are ignoring relaxation effects to the addition or removal of electrons.
+Koopman's theorem also ignores electron correlation, so the IP and EA will deviate from experiment.
+
+We can also investigate the energy of an electronically excited determinant. Consider for example the orbital substitution $\psi_i \rightarrow \psi_a$ to give the determinant $\Phi_{i}^{a}$. The energy of this excited determinant is:
+\begin{equation}
+\begin{split}
+\bra{\Phi_{i}^{a}} \hat{H} \ket{\Phi_{i}^{a}}
+=&  \sum_j^{N} \bra{j}\hat{h}\ket{j} 
++ \bra{a} \hat{h} \ket{a}
+- \bra{i} \hat{h} \ket{i}\\
+&+ \frac{1}{2} \sum_{ij}^{N} \aphystei{ij}{ij} 
++ \sum_{j}^{N} \aphystei{aj}{aj} 
+- \sum_{j}^{N} \aphystei{ij}{ij} \\
+&-\aphystei{ia}{ia},
+\end{split}
+\end{equation}
+where we subtract $\aphystei{ia}{ia}$ to avoid counting the interaction of an electron in $\psi_a$ with $\psi_i$.
+If we collect terms that contribute to $E_0$, $\epsilon_a$, and $\epsilon_i$, we may rewrite the energy of an excited state as:
+\begin{equation}
+\bra{\Phi_{i}^{a}} \hat{H} \ket{\Phi_{i}^{a}} =
+E_0 + \epsilon_a - \epsilon_i -\underbrace{\aphystei{ia}{ia}}_{\text{hole/electron interaction}}.
+\end{equation}
+This expression shows that the excitation energy is the difference between orbital energies minus a term that represents the Coulomb/exchange interaction of the hole created by removing an electron from $\psi_i$ and the electron in $\psi_a$.
+
+
+\subsection{Generalized, unrestricted, and restricted Hartree--Fock theory}
+So far we have not imposed any restriction on the spin orbital basis.
+Within HF theory one may form a hierarchy of increasingly more constrained theory.
+The most general case is \textit{generalized} Hartree--Fock (GHF).
+In this formalism spin orbitals are a linear combination of a alpha plus beta component:
+\begin{equation}
+\psi_p^\mathrm{GHF}(\mathbf{r},\omega) 
+= \phi_{p,\alpha}(\mathbf{r}) \alpha(\omega) +
+\phi_{p,\beta}(\mathbf{r}) \beta(\omega).
+\end{equation}
+In GHF electrons is also called a non-collinear HF because electron spins are not constrained to be eigenfunctions of $\hat{S}_z$.
+
+\textit{Unrestricted} Hartree--Fock (UHF) restricts spin orbitals to be alpha or beta.
+If we arrange spin orbitals in such a way that alpha and beta spin alternate we can write the unrestricted spin orbitals as:
+\begin{equation}
+\begin{split}
+\psi_{2p - 1}^\mathrm{UHF}(\mathbf{r},\omega) 
+=& \phi_{2p - 1}(\mathbf{r}) \alpha(\omega),\\
+\psi_{2p}^\mathrm{UHF}(\mathbf{r},\omega) 
+=& \phi_{2p}(\mathbf{r}) \beta(\omega),
+\end{split}
+\end{equation}
+with $p = 1,\ldots, K$, where $K$ is the size of the spatial orbital basis.
+We are free to arrange these functions and later we will use an indexing that puts alpha spin orbitals before beta spin orbitals:
+\begin{equation}
+\psi_{p}^\mathrm{UHF}(\mathbf{r},\omega)
+=\phi_{p}(\mathbf{r})
+\begin{cases}
+\alpha(\omega) & \text{if } p < K \\
+\beta(\omega) & \text{if } p \geq K 
+\end{cases},
+\end{equation}
+with $p = 1,\ldots, 2K$.
+
+\textit{Restricted} Hartree--Fock (RHF) theory constrains spin orbitals to have alpha or beta spin. Spin orbitals come in pairs with identical spatial components:
+\begin{equation}
+\begin{split}
+\psi_{2p - 1}^\mathrm{RHF}(\mathbf{r},\omega) 
+=& \phi_{p}(\mathbf{r}) \alpha(\omega),\\
+\psi_{2p}^\mathrm{RHF}(\mathbf{r},\omega) 
+=& \phi_{p}(\mathbf{r}) \beta(\omega),
+\end{split}
+\end{equation}
+with $p = 1,\ldots, K$.
+If the spin orbitals are arranged so that the alpha spin orbitals come before the beta spin orbitals then:
+\begin{equation}
+\psi_{p}^\mathrm{RHF}(\mathbf{r},\omega)
+=
+\begin{cases}
+\phi_{p}(\mathbf{r}) \alpha(\omega) & \text{if } p < K \\
+\phi_{p - K}(\mathbf{r}) \beta(\omega) & \text{if } p \geq K 
+\end{cases},
+\end{equation}
+with $p = 1,\ldots, 2K$.
+
+\subsection{Closed-shell restricted Hartree--Fock theory}
+The Hartree--Fock equations can be further simplified in the case of closed-shell species with equal number of alpha and beta electrons.
+In this case, we assume electrons with alpha and beta spin are paired in orbitals with identical spatial component and the wave function is approximated with the following Slater determinant:
+\begin{equation}
+\ket{\Phi_0^\mathrm{RHF}} = \ket{\phi_1 \alpha,\ldots, \phi_{N/2} \alpha,
+\phi_1 \beta,\ldots, \phi_{N/2} \beta}.
+\end{equation}
+Expressions for the energy and Fock matrix in terms of spatial orbitals can be derived by expressing a sum over spin orbitals in terms of sums over spatial orbitals:
+\begin{equation}
+\sum_{i}^{N} \psi_i = \sum_{i}^{N/2} \phi_i \alpha + \sum_{i}^{N/2} \phi_i \beta.
+\end{equation}
+
+In this case the energy expression then takes the simplified form:
+\begin{equation}
+\begin{split}
+E_0 =& \sum_{i=1}^{N/2} \bra{i} \hat{h} \ket{i} + \sum_{i = 1}^{N/2} \bra{\bar{i}} \hat{h} \ket{\bar{i}} \\
+& \frac{1}{2} \sum_{ij}^{N/2} \aphystei{ij}{ij}
++ \frac{1}{2} \sum_{i\bar{j}}^{N/2} \aphystei{i\bar{j}}{i\bar{j}}
++ \frac{1}{2} \sum_{\bar{i}j}^{N/2} \aphystei{\bar{i}j}{\bar{i}j}
++ \frac{1}{2} \sum_{\bar{i}\bar{j}}^{N/2} \aphystei{\bar{i}\bar{j}}{\bar{i}\bar{j}}.
+\end{split}
+\end{equation}
+%=& \sum_i^{\rm occ} \bra{i} \hat{h} \ket{i} + \sum_{ij}^{\rm occ} \aphystei{ij}{ij}
+%-\frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{ij}{ij} \\
+%=& \sum_i \epsilon_i - 
+%\frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{ij}{ij}.
+We can use the fact that in the restricted closed-shell case:
+\begin{equation}
+\bra{i} \hat{h} \ket{i} = \bra{\bar{i}} \hat{h} \ket{\bar{i}},
+\end{equation}
+while for the two-electron integrals:
+\begin{equation}
+\aphystei{ij}{ij} = \aphystei{\bar{i}\bar{j}}{\bar{i}\bar{j}} 
+= \braket{ij}{ij} - \braket{ij}{ji},
+\end{equation}
+and
+\begin{equation}
+\aphystei{i\bar{j}}{i\bar{j}} = \aphystei{\bar{i}j}{\bar{i}j}  = 
+\braket{ij}{ij},
+\end{equation}
+to write the energy expression as:
+\begin{equation}
+E_0 = 2 \sum_{i=1}^{N/2} \bra{i} \hat{h} \ket{i} 
++ \sum_{ij}^{N/2} [ 2 \braket{ij}{ij} - \braket{ij}{ji} ].
+\end{equation}
+
+Similarly, we can express the Fock matrix as:
+\begin{equation}
+\bra{i}\hat{f}\ket{j} = \bra{i}\hat{h}\ket{j} + \sum_{k}^{N/2} [ 2 \braket{ik}{jk} - \braket{ik}{kj} ].
+\end{equation}
+
+\subsection{The Roothan equations}
+In this section we will derive the Roothan equations.
+These equations correspond to the Hartree--Fock equations expressed in a finite computational basis $\{ \chi_\mu \}$.
+The main idea is to express the spatial molecular orbitals $\phi_i(\mathbf{r})$ as a linear combination of the computational basis:
+\begin{equation}
+\phi_i(\mathbf{r}) = \sum_{\mu} \chi_\mu(\mathbf{r}) C_{\mu i}.
+\end{equation}
+Let us consider the Hartree--Fock equation:
+\begin{equation}
+\hat{f} \ket{\psi_i} = \ket{\psi_i} \epsilon_i,
+\end{equation}
+next, insert the expansion on the computational basis and project on the left with $\bra{\chi_{\nu} \alpha}$ to get:
+\begin{equation}
+ \sum_{\mu} \bra{\chi_{\nu}}\hat{f} \ket{\chi_\mu} C_{\mu i} = \sum_{\mu} \braket{\chi_{\nu}}{\chi_\mu} C_{\mu i} \epsilon_i.
+\end{equation}
+In general, the computational basis may not be orthonormal. Therefore, we write $\braket{\chi_{\nu}}{\chi_\mu} = S_{\nu \mu}$, where $S_{\nu \mu}$ is the \textit{overlap matrix}.
+If we denote the matrix elements of the Fock operator as $F_{\nu\mu}=\bra{\chi_{\nu}}\hat{f}\ket{\chi_\mu}$, we may write:
+\begin{equation}
+ \sum_{\mu} F_{\nu\mu} C_{\mu i} = \sum_{\mu} S_{\nu \mu} C_{\mu i} \epsilon_i,
+\end{equation}
+or in matrix notation
+\begin{equation}
+ \mathbf{F}\mathbf{C} = \mathbf{S}\mathbf{C}\boldsymbol{\epsilon},
+\end{equation}
+where $\boldsymbol{\epsilon}$ is a diagonal matrix.
+This is Roothan's form of the Hartree--Fock equations.
+Note that due to the presence of $\mathbf{S}$, this is a generalized eigenvalue problem.
+
+The matrix $\mathbf{F}$ is the Fock operator expressed in the computational basis and is given by:
+\begin{equation}
+\begin{split}
+(\mathbf{F})_{\mu\nu} &= f_{\mu\nu}
+= \bra{\chi_\mu} \hat{h} \ket{\chi_\nu}
++ \sum_k^{N/2} [ 2 \braket{\chi_\mu \phi_k}{\chi_\nu \phi_k}
+- \braket{\chi_\mu \phi_k}{\phi_k \chi_\nu}] \\
+&= h_{\mu\nu}
++ \sum_k^{N/2} [ 2 \braket{\chi_\mu \chi_\rho}{\chi_\nu \chi_\sigma} 
+- \braket{\chi_\mu \chi_\rho}{\chi_\sigma \chi_\nu }] C_{\rho k}^* C_{\sigma k}.
+\end{split}
+\end{equation}
+
+If we introduce the density matrix:
+\begin{equation}
+P_{\rho\sigma} = \sum_k^{N/2} C_{\rho k}^* C_{\sigma k},
+\end{equation}
+the Fock matrix may be expressed as a function of $P_{\rho\sigma}$:
+\begin{equation}
+f_{\mu\nu}(\mathbf{P}) = h_{\mu\nu}
++\underbrace{
+\sum_k^{N/2} [ 2 \braket{\chi_\mu \chi_\rho}{\chi_\nu \chi_\sigma} 
+- \braket{\chi_\mu \chi_\rho}{\chi_\sigma \chi_\nu }] P_{\rho\sigma}
+}_{G_{\mu\nu}}.
+\end{equation}
+
+Since the Fock matrix depends on $\mathbf{P}$ and ultimately on $\mathbf{C}$, the Hartree--Fock equations are nonlinear and require an interative solution:
+\begin{equation}
+ \mathbf{F}(\mathbf{C})\mathbf{C} = \mathbf{S}\mathbf{C}\boldsymbol{\epsilon},
+\end{equation}
+
+How can we reduce this generalized eigenvalue problem to a normal eigenvalue problem?
+Consider a transformation of the computational basis:
+\begin{equation}
+\chi_\mu \rightarrow \chi_\mu' = \sum_\nu \chi_\nu X_{\nu\mu}.
+\end{equation}
+The molecular orbital represented in the $\{\chi_\mu\}$ and $\{\chi_\mu'\}$ basis are related via:
+\begin{equation}
+\phi_i = \sum_\mu \chi_\mu C_{\mu i} = \sum_\mu \chi'_\mu C'_{\mu i} = \sum_{\mu \nu} \chi_\nu X_{\nu\mu}  C'_{\mu i},
+\end{equation}
+from which we get
+\begin{equation}
+\mathbf{C} = \mathbf{XC}'.
+\end{equation}
+Suppose we choose $\mathbf{X}$ to satisfy the condition:
+\begin{equation}
+\mathbf{X}^\dagger \mathbf{SX} = \mathbf{1},
+\end{equation}
+then we can take Roothan's equation, multiply on the left with $\mathbf{X}^\dagger$, and substitute $\mathbf{C} = \mathbf{XC}'$ to get:
+\begin{equation}
+\begin{split}
+\underbrace{\mathbf{X}^\dagger\mathbf{F}\mathbf{X}}_{\mathbf{F}'}\mathbf{C}' &= \underbrace{\mathbf{X}^\dagger\mathbf{S}\mathbf{X}}_{\mathbf{1}}\mathbf{C}'\boldsymbol{\epsilon} \\
+\mathbf{F}'\mathbf{C}' &= \mathbf{C}'\boldsymbol{\epsilon}.
+\end{split}
+\end{equation}
+Thanks to this transformation we were able to transform Roothan's equation (a generalized eigenvalue problem) to a normal eigenvalue problem.
+Note that the definition of the Fock matrix and eigenvector have changed, but the eigenvalues of this equation are identical to those of the generalized eigenvalue problem.
+To solve Roothan's equation in the orthonormal basis we first compute $\mathbf{F}' =\mathbf{X}^\dagger\mathbf{F}\mathbf{X}$, then solve the  eigenvalue equation, $\mathbf{F}'\mathbf{C}' = \mathbf{C}'\boldsymbol{\epsilon}$, and then obtain the eigenvector from $\mathbf{C} = \mathbf{XC}'$.
+
+How can we pick a transformation $\mathbf{X}$ such that $\mathbf{X}^\dagger \mathbf{SX} = \mathbf{1}$? It is easy to see that there are several ways to choose $\mathbf{X}$.
+In the symmetric orthogonalization procedure $\mathbf{X}$ is choosen to be the (matrix) square root of $\mathbf{S}$:
+\begin{equation}
+\mathbf{X} = \mathbf{S}^{-\frac{1}{2}}.
+\end{equation}
+This form of $\mathbf{X}$ fits the role since:
+\begin{equation}
+\mathbf{S}^{-\frac{1}{2}} \mathbf{S} \mathbf{S}^{-\frac{1}{2}} = \mathbf{S}^{-\frac{1}{2}}\mathbf{S}^{\frac{1}{2}}= \mathbf{1}.
+\end{equation}
+The matrix $\mathbf{S}^{-\frac{1}{2}}$ may be built by first diagonalizing $\mathbf{S}$ with the unitary matrix $\mathbf{U}$:
+\begin{equation}
+\mathbf{SU} = \mathbf{Us},
+\end{equation}
+and then building
+\begin{equation}
+\mathbf{S}^{-\frac{1}{2}} = \mathbf{U} \mathbf{s}^{-\frac{1}{2}}\mathbf{U}^\dagger.
+\end{equation}
+
+Alternatively, in the canonical orthogonalization procedure, $\mathbf{X}$ is be defined as:
+\begin{equation}
+\mathbf{X} = \mathbf{U} \mathbf{s}^{-\frac{1}{2}}.
+\end{equation}
+This form of $\mathbf{X}$ also does the job: 
+\begin{equation}
+\mathbf{s}^{-\frac{1}{2}} \mathbf{U}^\dagger \mathbf{S} \mathbf{U} \mathbf{s}^{-\frac{1}{2}} = \mathbf{s}^{-\frac{1}{2}} \mathbf{s} \mathbf{s}^{-\frac{1}{2}} = \mathbf{1}.
+\end{equation}
+
+\subsection{Outline of the Hartree--Fock--Roothan procedure}
+
+In this section we will discuss the computational steps required to solve the Hartree--Fock equations projected onto a finite computational basis.
+For now we will assume that this computational basis is an atomic basis but we will neglect the details of how it is constructed and what type of functions are used. Note that the computational basis might also be a set of delocalized functions that does not have a well defined atomic character.
+
+The input to a HF computation is the molecule, which is specified by the coordinates ($\{\mathbf{R}_A\}$) and charges ($\{\mathbf{Z}_A\}$) of the nuclei, the number of electrons ($N$), and the projection of spin onto the $z$ axis ($M_S$).
+We also have to provide a computation basis $\{\chi_\mu\}$.
+
+The major steps in the Hartree--Fock procedure are:
+\begin{enumerate}
+\item \textbf{Evaluation of the integrals over basis functions}. The following integrals are needed:
+\begin{equation}
+S_{\mu\nu} = \int d\mathbf{r} \, \chi_\mu^*(\mathbf{r}) \chi_\nu(\mathbf{r}),
+\end{equation}
+\begin{equation}
+V_{\mu\nu} = \int d\mathbf{r} \, \chi_\mu^*(\mathbf{r}) [-\frac{1}{2}\nabla^2 + V_{eN}(\mathbf{r})]\chi_\nu(\mathbf{r}),
+\end{equation}
+and the two-electron integrals $\braket{\mu\nu}{\rho\sigma} = \braket{\chi_\mu\chi_\nu}{\chi_\rho\chi_\sigma}$.
+
+\item \textbf{Diagonalization of the overlap matrix}. From $\mathbf{S}$ we solve the eigenvalue problem:
+\begin{equation}
+\mathbf{SU} = \mathbf{Us}.
+\end{equation}
+
+\item \textbf{Formation of the matrix $\mathbf{X}$}. The matrix $\mathbf{X}$ is built as
+\begin{equation}
+\mathbf{X} = \mathbf{U}\mathbf{s}^{-\frac{1}{2}}.
+\end{equation}
+
+\item \textbf{Initialization of the density matrix}. The density matrix $\mathbf{P}$ is initialized to zero:
+\begin{equation}
+\mathbf{P}^{(0)} = \mathbf{0}.
+\end{equation}
+
+\item \textbf{Computation of the two-electron contribution to the Fock matrix}. The two matrix $\mathbf{G}$ is built from the current density matrix ($\mathbf{P}^{(k)}$) and the two-electron integrals:
+\begin{equation}
+\mathbf{G} = \mathbf{G}[\mathbf{P}^{(k)},\braket{\mu\nu}{\rho\sigma}].
+\end{equation}
+
+\item \textbf{Formation the Fock matrix}.
+\begin{equation}
+\mathbf{F} = \mathbf{H} + \mathbf{G}.
+\end{equation}
+
+\item \textbf{Transformation the atomic orthonormal basis}.
+\begin{equation}
+\mathbf{F}' = \mathbf{X}^\dagger\mathbf{FX}.
+\end{equation}
+
+\item \textbf{Diagonalization of $\mathbf{F}'$}. We solve the eigenvalue problem:
+\begin{equation}
+\mathbf{F}' \mathbf{C}' = \mathbf{F}' \boldsymbol{\epsilon}.
+\end{equation}
+
+\item \textbf{Backtransformation to the nonorthogonal basis}. 
+\begin{equation}
+\mathbf{C} = \mathbf{X}\mathbf{C}'.
+\end{equation}
+
+\item \textbf{Update of the density matrix and energy}. 
+Using the updated MO coefficient ($\mathbf{C}$) we compute an updated density matrix
+\begin{equation}
+P^{(k+1)}_{\mu\nu} = \sum_i^N C_{\mu i}^* C_{\nu i}.
+\end{equation}
+Using the updated density matrix we recompute the energy.
+The change in energy:
+\begin{equation}
+\Delta E^{(k+1)} = E^{(k+1)} - E^{(k)},
+\end{equation}
+and the change in the density matrix:
+\begin{equation}
+\Delta \mathbf{P}^{(k+1)} = \mathbf{P}^{(k+1)} - \mathbf{P}^{(k)},
+\end{equation}
+are used to determine if the Hartree--Fock equation have converged.
+If $|\Delta E^{(k+1)}| \leq \eta_{E}$ and $\|\Delta \mathbf{P}^{(k+1)}\| \leq \eta_{\mathbf{P}}$, where $\eta_{E}$ and $\eta_{\mathbf{P}}$ are user-provided convergence thresholds, then the HF procedure is terminated.
+Otherwise, we go back to step 5 and build the matrix $\mathbf{G}$ using the updated density matrix. This procedure is iterated until convergence.
+\end{enumerate}
+
+\end{document}
