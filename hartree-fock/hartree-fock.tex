@@ -15,7 +15,7 @@ The main assumption of Hartree--Fock theory is that the wave functions for $N$ e
 \ket{\Phi_0} = \ket{\psi_1, \psi_2, \ldots, \psi_N }.
 \end{equation}
 The goal is to find the best set of spin orbitals in the variational sense. 
-Let us define the functional $E[\tilde{\Phi}]$ of a trial wave function $\tilde{\Phi}$:
+Let us define the functional $E[\Phi]$ of a trial wave function $\Phi$:
 \begin{equation}
 E[\Phi] = \bra{\Phi} \hat{H} \ket{\Phi},
 \end{equation}
@@ -105,12 +105,12 @@ E_0[\{ \psi_i +  \delta \psi_i\}] =&
 \end{equation}
 where ``h.c.'' stands for Hermitian conjugate.
 
-The variation of the constraint $- \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_p}{\psi_q} - \delta_{pq})$ is equal to:
+The variation of the constraint $- \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_p|\psi_q} - \delta_{pq})$ is equal to:
 \begin{equation}
 \begin{split}
-- \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_i + \delta \psi_i}{\psi_j + \delta \psi_j} - \delta_{ij})
-=& - \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_i}{\psi_j} - \delta_{ij}) \\
-& - \sum_{ij}^\mathrm{occ} \lambda_{ji} \braket{\delta\psi_i}{\psi_j}  - \sum_{ij}^\mathrm{occ} \lambda_{ji} \braket{\psi_i}{\delta\psi_j} \\
+- \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_i + \delta \psi_i|\psi_j + \delta \psi_j} - \delta_{ij})
+=& - \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_i|\psi_j} - \delta_{ij}) \\
+& - \sum_{ij}^\mathrm{occ} \lambda_{ji} \braket{\delta\psi_i|\psi_j}  - \sum_{ij}^\mathrm{occ} \lambda_{ji} \braket{\psi_i|\delta\psi_j} \\
 &+ \text{(higher order)}.
 \end{split}
 \end{equation}
@@ -124,7 +124,7 @@ Let us identify the change in the Lagrangian up to linear terms, that is:
 \begin{split}
 \delta \mathcal{L}  =
 \sum_i^{\rm occ} \left[ \bra{\delta \psi_i} \hat{h} \ket{\psi_i} 
-+ \sum_{j}^{\rm occ} \aphystei{\delta \psi_i \psi_j}{\psi_i \psi_j} - \sum_{ij}^\mathrm{occ} \lambda_{ji} \braket{\delta\psi_p}{\psi_q} \right] + \text{h.c.} 
++ \sum_{j}^{\rm occ} \aphystei{\delta \psi_i \psi_j}{\psi_i \psi_j} - \sum_{ij}^\mathrm{occ} \lambda_{ji} \braket{\delta\psi_p|\psi_q} \right] + \text{h.c.} 
 \end{split}
 \end{equation}
 
@@ -379,22 +379,22 @@ We can use the fact that in the restricted closed-shell case:
 while for the two-electron integrals:
 \begin{equation}
 \aphystei{ij}{ij} = \aphystei{\bar{i}\bar{j}}{\bar{i}\bar{j}} 
-= \braket{ij}{ij} - \braket{ij}{ji},
+= \braket{ij|ij} - \braket{ij|ji},
 \end{equation}
 and
 \begin{equation}
 \aphystei{i\bar{j}}{i\bar{j}} = \aphystei{\bar{i}j}{\bar{i}j}  = 
-\braket{ij}{ij},
+\braket{ij|ij},
 \end{equation}
 to write the energy expression as:
 \begin{equation}
 E_0 = 2 \sum_{i=1}^{N/2} \bra{i} \hat{h} \ket{i} 
-+ \sum_{ij}^{N/2} [ 2 \braket{ij}{ij} - \braket{ij}{ji} ].
++ \sum_{ij}^{N/2} [ 2 \braket{ij|ij} - \braket{ij|ji} ].
 \end{equation}
 
 Similarly, we can express the Fock matrix as:
 \begin{equation}
-\bra{i}\hat{f}\ket{j} = \bra{i}\hat{h}\ket{j} + \sum_{k}^{N/2} [ 2 \braket{ik}{jk} - \braket{ik}{kj} ].
+\bra{i}\hat{f}\ket{j} = \bra{i}\hat{h}\ket{j} + \sum_{k}^{N/2} [ 2 \braket{ik|jk} - \braket{ik|kj} ].
 \end{equation}
 
 \subsection{The Roothan equations}
@@ -410,9 +410,9 @@ Let us consider the Hartree--Fock equation:
 \end{equation}
 next, insert the expansion on the computational basis and project on the left with $\bra{\chi_{\nu} \alpha}$ to get:
 \begin{equation}
- \sum_{\mu} \bra{\chi_{\nu}}\hat{f} \ket{\chi_\mu} C_{\mu i} = \sum_{\mu} \braket{\chi_{\nu}}{\chi_\mu} C_{\mu i} \epsilon_i.
+ \sum_{\mu} \bra{\chi_{\nu}}\hat{f} \ket{\chi_\mu} C_{\mu i} = \sum_{\mu} \braket{\chi_{\nu}|\chi_\mu} C_{\mu i} \epsilon_i.
 \end{equation}
-In general, the computational basis may not be orthonormal. Therefore, we write $\braket{\chi_{\nu}}{\chi_\mu} = S_{\nu \mu}$, where $S_{\nu \mu}$ is the \textit{overlap matrix}.
+In general, the computational basis may not be orthonormal. Therefore, we write $\braket{\chi_{\nu}|\chi_\mu} = S_{\nu \mu}$, where $S_{\nu \mu}$ is the \textit{overlap matrix}.
 If we denote the matrix elements of the Fock operator as $F_{\nu\mu}=\bra{\chi_{\nu}}\hat{f}\ket{\chi_\mu}$, we may write:
 \begin{equation}
  \sum_{\mu} F_{\nu\mu} C_{\mu i} = \sum_{\mu} S_{\nu \mu} C_{\mu i} \epsilon_i,
@@ -430,11 +430,11 @@ The matrix $\mathbf{F}$ is the Fock operator expressed in the computational basi
 \begin{split}
 (\mathbf{F})_{\mu\nu} &= f_{\mu\nu}
 = \bra{\chi_\mu} \hat{h} \ket{\chi_\nu}
-+ \sum_k^{N/2} [ 2 \braket{\chi_\mu \phi_k}{\chi_\nu \phi_k}
-- \braket{\chi_\mu \phi_k}{\phi_k \chi_\nu}] \\
++ \sum_k^{N/2} [ 2 \braket{\chi_\mu \phi_k|\chi_\nu \phi_k}
+- \braket{\chi_\mu \phi_k|\phi_k \chi_\nu}] \\
 &= h_{\mu\nu}
-+ \sum_k^{N/2} [ 2 \braket{\chi_\mu \chi_\rho}{\chi_\nu \chi_\sigma} 
-- \braket{\chi_\mu \chi_\rho}{\chi_\sigma \chi_\nu }] C_{\rho k}^* C_{\sigma k}.
++ \sum_k^{N/2} [ 2 \braket{\chi_\mu \chi_\rho|\chi_\nu \chi_\sigma} 
+- \braket{\chi_\mu \chi_\rho|\chi_\sigma \chi_\nu }] C_{\rho k}^* C_{\sigma k}.
 \end{split}
 \end{equation}
 
@@ -446,8 +446,8 @@ the Fock matrix may be expressed as a function of $P_{\rho\sigma}$:
 \begin{equation}
 f_{\mu\nu}(\mathbf{P}) = h_{\mu\nu}
 +\underbrace{
-\sum_k^{N/2} [ 2 \braket{\chi_\mu \chi_\rho}{\chi_\nu \chi_\sigma} 
-- \braket{\chi_\mu \chi_\rho}{\chi_\sigma \chi_\nu }] P_{\rho\sigma}
+\sum_k^{N/2} [ 2 \braket{\chi_\mu \chi_\rho|\chi_\nu \chi_\sigma} 
+- \braket{\chi_\mu \chi_\rho|\chi_\sigma \chi_\nu }] P_{\rho\sigma}
 }_{G_{\mu\nu}}.
 \end{equation}
 
@@ -528,7 +528,7 @@ S_{\mu\nu} = \int d\mathbf{r} \, \chi_\mu^*(\mathbf{r}) \chi_\nu(\mathbf{r}),
 \begin{equation}
 V_{\mu\nu} = \int d\mathbf{r} \, \chi_\mu^*(\mathbf{r}) [-\frac{1}{2}\nabla^2 + V_{eN}(\mathbf{r})]\chi_\nu(\mathbf{r}),
 \end{equation}
-and the two-electron integrals $\braket{\mu\nu}{\rho\sigma} = \braket{\chi_\mu\chi_\nu}{\chi_\rho\chi_\sigma}$.
+and the two-electron integrals $\braket{\mu\nu|\rho\sigma} = \braket{\chi_\mu\chi_\nu|\chi_\rho\chi_\sigma}$.
 
 \item \textbf{Diagonalization of the overlap matrix}. From $\mathbf{S}$ we solve the eigenvalue problem:
 \begin{equation}
@@ -547,7 +547,7 @@ and the two-electron integrals $\braket{\mu\nu}{\rho\sigma} = \braket{\chi_\mu\c
 
 \item \textbf{Computation of the two-electron contribution to the Fock matrix}. The two matrix $\mathbf{G}$ is built from the current density matrix ($\mathbf{P}^{(k)}$) and the two-electron integrals:
 \begin{equation}
-\mathbf{G} = \mathbf{G}[\mathbf{P}^{(k)},\braket{\mu\nu}{\rho\sigma}].
+\mathbf{G} = \mathbf{G}[\mathbf{P}^{(k)},\braket{\mu\nu|\rho\sigma}].
 \end{equation}
 
 \item \textbf{Formation the Fock matrix}.
