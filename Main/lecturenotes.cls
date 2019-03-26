@@ -26,6 +26,7 @@
 \RequirePackage{topcapt}
 \RequirePackage{booktabs}
 \RequirePackage{braket}
+\RequirePackage{mhchem}
 
 % Typography
 \RequirePackage{fontspec}
