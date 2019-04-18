@@ -1,0 +1,305 @@
+% This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+% or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% !TEX TS-program = xelatex
+
+\documentclass[../Main/chem532-notes.tex]{subfiles}
+\begin{document}
+
+\chapter{Density Functional Theory}
+
+\section{What is a functional?}
+You are very familiar with the concept of a function. In its simplest form, a function $f(x)$ is a rule to map a number $x$ to another number $f(x)$.
+The hydrogen atom wave functions are a function that maps points in $\mathbb{R}^3$ to a complex number.
+
+Functionals generalize the concept of function. In a functional the input is a function, say $f(x)$, and the output is a number.
+For example, consider the following functional $F$:
+\begin{equation}
+F[\rho(x)] = \int_a^b dx |\rho(x)|^2,
+\end{equation}
+takes a generic function $\rho(x)$ and returns the integral of its modulus square integrated in the range $[a,b]$.
+We will often encounter functionals of the form:
+\begin{equation}
+F[\rho(x)] = \int_a^b dx\,f(\rho(x),\rho'(x)),
+\end{equation}
+where $\rho'(x)$ is the derivative of $\rho(x)$.
+
+As in the case of functions, we may define the derivative of a functional.
+Consider a function $\rho(x)$ and an arbitrary function $\phi(x)$.
+We define the functional derivative $\frac{\delta F}{\delta \rho}$ as the function that satisfies the following condition:
+\begin{equation}
+\lim_{\epsilon \rightarrow 0} \frac{F[\rho + \epsilon \phi] - F[\rho]}{\epsilon}
+= \int dx \,\frac{\delta F(x)}{\delta \rho(x)} \phi(x).
+\end{equation}
+In other words, for a small variation in the function $\rho(x)$, say $\delta \rho(x) = \epsilon \phi(x)$, the difference in the functional is given by:
+\begin{equation}
+\delta F[\rho] = F[\rho + \epsilon \phi] - F[\rho] = \int dx \,\frac{\delta F(x)}{\delta \rho(x)} \underbrace{\epsilon \phi(x)}_{\delta \rho(x)}.
+\end{equation}
+
+\section{Early developments in DFT}
+The central idea of DFT is to replace the complex wave function for a $N$ electron system, $\Psi(x_1,\ldots,x_N)$ with the electron density $\rho(\mathbf{r})$.
+This would allow to reduce the problem of optimizing a function of $4^N$ variables to the simpler case of a function of 3 dimensions.
+
+It is easy to see that one can write the energy of a system of $N$ electrons using only the one- and two-particle density matrices.
+In the case of the kinetic energy operator:
+\begin{equation}
+\begin{split}
+\bra{\Psi}\hat{T} \ket{\Psi}
+=& \sum_i^N  \int dx_1 \cdots dx_N \Psi(x_1,\ldots,x_N)^* \left(-\frac{1}{2}\nabla_i^2\right) \Psi(x_1,\ldots,x_N) \\
+=& -\frac{N}{2} \int dx_1 \cdots dx_N \Psi(x_1,\ldots,x_N)^* \nabla_1^2 \Psi(x_1,\ldots,x_N) \\
+=& -\frac{N}{2} \int dx_1 \left[ \nabla_1^2 \int dx_2 \cdots dx_N \Psi(x_1',\ldots,x_N)^* \Psi(x_1,\ldots,x_N)\right]_{x_1' = x_1}\\
+=& \int dx_1 \left[-\frac{1}{2}\nabla_1^2 \gamma(x_1';x_1)\right]_{x_1' = x_1}.
+\end{split}
+\end{equation}
+The nuclear-electron potential
+\begin{equation}
+\begin{split}
+\bra{\Psi}\hat{V}_{\rm ex} \ket{\Psi}
+=& \sum_i^N  \int dx_1 \cdots dx_N \Psi(x_1,\ldots,x_N)^* v_{\rm ex}(x_i) \Psi(x_1,\ldots,x_N) \\
+=& N \int dx_1 \cdots dx_N \Psi(x_1,\ldots,x_N)^* v_{\rm ex}(x_1) \Psi(x_1,\ldots,x_N) \\
+=& N\int dx_1 \left[ v_{\rm ex}(x_i)  \int dx_2 \cdots dx_N \Psi(x_1,\ldots,x_N)^* \Psi(x_1,\ldots,x_N)\right]\\
+=& \int dx_1 v_{\rm ex}(x_i) \rho(x).
+\end{split}
+\end{equation}
+Similarly for the electron-electron repulsion energy we have:
+\begin{equation}
+\begin{split}
+\bra{\Psi}\hat{V}_{\rm ee} \ket{\Psi}
+=& \frac{1}{2}\sum_{ij}^N{'}  \int dx_1 \cdots dx_N \Psi(x_1,\ldots,x_N)^* \frac{1}{r_{ij}}\Psi(x_1,\ldots,x_N) \\
+=& \frac{N(N-1)}{2} \int dx_1 \cdots dx_N \Psi(x_1,\ldots,x_N)^* \frac{1}{r_{12}}\Psi(x_1,\ldots,x_N) \\
+=& \frac{N(N-1)}{2}\int dx_1 dx_2 \left[ \frac{1}{r_{12}}  \int dx_3 \cdots dx_N \Psi(x_1,\ldots,x_N)^* \Psi(x_1,\ldots,x_N)\right]\\
+=& \int dx_1 dx_2   \frac{1}{r_{12}} \rho_2(x_1,x_2),
+\end{split}
+\end{equation}
+where $\rho_2(x_1,x_2)$ is the two-electron density:
+\begin{equation}
+\rho_2(x_1,x_2) = \frac{N(N-1)}{2} \int dx_3 \cdots dx_N \Psi(x_1,\ldots,x_N)^* \Psi(x_1,\ldots,x_N).
+\end{equation}
+
+Combined together, these three equations may be written as the sum of three functionals:
+\begin{equation}
+E = T[\rho_1(x_1';x_1)] + V_\mathrm{ex}[\rho(x_1)] + V_\mathrm{ee}[\rho_2(x_1,x_2)].
+\end{equation}
+One may be tempted to try to minimize this functional over $\rho_1$ and $\rho_2$.
+However, this solution is not as simple as it looks.
+Without any constraint, the minimization of this functional gives energies that significantly below those of FCI.
+The issue is the fact that by integrating out the majority of the electrons we loose information regarding the sign of the wave function.
+In other words, not all $\rho_1$ and $\rho_2$ that we can conceive correspond to a $N$-electron wave function.
+One needs to augment the energy minimization with $N$-representability constraints, that is, constraints that make sure that $\rho_1$ and $\rho_2$ come from a $N$-electron wave function.
+
+Thomas and Fermi were the first to propose a way to compute the energy of a system of electrons via a functional of the electron density $\rho(x_1)$ alone.
+By assuming the uniform electron gas model, they derived the following kinetic energy functional:
+\begin{equation}
+T \approx T_\mathrm{TF}[\rho(x_1)] = C_\mathrm{F} \int d\mathbf{r}\,\rho^{5/3}(\mathbf{r}),
+\end{equation}
+where $C_\mathrm{F}$ is a constant.
+Furthermore, they approximated the electron-electron repulsion term with the classical Coulomb repulsion energy:
+\begin{equation}
+V_\mathrm{ee} \approx J[\rho] = \frac{1}{2} \int d\mathbf{r}_1 d\mathbf{r}_2 \, \frac{\rho(\mathbf{r}_1) \rho(\mathbf{r}_2)}{r_{12}}.
+\end{equation}
+Note that $T$ is difficult to approximate, and $T_\mathrm{TF}$ is generally not very accurate.
+The Thomas--Fermi model has problems describing molecular systems. It cannot describe bonding.
+
+This functional was later improved by Dirac by adding electron exchange effects:
+\begin{equation}
+E_\mathrm{x}[\rho] = -C_\mathrm{x} \int d\mathbf{r}\,\rho^{4/3}(\mathbf{r}).
+\end{equation}
+The combination of the Thomas--Fermi functional with Dirac exchange is usually called the local density approximation (LDA) because it assumes a uniform electron density.
+
+\section{Theoretical foundations of DFT: the Hohenberg--Kohn theorems}
+DFT was put on solid grounds by the work of Hohenberg and Kohn (1964).
+The HK theorems establish a one-to-one relationship between the ground state density $\rho_\mathrm{gs}$ and the external potential $v_\mathrm{ex}$.
+Moreover, they state that there is a universal functional of the density $F[\rho]$ such that the total functional:
+\begin{equation}
+E[\rho] = F[\rho] + \int d\mathbf{r} \, v_\mathrm{ex}(\mathbf{r}) \rho(\mathbf{r}),
+\end{equation}
+has a minimum that corresponds to the ground state energy:
+\begin{align} 
+\min E[\rho] = E_\mathrm{gs}, \label{eq:dft:hktheorem2a}\\
+\arg \min E[\rho] = \rho_\mathrm{gs} \label{eq:dft:hktheorem2b}.
+\end{align}
+The HK theorems are both trivial and nontrivial, and they do not provide a recipe to find $F[\rho]$.
+Currently, the exact $F[\rho]$ is unknown and it is likely that we will not be able to write a closed form expression for it.
+Contrast this with the functionals based on the one- and two-electron density matrices where the functionals are exactly known.
+Here we will not give a proof of the HK theorems. In the next section we will take a look at a different proof proposed by Levy.
+
+\section{Levy's variational functional}
+Recall that the ground state energy is defined as:
+\begin{equation}
+E_\mathrm{gs} = \min_{
+\substack{\tilde{\Psi}\\ \braket{\tilde{\Psi}|\tilde{\Psi}} = 1}
+} \bra{\tilde{\Psi}}\hat{H} \ket{\tilde{\Psi}}.
+\end{equation}
+Let us introduce a functional that searches all possible wave functions $\tilde{\Psi}$ of $N$ electrons and minimizes the energy, subject to the constraint that the density of $\tilde{\Psi}$ is equal to a given density $\rho$:
+\begin{equation}
+E[\rho] = \min_{\tilde{\Psi} \rightarrow \rho} \bra{\tilde{\Psi}}\hat{H} \ket{\tilde{\Psi}}
+= \min_{\tilde{\Psi} \rightarrow \rho} \bra{\tilde{\Psi}}\hat{T} + \hat{V}_\mathrm{ee} \ket{\tilde{\Psi}} + V_\mathrm{ex}[\rho].
+\end{equation}
+Note that the last term, $V_\mathrm{ex}[\rho]$, is the only component that includes information about the arrangement of the atoms.
+If we identify the first term with the universal functional:
+\begin{equation}
+F[\rho] = \min_{\tilde{\Psi} \rightarrow \rho} \bra{\tilde{\Psi}}\hat{T} + \hat{V}_\mathrm{ee} \ket{\tilde{\Psi}},
+\end{equation}
+we may write the ground state energy as:\mnote{Here we use the \textit{infimum}, which is similar to the concept of \textit{minimum}. The infimum is the greatest lower bound of a set. This concept is useful, for example, when considering the positive real numbers $\mathbb{R}_{>0} = \{ x \in \mathbb{R} : x > 0\}$. This set has no minimum but it does have a infimum, the number 0.}
+\begin{equation}
+E = \inf_\rho \left(F[\rho] + \int d\mathbf{r} v_\mathrm{ex}(\mathbf{r}) \rho(\mathbf{r}) \right).
+\end{equation}
+Note that $E[\rho]$ is only defined for ground-state densities obtained by minimizing the expectation value of an antisymmetric wave function. Thus, this approach does not suffer from the problem of $N$-representability.
+The Levy approach also solves the $v$-representability problem and guarantees that there are not other densities that are not $v$-representable and yield the same ground state energy.
+
+\section{The Kohn--Sham method}
+As we have seen in the previous section, the kinetic energy functional in DFT depends only on the electron density $\rho$.
+This formulation of DFT is often called pure or orbital-free DFT.
+This approach does not work too well in practical applications.
+The kinetic energy is a major component of the total energy. From the virial theorem one can prove that the expectation value of the kinetic energy $\langle \hat{T} \rangle$ is related to the expectation value of the potential energy $\langle \hat{V} \rangle$ by:
+\begin{equation}
+\langle \hat{T} \rangle = -\frac{1}{2} \langle \hat{V} \rangle.
+\end{equation}
+Hence a large error in $\langle \hat{T} \rangle$ can lead to a large error in the total energy $\langle \hat{T} \rangle + \langle \hat{V} \rangle$.
+
+In the method proposed by Kohn and Sham, molecular orbitals are reintroduced. In this way, the kinetic energy functional can be expressed in a form that is significantly more accurate than that of orbital-free functionals.
+
+The Kohn--Sham formalism starts by defining two systems.
+The first one, is the real system in which all electrons interact with each other in an external potential $v_\mathrm{ex}$. In this case $\hat{V}_\mathrm{ee} \neq 0$.
+From the Hohenberg--Kohn theorem we know that given $v_\mathrm{ex}$ there is a unique ground electronic state $\Psi$ (unless the ground state is degenerate) with electron density $\rho$.
+In addition, Kohn and Sham consider an auxiliary system of non-interacting electrons in a potential $v_\mathrm{s}$, which in general is not equal to $v_\mathrm{ex}$.
+In the auxiliary system $\hat{V}_\mathrm{ee} = 0$, so the Hamiltonian is given by a sum of one-electron operators:
+\begin{equation}
+\hat{H}_\mathrm{s} = -\frac{1}{2} \sum_i^N \nabla_i^2 + \sum_i^N v_\mathrm{s}(x_i) = \sum_i^N \hat{h}_\mathrm{s}(x_i).
+\end{equation}
+The non-interacting system satisfies the Schr\"{o}dinger equation:
+\begin{equation}
+\hat{H}_\mathrm{s} \Psi_\mathrm{s} = E_\mathrm{s} \Psi_\mathrm{s},
+\end{equation}
+where $\Psi_\mathrm{s}$ is a single Slater determinant, $\ket{\Psi_\mathrm{s}} = \ket{\psi_1 \cdots \psi_N}$, and the orbitals $\psi_i$ satisfy one-electron Schr\"{o}dinger equations:
+\begin{equation}
+\hat{h}_\mathrm{s}(x) \psi_i(x) = \epsilon_i \psi_i(x).
+\end{equation}
+The energy of the auxiliary system is given by the sum of the one-electron energies:
+\begin{equation}
+E_\mathrm{s} = \bra{\Psi_\mathrm{s}} \hat{H}_\mathrm{s} \ket{\Psi_\mathrm{s}} = \sum_i^N \epsilon_i.
+\end{equation}
+For this system we can write the exact density ($\rho_\mathrm{s}$):
+\begin{equation}
+\rho_\mathrm{s}(x) = \sum_i^N |\psi_i(x)|^2,
+\end{equation}
+and density matrix:
+\begin{equation}
+\gamma_\mathrm{s}(x;x') = \sum_i^N \psi_i(x) \psi_i^*(x').
+\end{equation}
+Kohn and Sham now make the following assumption.
+They impose that the exact ground state density and the density of the auxiliary system are equal
+\begin{equation}
+\rho = \rho_\mathrm{s}.
+\end{equation}
+The above condition is satisfied by finding an appropriate external potential $v_\mathrm{s}$.
+Note, that this does not imply that the density matrix of the real and auxiliary systems coincide, that is, in general we will have that $\gamma \neq \gamma_\mathrm{s}$.
+
+For the auxiliary we can write the energy as a functional of the Kohn--Sham orbitals:
+\begin{equation}
+E[\{\psi_i\}] = T_\mathrm{s}[\{\psi_i\}] + \int dx \, v_\mathrm{s}(x) \rho(x),
+\end{equation}
+where the kinetic energy of the auxiliary system is given by
+\begin{equation}
+T_\mathrm{s}[\{\psi_i\}] = \bra{\Psi_\mathrm{s}} \hat{T} \ket{\Psi_\mathrm{s}}= \sum_i^N \bra{\psi_i} -\frac{1}{2}\nabla^2\ket{\psi_i}.
+\end{equation}
+Note, that the exact kinetic energy $T[\rho] = \bra{\Psi} \hat{T} \ket{\Psi}$ in general differs from $T_\mathrm{s}[\{\psi_i\}]$.
+So why do we introduce the auxiliary system? So that we can approximate $T[\rho]$ using an expression that depends on orbitals.
+Functionals of the kinetic energy that contain orbitals are significantly more accurate than approximations bases only on the electron density.
+
+Now we can manipulate the energy expression to explicitly contain the KS kinetic energy. Starting from the exact density functional we rewrite it in terms of quantities that are known plus an unknown exchange-correlation functional ($E_\mathrm{xc}[\{\psi_i\}]$):
+\begin{equation}
+\begin{split}
+E[\{\psi_i\}] & = T\{\psi_i\}] + V_\mathrm{ex}[\rho] + V_\mathrm{ee}[\{\psi_i\}] \\
+& =  T_\mathrm{s}[\{\psi_i\}] + V_\mathrm{ex}[\rho] + J[\rho] +
+\underbrace{T[\{\psi_i\}]- T_\mathrm{s}[\{\psi_i\}] + 
+V_\mathrm{ee}[\{\psi_i\}]  - J[\rho] 
+}_{E_\mathrm{xc}[\{\psi_i\}]} \\
+& =  T_\mathrm{s}[\{\psi_i\}] + V_\mathrm{ex}[\rho] + J[\rho] + E_\mathrm{xc}[\{\psi_i\}].
+\end{split}
+\end{equation}
+The exchange-correlation functional contain contributions from exchange and correlation (which are missing from the Coulomb functional $J[\rho]$) and corrections to the kinetic energy ($T[\{\psi_i\}]- T_\mathrm{s}[\{\psi_i\}]
+$).
+
+To obtain the ground state energy and density we minimize the KS functional subject to orthonormality of the spin orbitals.
+Note, that the Hohenberg--Kohn theorems justify this procedure since minimization of the exact functional $E[\rho]$ leads to the ground state energy and density [see Eqs.~\eqref{eq:dft:hktheorem2a}-\eqref{eq:dft:hktheorem2b}].
+This goal may be achieved by a Lagrangian analogous to the one used in Hartree--Fock theory:
+\begin{equation}
+\mathcal{L}_\mathrm{KS}[\{ \psi_i \}] = E_\mathrm{KS}[\{ \psi_i \}] - \sum_{ij}^\mathrm{occ} \lambda_{ji} (\braket{\psi_i|\psi_j} - \delta_{ij}).
+\end{equation}
+
+At this point, we can derive Hartree--Fock-like equations by impose that this Lagrangian is stationary with respect to changes in the orbitals.
+One new aspect in this derivation is that we have to compute the variation in the exchange-correlation functional when the orbitals are changed from $\{\psi_i\}$ to $\{\psi_i + \delta\psi_i \}$
+\begin{equation}
+\begin{split}
+E_\mathrm{xc}[\{\psi_i + \delta\psi_i \}] - E_\mathrm{xc}[\{\psi_i\}]
+& = \sum_i \int dx \frac{\delta E_\mathrm{xc}}{\delta\psi_i^* } \delta\psi_i 
+= \sum_i \int dx \frac{\delta E_\mathrm{xc}}{\delta \rho} \frac{\delta \rho}{\delta\psi_i^* } \delta\psi_i  \\
+& = \sum_i \int dx \, v_\mathrm{xc}(x) \psi_i(x)  \delta\psi_i,
+\end{split}
+\end{equation}
+where we have introduced the exchange-correlation potential ($v_\mathrm{xc}$), which is the functional derivative of $E_\mathrm{xc}$ with respect to the density.
+
+If we impose the stationarity condition on $\mathcal{L}_\mathrm{KS}[\{ \psi_i \}] $ we obtain the following eigenvalue equation
+ \begin{equation}
+\left[ -\frac{1}{2} \nabla^2 + v_\mathrm{ex}(\mathbf{r}) + \hat{J}(\mathbf{r}) + v_\mathrm{xc}(\mathbf{r}) \right] \psi_{i}(x) 
+= \sum_{j}^\mathrm{occ} \lambda_{ji} \psi_{j}(x),
+\end{equation}
+which, after performing a rotation to the basis that diagonalizes the matrix $\lambda_{ij}$ yields the canonical Kohn--Sham equations
+ \begin{equation}
+\left[ -\frac{1}{2} \nabla^2 + v_\mathrm{ex}(\mathbf{r}) + \hat{J}(\mathbf{r}) + v_\mathrm{xc}(\mathbf{r}) \right] \psi_{i}(x) 
+= \epsilon_{i} \psi_{i}(x).
+\end{equation}
+We can collect all the potential energy terms together and identify them with the potential of the auxiliary system ($v_\mathrm{s}$)
+\begin{equation}
+v_\mathrm{s}(\mathbf{r}) =  v_\mathrm{ex}(\mathbf{r}) + \hat{J}(\mathbf{r}) + v_\mathrm{xc}(\mathbf{r}).
+\end{equation}
+
+
+
+\section{Approximate density functionals}
+The simplest way to approximate the exact exchange-correlation density functional is to assume that the electron density is homogeneous.
+This leads to the so-called local density approximation (LDA).
+For a homogeneous density, all derivatives of $\rho(\mathbf{r})$ are zero, so one assumes a parametric form that includes only this variable.
+In the LDA, the density functional is written as
+\begin{equation}
+E^\mathrm{LDA}_\mathrm{ex}[\rho] 
+= \int d\mathbf{r} \, \rho(\mathbf{r}) [\epsilon_\mathrm{x}(\rho) + \epsilon_\mathrm{c}(\rho)],
+\end{equation}
+where $\epsilon_\mathrm{x}(\rho)$ and $\epsilon_\mathrm{c}(\rho)$ are the exchange and correlation energy density.
+The exchange contribution derived by Dirac is given by
+\begin{equation}
+\epsilon^\mathrm{Dirac}_\mathrm{x}(\rho) = - C_\mathrm{x} \rho^{1/3},
+\end{equation}
+while for the correlation part a common choice is the fuctional by Vosko--Wilk--Nusair (VWN), $\epsilon_\mathrm{c}^\mathrm{VWN}$, which was obtained by fitting the energy of the homogeneous electron gas computed with highly-accurate quantum Monte Carlo methods.
+
+Further improvements can be introduced if one considers the derivatives of the density. A common way to introduce the first derivative is via the dimensionless quantity
+\begin{equation}
+x = \frac{|\nabla\rho|}{\rho}.
+\end{equation}
+For example, Becke's exchange function (B88) takes the form
+\begin{equation}
+\epsilon^\mathrm{B88}_\mathrm{x}(\rho) = - \beta \rho^{1/3} \frac{x}{1 + 6 \beta \sinh^{-1} x}.
+\end{equation}
+
+
+
+
+\section{Known problems with DFT methods}
+%Self-interaction. Energy of one-electron systems.
+%\begin{equation}
+%\end{equation}
+%Lack of dispersion interactions.
+%For two neutral fragments A and B:
+%\begin{equation}
+%\lim_{R_\mathrm{AB} \rightarrow \infty} E(R_\mathrm{AB}) = -\frac{C_6}{R_\mathrm{AB}^6}
+%\end{equation}
+A good review of the problems of DFT can be found in Ref.~\cite{Burke:2012eg}
+%
+%\bibliographystyle{abbrv}
+%\bibliography{papers3}
+
+
+
+\end{document}

@@ -1,0 +1,350 @@
+% This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+% or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% !TEX TS-program = xelatex
+
+\documentclass[../Main/chem532-notes.tex]{subfiles}
+\begin{document}
+
+\chapter{General Advice for Running Quantum Chemistry Computations}
+
+\section{Choosing the right units, geometry input, and selecting the electronic state}
+
+As you setup a computation you will have several options for providing information about your molecule to a quantum chemistry program.
+The molecular geometry is usually specified by either in xyz or zmat format. In the xyz format you provide a list of the element symbol (\verb|AtomI|) and the ($x, y,z$) coordinates (\verb|XI YI ZI|):
+\begin{verbatim}
+Atom1 X1 Y1 Z1
+Atom2 X2 Y2 Z2
+...
+AtomM XM YM ZM
+\end{verbatim}
+In the zmat format, the geometry is specified via internal coordinates, that is, via bond lengths (\verb|RIJ|), bond angles (\verb|ThetaIJK|), and , bond dihedral angles (\verb|PhiIJKL|):
+\begin{verbatim}
+Atom1
+Atom2 I R2I 
+Atom3 I R3I J Theta3IJ
+Atom4 I R4I J Theta4IJ K Phi4IJK
+Atom5 I R5I J Theta5IJ K Phi5IJK
+...
+\end{verbatim}
+Most programs assume that the ($x,y,z$) coordinates are given in units of \AA{}ngstrom (\AA{}), but keywords may be provided to switch to atomic units (bohr).
+
+Other important inputs to quantum chemistry computations are the charge and spin multiplicity of the electronic state we are interested in studying.
+The charge determines the total number of electrons, since
+\begin{equation}
+\mathrm{charge} = \sum_{\alpha=1}^M Z_\alpha - N_\alpha - N_\beta,
+\end{equation}
+while the spin multiplicity $S = 2 M_S + 1$ determines the difference $N_\alpha - N_\beta$ since
+\begin{equation}
+M_S = \frac{1}{2} (N_\alpha - N_\beta).
+\end{equation}
+
+The charge and spin multiplicity are specified at the beginning of an input file. For example, to run a computation on a singlet state of the methane molecule (\ce{CH4}), we indicate a charge equal to 0 (first number in the second line) and a multiplicity $S= 2M_s + 1 = 2 \times 0 + 1 = 1$ ($M_S = 0$ because there are equal number of alpha and beta electron in a singlet state)
+\begin{verbatim}
+set molecule methane {
+0 1 # <- charge multiplicity
+C       -0.7174019291      0.3273733834      0.0000000000                 
+H        0.3525980709      0.3273733834      0.0000000000                 
+H       -1.0740647110      1.3198547045     -0.1807553242                 
+H       -1.0740695669     -0.0123274364      0.9498902827                 
+H       -1.0740708618     -0.3254059329     -0.7691335623     
+}
+\end{verbatim}
+
+\begin{ibox}
+For a tutorial on the Psi4 package check out this link:
+
+\url{http://www.psicode.org/psi4manual/1.3/tutorial.html}
+\end{ibox}
+
+
+\section{Choice of the basis set}
+Next, you will have to select a basis set to perform your computations.
+In this case it is important to distinguish between DFT and wave function computations.
+\begin{itemize}
+\item For DFT and Hartree--Fock computations common choices include Pople's 6-31G* and 6-31G** basis sets but I would discourage you from using these because they are now obsolete. Better, use the Karlsruhe basis sets (def2-SVP, def2-TZVP, def2-QZVP, def2-TZVPD, \ldots). For routine computations, a def2-TZVP basis should provide nearly-converged results.
+
+\item For wave function methods like MP2, CCSD, CCSD(T), etc., Dunning's  correlation-consistent basis sets (cc-pV$X$Z, with $X$ = D, T, Q, 5) are recommended. These are families of basis sets that systematically converge to the full basis set limit.
+The cc-pVDZ basis is likely to provide reasonable, but potentially inaccurate results. A cc-pVTZ basis is generally recommended for routine applications. 
+For highly-accurate benchmark results it is necessary to use the cc-pVQZ or cc-pV5Z basis sets.
+
+\item Note that to describe Rydberg states, long range interactions, and anions it is generally recommended to add diffuse functions to you basis. For the Pople/Karlsruhe basis sets you will see the symbols ``+'' and ``D'', while the correlation-consistent basis sets add the ``aug-'' prefix to the basis set name.
+
+\item Dunning's basis sets (cc-pV$X$Z) are meant to correlate only valence electrons, so core electrons should be frozen in computations that use them.
+To account for core electron correlation it is necessary to use a core-valence set, usually indicated with the symbol cc-pCV$X$Z, or the newer weighted core-valence sets (cc-pwCV$X$Z). 
+
+\item Other variants of Dunning's basis sets include basis extended for period 3 atoms [cc-pV($X$+d)Z], pseudopotential basis sets for heavy elements [cc-pV$X$Z-PP], and basis sets for relativistic computations [cc-pV$X$Z-DK].
+
+\end{itemize}
+
+\textbf{Note, that is common practice in Quantum Chemistry to cite the original reference to the basis sets employed in a computation. Crafting a basis set for a large number of elements in the periodic table takes a lot of work and the people that invested the time doing so deserve credit.}
+
+\begin{ibox}
+A great resource for finding the definition of basis sets and the papers in which they were introduced is the Basis Set Exchange website:
+
+\url{https://www.basissetexchange.org}.
+\end{ibox}
+
+%For more information see: https://en.wikipedia.org/wiki/Basis_set_(chemistry)
+
+\section{Methods for ground-state computations}
+Any exploratory study should start with a DFT computation using a modest basis set (e.g., def2-SVP) using well-established functionals like (B3LYP).
+Density functional theory, with their low computational scaling ($N^4$, where $N$ is the number of electrons), are generally applicable to numerous problems where one is interested only in the ground state.
+Hartree--Fock theory, is generally not sufficiently accurate for any application, unless it is followed by a correlated wave function computation.
+
+M{\o}ller--Plessett perturbation theory methods (MP2, MP3, etc.) are more expensive than DFT as they scale as $N^5$ or higher. MP2 is in many case qualitatively correct and gives particularly good results for geometries. Beyond second order, the MP series is not guaranteed to converge and it is preferable to use coupled cluster methods.
+
+Coupled cluster theory with singles and double (CCSD) is generally regarded as a very good method, but cannot provide energies with chemical accuracy (defined as a relative error less than 1 kcal/mol). This method scales as $N^6$ and is already quite expensive.
+The gold standard in correlated wave function computations is the CCSD(T) method, which augments CCSD with perturbative corrections for triple substitutions [(T)].
+
+\section{Excited state methods}
+When one is interested in going beyond the ground state there are fewer options.
+A common choice is time-dependent DFT (TD-DFT). TD-DFT can provide excitation energies of good quality, although it is known to fail in many instances. Special functionals have been developed to describe Rydberg and charge-transfer excitations (range separated) and you should use one of them if you are interested in computing spectra.
+
+At the wave function level, a common method for excited states is configuration interaction with singles (CIS). CIS uses a combination of singly substituted Slater determinants obtained by promoting an electron in an occupied orbital to a virtual one. CIS is not very accurate but it is economical.
+In coupled cluster theory, excited states may be obtained via the equation-of-motion approach (EOM-CC) or the very similar linear-response formalism (LR-CC). EOM-CCSD is a good choice (although expensive) for computing accurate excitation energies.
+Other methods include the second- and third- order algebraic-diagrammatic construction [ADC(2)/ADC(3)] and the CC2/CC3 methods, which are approximations of EOM-CC theory.
+
+%\section{Basis set extrapolation}
+
+\section{Troubleshooting computations}
+\subsection{Self-consistent-field (SCF) procedure}
+What could go wrong in a quantum chemistry computation? Well, there are several aspects that can fail, but the most important and frequent is failure of the self-consistent-field (SCF) procedure in Hartree--Fock and DFT to converge. When this part of the computation does not converge, the rest of the results may be meaningless. Be careful, because some programs will continue to run even if the SCF procedure did not converge!
+
+There are several things that you can try to do if your SCF computation does not converge:
+\begin{itemize}
+\item Increase the number of SCF iterations that the code is allowed to perform.
+\item Change the initial orbital guess. A program may have different ways to guess the initial orbitals used in a SCF procedure.
+\item Change the basis set. In general large basis sets or basis sets with diffuse functions will be more problematic to converge. Another solution is to converge the SCF procedure with a small basis set and then to use these orbitals as guesses for a computation with a larger basis.
+\item In certain cases, it is possible to use other convergence tricks. One is level shift, which consists in shifting the energy of unoccupied orbitals. This works for certain cases (diradicals and triplet states).
+Some code may implement some more refined methods to improve convergence, check the manual.
+\end{itemize}
+
+\subsection{Finding the right SCF solution, symmetry, and orbital occupation}
+Even if the SCF procedure converges, sometimes the solution found is wrong. This can happen if you are stretching bonds, or have many diffuse functions, or if the  molecule has symmetry.
+When you find a wrong SCF solution you may find some strange outcomes, for example, the energy of the LUMO may be lower than that of the HOMO, like in the calculation below on \ce{N2}:
+\begin{verbatim}
+  ==> Iterations <==
+                           Total Energy        Delta E     RMS |[F,P]|
+   @DF-RHF iter   1:  -104.05276519746047   -1.04053e+02   1.84072e-01 DIIS
+   ...
+   @DF-RHF iter   8:  -107.84466525047402   -3.15438e-10   2.08693e-07 DIIS
+  Energy and wave function converged.
+
+    Orbital Energies [Eh]
+    ---------------------
+
+    Doubly Occupied:
+
+       1Ag   -15.685996     1B1u  -15.682880     2Ag    -1.391910
+       1B3u   -0.658683     1B2u   -0.588756     3Ag    -0.529034
+       1B2g   -0.235918
+
+    Virtual:
+
+       2B1u   -0.390811     1B3g    0.185252     3B1u    0.580952
+\end{verbatim}
+In this example, the LUMO (2$B_{1u}$) has orbital energy  $\epsilon_{\mathrm{LUMO}} = -0.391 E_\mathrm{h}$ lower than the HOMO $\epsilon_{\mathrm{HOMO}} = -0.236 E_\mathrm{h}$.
+
+In this case the SCF procedure converged to the wrong solution because of an incorrect guess of the occupation of orbitals due to symmetry.
+For \ce{N2} there are 8 irreducible representations in the larges Abelian point group ($D_{2\mathrm{h}}$). The SCF program has to guess how many orbital of each irrep should be occupied with electrons. If it guesses wrong, then the SCF procedure may get stuck and you end up with the wrong occupation numbers.
+In this case the program guessed the following occupation for the doubly occupied orbitals (\verb|DOCC|):
+\begin{verbatim}
+              Ag  B1g  B2g  B3g   Au  B1u  B2u  B3u
+    DOCC = [   3,   0,   1,   0,   0,   1,   1,   1 ]
+\end{verbatim}
+
+If we change the occupation so that the LUMO is occupied and the HOMO not, that is, we set
+\begin{verbatim}
+              Ag  B1g  B2g  B3g   Au  B1u  B2u  B3u
+    DOCC = [   3,   0,   0,   0,   0,   2,   1,   1 ]
+\end{verbatim}
+then we get the correct solution
+\begin{verbatim}
+   @DF-RHF iter   1:   -99.92277294845300   -9.99228e+01   2.54521e-01 DIIS
+   ...
+   @DF-RHF iter   9:  -108.95348837895291   -1.85295e-10   1.00773e-07 DIIS
+  Energy and wave function converged.
+
+    Orbital Energies [Eh]
+    ---------------------
+
+    Doubly Occupied:
+
+       1Ag   -15.687294     1B1u  -15.683937     2Ag    -1.469609
+       2B1u   -0.774890     3Ag    -0.626042     1B2u   -0.607131
+       1B3u   -0.607131
+
+    Virtual:
+
+       1B2g    0.174361     1B3g    0.174361     3B1u    0.593802
+\end{verbatim}
+You can see that the final energy in this computation is significantly smaller than the previous one ($-108.953488$ vs. $-107.844665250$ \Eh).
+
+In other cases, changing occupation numbers is not enough and you might have to run a \textbf{stability analysis}. A stability analysis is similar to a harmonic frequency analysis, but instead of moving the nuclei around we test if the SCF solution is stable with respect to changes in the orbitals.
+In a stability analysis one computes the Hessian with respect to orbital rotations. The presence of one or more negative eigenvalues of the Hessian indicate that the SCF solution is unstable.
+Some programs allow you to use the information from a stability analysis to find a better (more stable) solution.
+
+As a first example consider the following computation on \ce{O2}
+\begin{verbatim}
+molecule h2 {
+  0 1
+  O
+  O 1 1.22220
+  symmetry c1
+}
+
+set basis cc-pVDZ
+set reference uhf
+set stability_analysis follow
+energy ('scf')
+\end{verbatim}
+Initially the SCF procedure finds a singlet (multiplicity = 1) solution
+\begin{verbatim}
+                           Total Energy        Delta E     RMS |[F,P]|
+
+   @DF-UHF iter SAD:  -148.80750855152425   -1.48808e+02   0.00000e+00
+   ...
+   @DF-UHF iter   6:  -149.53968837671806   -5.73920e-08   9.50024e-07 DIIS
+  Energy and wave function converged.
+
+  ==> Post-Iterations <==
+
+   @Spin Contamination Metric:  -2.842170943E-14
+   @S^2 Expected:                0.000000000E+00
+   @S^2 Observed:               -2.842170943E-14
+\end{verbatim}
+We can tell this is a singlet solution because the expectation value of $\hat{S}^2$ is practically zero.
+However, this solution is not stable as the following analysis reveals
+\begin{verbatim}
+    Negative totally symmetric eigenvalue detected: -0.111172
+    Wavefunction unstable!
+    Lowest UHF->UHF stability eigenvalues:
+       A -0.111172
+
+    Rotating orbitals by 0.500000 * pi / 2 radians along unstable eigenvector.
+    Running SCF again with the rotated orbitals.
+   @DF-UHF iter   7:  -149.58236352738325   -1.49582e+02   2.51289e-03 DIIS
+   ...
+   @DF-UHF iter  14:  -149.59625391005312   -1.61574e-08   7.49422e-07 DIIS
+   
+     ==> Post-Iterations <==
+
+   @Spin Contamination Metric:   1.064489505E+00
+   @S^2 Expected:                0.000000000E+00
+   @S^2 Observed:                1.064489505E+00
+\end{verbatim}
+The end of this computation shows that the final UHF wave function is spin contaminated, that is, the expectation value of $\hat{S}^2$ is quite different from the allowed values $S(S +1) \in \{0, 2, 6, \ldots \}$. The value of $\hat{S}^2$ between 0 and 2 indicates that it is possible that a triplet solution may be more stable.
+We can check this easily by running a triplet compuation 
+\begin{verbatim}
+molecule h2 {
+  0 3
+  O
+  O 1 1.22220
+  symmetry c1
+}
+
+set basis cc-pVDZ
+set reference uhf
+energy ('scf')
+\end{verbatim}
+The following output shows that the final energy is even lower than the previous computation and that the observed average value of $\hat{S}^2$ (2.0338) is close to the one expected for a triplet state (2.0)
+\begin{verbatim}
+                           Total Energy        Delta E     RMS |[F,P]|
+
+   @DF-UHF iter SAD:  -148.80750855152425   -1.48808e+02   0.00000e+00
+   ...
+   @DF-UHF iter   7:  -149.62449435085691   -1.13297e-08   8.35935e-07 DIIS
+  Energy and wave function converged.
+
+
+  ==> Post-Iterations <==
+
+   @Spin Contamination Metric:   3.383018297E-02
+   @S^2 Expected:                2.000000000E+00
+   @S^2 Observed:                2.033830183E+00
+\end{verbatim}
+
+\subsection{Failure of the mean-field approximation}
+In certain cases, a stability analysis can reveal issues with the assumption that the wave function is well described by a single determinant.
+In general, a single Slater determinant is insufficient to describe states that are near-degenerate. This may happen when there are several near-degenerate orbitals that can be occupied in several ways.
+When a single Slater determinant is insufficient we need a method like CASSCF that uses a linear combination of determinants to describe an electronic state.
+
+As an example, consider \ce{H2} with a bond distance (1.5 \AA{}) that is twice the equilibrium one. If we run a restricted Hartree--Fock (RHF) computation we get
+\begin{verbatim}
+  ==> Iterations <==
+
+                           Total Energy        Delta E     RMS |[F,P]|
+
+   @DF-UHF iter SAD:    -0.76784932808581   -7.67849e-01   0.00000e+00
+   @DF-UHF iter   1:    -1.00141998955223   -2.33571e-01   2.75241e-03 DIIS
+   ...
+   @DF-UHF iter   4:    -1.00219852882535   -2.24884e-08   2.49903e-08 DIIS
+  Energy and wave function converged.
+\end{verbatim}
+However, a stability analysis reveals that this wave function is unstable and that an unrestricted HF (UHF) solution exists
+\begin{verbatim}
+    Negative totally symmetric eigenvalue detected: -0.107448
+    Wavefunction unstable!
+    Lowest RHF->UHF stability eigenvalues:
+       A -0.107448
+       
+    Rotating orbitals by 0.500000 * pi / 2 radians along unstable eigenvector.
+    Running SCF again with the rotated orbitals.
+   @DF-UHF iter   5:    -1.00996434718943   -1.00996e+00   8.98053e-03 DIIS
+   ...
+   @DF-UHF iter  11:    -1.02138009771254   -5.27588e-09   1.55929e-07 DIIS       
+\end{verbatim}
+The solution found after following the mode with negative eigenvalue is lower in energy. A second stability analysis reveals that the UHF solution we found is now stable:
+\begin{verbatim}
+    Wavefunction stable under totally symmetric rotations.
+    Lowest totally symmetric eigenvalue: 0.177523
+    Lowest UHF->UHF stability eigenvalues:
+       A 0.177523
+
+    Stability analysis over.
+
+  ==> Post-Iterations <==
+
+   @S^2 Expected:                0.000000000E+00
+   @S^2 Observed:                5.824960917E-01
+\end{verbatim}
+The UHF solution is spin contaminated since the expectation value of $\hat{S}^2$ is ca. 0.5825 instead of 0, as it should be for a singlet state.
+In this case, the problem is that a single Slater determinant cannot properly describe bond breaking in \ce{H2}. As we have seen in the section on FCI, we need at least two determinants to describe the wave function of \ce{H2} correctly in the dissociation limit. This can be done by running a multiconfigurational SCF calculation, where one optimizes both the orbitals and determinant coefficients of a FCI computation done on a small subset of so-called active orbitals. When we consider all determinants generated by distributing the active electrons in all possible ways we talk of a complete-active-space SCF (CASSCF) computation. Running a CASSCF computation on \ce{H2} with two electrons in two orbitals we get a singlet solution that is lower than the RHF and UHF solutions
+\begin{verbatim}
+   ==> Starting MCSCF iterations <==
+
+        Iter         Total Energy       Delta E   Orb RMS    CI RMS
+   @MCSCF  1:     -1.035694387154   -3.3496e-02  2.82e-02  4.23e-16
+   ...
+   @MCSCF  8:     -1.056125382298   -2.8041e-08  6.30e-06  1.67e-15
+   
+      The 4 most important determinants:
+
+    *   1   -0.951333  |20>  1AX
+    *   2    0.308164  |02>  2AX
+\end{verbatim}
+In the last two lines of this output we can read the coefficients associated with the determinants included in the CASSCF procedure, where the determinants are indicated as a list of number with the occupation of each orbital (0, +, $-$, or 2 for empty, single alpha electron, single beta electron, and doubly occupied, respectively).
+
+
+\subsection{Geometry optimization}
+
+Another common failure is lack of convergence in geometry optimizations. Here is a list of things to consider:
+\begin{itemize}
+\item Do not use an optimized geometry unless you have verified that the geometry optimization has actually converged.
+
+\item Geometry optimization can be slow to converge,  especially if the atoms have to ``go around a corner''. Since geometry optimizers usually estimate the Hessian instead of computing the exact one, starting the optimization with the full Hessian may improve convergence. This is particularly true of transition state searches. Most of the time, you can significantly reduce the cost to compute the Hessian by using smaller basis or less expensive method.
+
+\item Some molecules are hard to optimize due to the choice of optimization coordinates. Sometimes you can improve convergence by using more complex coordinate systems.
+
+\item Once you have found a stationary point, run a frequency analysis to verify that the geometry is a local minimum or a transition state.
+
+\item Another aspect to keep in mind is that in certain codes, geometry optimization cannot proceed from a geometry with high symmetry (e.g., $D_{2\mathrm{h}}$) to low symmetry (e.g., $C_1$). If you want to find a minimum, it is generally a good idea to start with a guess geometry that has no symmetry and let the optimizer determine if the minimum is symmetric.
+Again, this is why it is important to run a frequency analysis after a geometry optimization to verify the nature of the stationary point.
+\end{itemize}
+
+
+
+
+\end{document}
