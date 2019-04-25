@@ -27,6 +27,7 @@
 \RequirePackage{booktabs}
 \RequirePackage{braket}
 \RequirePackage{mhchem}
+\RequirePackage{cancel}
 
 % Typography
 \RequirePackage{fontspec}
@@ -41,6 +42,14 @@
 \RequirePackage{mparhack}
 \RequirePackage{hyperref}
 \RequirePackage{booktabs}
+\RequirePackage{xcolor}
+
+\hypersetup{
+    colorlinks,
+    linkcolor={white!10!black},
+    citecolor={orange!80!black},
+    urlcolor={red!80!black}
+}
 
 % Set fonts
 \defaultfontfeatures{Mapping=tex-text}

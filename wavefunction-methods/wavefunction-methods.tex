@@ -1,0 +1,365 @@
+% This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+% or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% !TEX TS-program = xelatex
+
+\documentclass[../Main/chem532-notes.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Single-reference wave function methods}
+
+Wave function methods are a class of quantum chemistry approaches that try to build the exact solution to the electronic Schr\"{o}dinger equation in a systematic way.
+Most methods start with the assumption that the Hartree--Fock solution ($\Phi_0$) is accurate and that  the exact wave function ($\Psi$) can be obtained from it by adding a small correction.
+
+To be more rigorous we have to introduce the notion of correlation energy. One definition of electron correlation is the difference between the FCI ($E_{\mathrm{FCI}}$)  and Hartree--Fock ($E_{\mathrm{HF}}$) energy
+\begin{equation}
+E_{\mathrm{corr}} = E_{\mathrm{FCI}} - E_{\mathrm{HF}} \leq 0.
+\end{equation}
+This difference is negative because the Hartree--Fock energy is variational, that is, $E_{\mathrm{HF}} \geq E_{\mathrm{FCI}}$. Note that the HF energy is exact ($E_{\mathrm{HF}} = E_{\mathrm{FCI}}$) only for one electron systems, or certain other special cases.
+The correlation energy is further divided into two components
+\begin{itemize}
+\item \textbf{Dynamical or weak correlation}. These are correlation effects that result from the short-range Coulomb repulsion of electrons and long-range London dispersion interactions.
+\item \textbf{Static, strong, or nondynamical correlation}. These are correlation effects that arise from the interaction of near-degenerate electronic states, for example, when breaking a bond, in excited states, in systems with coupled localized spins. In this case the HF single determinant approximation is qualitatively incorrect and one needs to use a \textbf{multireference approach}.
+\end{itemize}
+
+We have already seen an example where static correlation plays an important role: the dissociation of the \ce{H2} molecule. In this case, we saw that the ground state requires two determinants to correctly describe the covalent configuration in the dissociation limit (\ce{H^. + H^.}).
+Another case where the HF approximation fails is symmetry forbidden processes. For example consider a reaction in which the reactant is well described by the Slater determinant
+\begin{equation}
+\ket{\Phi_R} = \ket{(\phi_{S})^2},
+\end{equation}
+where $\phi_{S}$ is a symmetric orbital, while the product is described by the Slater determinant
+\begin{equation}
+\ket{\Phi_P} = \ket{(\phi_{A})^2},
+\end{equation}
+where $\phi_{A}$ is an antisymmetric orbital.
+Because $\phi_{S}$ and $\phi_{A}$ have different symmetry, they cannot continuously transform one into the other. Therefore, a wave function that describes the reaction at all points must be a linear combination
+\begin{equation}
+\ket{\Psi} = C_R \ket{\Phi_R} + C_P \ket{\Phi_P}.
+\end{equation}
+
+\section{Truncated configuration interaction}
+Perhaps one of the simplest approximations of the FCI wave function consists in truncating the basis of Slater determinants.
+In truncated CI methods, one expresses the FCI wave function as a sum of a reference HF determinant and all of its singly, doubly, and so on, substituted determinants.
+If we write the reference HF determinant as
+\begin{equation}
+\ket{\Phi_0} = \ket{\psi_1 \cdots \psi_N},
+\end{equation}
+the we write a determinant where the spin orbital $\psi_i$ has been replaced with $\psi_a$ as
+\begin{equation}
+\ket{\Phi_{i}^{a}} = \ket{\psi_1 \cdots  \cancel{\psi_i} \psi_a\cdots\psi_N}.
+\end{equation}
+In this notation, the indices at the bottom show the spin orbitals from which electrons have been removed, while the indices at the top show the empty orbitals that have been occupied by electrons.
+At times we may use an alternative notation based on \textbf{second quantization}. In this equivalent approach, we introduce two new operators, $\cop{p}$ and $\aop{p}$, that create and annihilate an electron in a generic spin orbital $\psi_p$. In second quantization we can write a singly-substituted determinant from the HF reference by first removing and electron from $\psi_i$ via the operator $\aop{i}$ and then creating an electron in $\psi_a$ via $\cop{a}$
+\begin{equation}
+\ket{\Phi_{i}^{a}} = \cop{a}\aop{i} \ket{\Phi_0}.
+\end{equation}
+Doubly-substituted determinant are similarly defined as
+\begin{equation}
+\ket{\Phi_{ij}^{ab}} = \cop{a}\cop{b}\aop{j}\aop{i} \ket{\Phi_0},
+\end{equation}
+where we use the convention that upper indices are read from left to right, while lower indices are read from right to left.
+
+Using this notation the FCI wave function may be written as
+\begin{equation}
+\ket{\Psi_{\mathrm{FCI}}} = 
+\ket{\Phi_0}
++ \sum_{i}^{\mathrm{occ}} \sum_{a}^{\mathrm{vir}} c_i^a \ket{\Phi_{i}^{a}}
++ \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} c_{ij}^{ab} \ket{\Phi_{ij}^{ab}} + \frac{1}{36} \sum_{ijk}^{\mathrm{occ}} \sum_{abc}^{\mathrm{vir}} c_{ijk}^{abc} \ket{\Phi_{ijk}^{abc}} + \ldots.
+\end{equation}
+Note that we assigned a coefficient equal to one to the HF determinant $\Phi_0$. This way of writing $\Psi_{\mathrm{FCI}}$ is called \textbf{intermediate normalization}. Instead of being normalized, $\Psi_{\mathrm{FCI}}$ is such that the projection of the HF determinant onto $\Psi_{\mathrm{FCI}}$ is one, that is,
+\begin{equation}
+\braket{\Phi_0 | \Psi_{\mathrm{FCI}}} = 1.
+\end{equation}
+To derive equations for the energy we can simply project the Schr\"{o}dinger equation on the left with $\Phi_0$
+\begin{equation}
+\bra{\Phi_0}\hat{H}\ket{\Psi_{\mathrm{FCI}}} = \braket{\Phi_0|\Psi_{\mathrm{FCI}}} E = E.
+\end{equation}
+Therefore, $E = \bra{\Phi_0}\hat{H}\ket{\Psi_{\mathrm{FCI}}}$. We can rewrite this condition in a more detailed way by plugging in the expansion of $\Psi_{\mathrm{FCI}}$ in terms of determinants
+\begin{equation}
+\begin{split}
+E & = \bra{\Phi_0}\hat{H}\left(
+\ket{\Phi_0}
++ \sum_{i}^{\mathrm{occ}} \sum_{a}^{\mathrm{vir}} c_i^a \ket{\Phi_{i}^{a}}
++ \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} c_{ij}^{ab} \ket{\Phi_{ij}^{ab}} + \ldots\right) \\
+& = \underbrace{\bra{\Phi_0}\hat{H}\ket{\Phi_0}}_{E_\mathrm{HF}}
++\underbrace{ \sum_{i}^{\mathrm{occ}} \sum_{a}^{\mathrm{vir}} c_i^a \bra{\Phi_0}\hat{H}\ket{\Phi_{i}^{a}}
++ \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} c_{ij}^{ab} \bra{\Phi_0}\hat{H}\ket{\Phi_{ij}^{ab}}}_{E_\mathrm{corr}}.
+\end{split}
+\end{equation}
+Here we can directly identify the Hartree--Fock energy and the contribution due to electron correlation.
+Although the FCI expansion includes triply and higher-substituted determinants, Slater's rules imply that the matrix elements between the reference and a generic excited determinant ($\ket{\Phi_{ij\cdots}^{ab\cdots}}$), $\bra{\Phi_0}\hat{H}\ket{\Phi_{ij\cdots}^{ab\cdots}}$, are nonzero only when a determinant is at most a double substitution with respect to $\Phi_0$.
+This is what determines this expansion to terminate.
+This result is interesting because depending on what we want to compute, we may not need to know the entire wave function. In the case of the energy, knowledge of only the coefficients for the singly- and doubly-substituted determinants is sufficient to recover the exact correlation energy.
+This result, however, does not mean that the FCI wave function can be approximates only with singles and doubles, but it does suggest that such an approximation may be accurate.
+
+In truncated CI methods, the FCI expansion is truncated at a certain excitation level $n$.
+If we introduce the excitation operator $\hat{C}$
+\begin{equation}
+\hat{C} = \hat{C}_1 + \hat{C}_2 + \ldots + \hat{C}_n,
+\end{equation}
+where a generic $k$-body excitation operator $\hat{C}_k$ is defined as
+\begin{equation}
+ \hat{C}_k = \frac{1}{(k!)^2} \sum_{ij\cdots}^{\mathrm{occ}} \sum_{ab\cdots}^{\mathrm{vir}} c_{ij\cdots}^{ab\cdots} \underbrace{\cop{a} \cop{b} \cdots \aop{j} \aop{i}}_{k\text{-fold excitation}},
+\end{equation}
+we can rewrite a truncated CI wave function as
+\begin{equation}
+\ket{\Psi_{\mathrm{CI}}} = (1 + \hat{C}) \ket{\Phi_0}.
+\end{equation}
+
+The simplest truncated CI approach is CI singles (CIS), which consists in the approximation $\hat{C} \approx \hat{C}_1$
+\begin{equation}
+\ket{\Psi_{\mathrm{CIS}}} = 
+\ket{\Phi_0}
++ \sum_{i}^{\mathrm{occ}} \sum_{a}^{\mathrm{vir}} c_i^a \ket{\Phi_{i}^{a}}.
+\end{equation}
+To solve for the CI coefficients $c_i^a$ one has to diagonalize the Hamiltonian in the basis of the reference and all of its singly substituted determinant.
+Interestingly, if the reference is a Hartree--Fock determinant, the CIS wave function one finds that the matrix elements between the reference and any single is a matrix element of the Fock operator
+\begin{equation}
+\bra{\Phi_{i}^{a}} \hat{H} \ket{\Phi_0} = h_{ai} + \sum_{k}^{\mathrm{occ}} \aphystei{ak}{ik} \equiv f_{ai} = \bra{\psi_a} \hat{f} \ket{\psi_i}.
+\end{equation}
+Now recall that the Hartree--Fock equation could be written in the most general form as
+\begin{equation}
+\hat{f} \ket{\psi_i} = \sum_{j}^{\mathrm{occ}}  \ket{\psi_i} \lambda_{ji}.
+\end{equation}
+This equation shows that when we apply $\hat{f}$ onto an occupied orbital we get back a linear combination of orbitals that are occupied. Therefore, when we left-project a virtual orbital $\psi_a$ onto  $\hat{f} \ket{\psi_i}$ , the matrix element is null
+\begin{equation}
+\bra{\psi_a}\hat{f} \ket{\psi_i} = \sum_{j}^{\mathrm{occ}}  \braket{\psi_a|\psi_i} \lambda_{ji} = 0.
+\end{equation}
+This result is known as \textbf{Brillouin's theorem}, and it implies that for HF orbitals $\bra{\Phi_{i}^{a}} \hat{H} \ket{\Phi_0} = 0$.
+Consequently, the Hamiltonian matrix in CIS does not have off-diagonal blocks that couple the reference to the singles and the CIS ground state energy is simply the Hartree--Fock energy.
+Although CIS does not improve the description of the Hartree--Fock solution for the ground state, it can be used to compute excited states.
+
+Brillouin's theorem applies only to single substituted determinants, so double substitutions can mix with the reference.
+The simplest CI methods that includes ground-state correlation corrections is CI with doubles (CID), which corresponds to the wave function approximation
+\begin{equation}
+\ket{\Psi_{\mathrm{CID}}} = 
+\ket{\Phi_0}
++ \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} c_{ij}^{ab} \ket{\Phi_{ij}^{ab}} .
+\end{equation}
+When both singles and doubles are included in CI, we have CI with singles and doubles (CISD). Once can also define higher order approximations that additionally include triples (CISDT) and quadruples (CISDTQ).
+
+Despite its simplicity, truncated CI suffers from a major deficiency: the energy and other properties lack size consistency, that is, they are not additive for separate fragments.
+Consider two fragments, A and B. We say that a computational method is size consistent if a computation of the energy of A and B held at infinite distance [$E(A\cdots B)$] is equal to the sum of the energy of A [$E(A)$] plus the energy of B [$E(B)$]
+\begin{equation}
+E(A\cdots B) = E(A) + E(B).
+\end{equation}
+For truncated CIs, in general one has that $E(A\cdots B) \neq E(A) + E(B)$, and we therefore say that they lack size consistency.
+The reason why truncated CI is not size consistent is that the wave function is not \textbf{multiplicatively separable}. For FCI, if we know the wave function of molecules A ($\Psi^A$) and B ($\Psi^B$), the total wave function for $A\cdots B$ should be the product
+\begin{equation}
+\ket{\Psi^{AB}} = \ket{\Psi^A\Psi^B}.
+\end{equation}
+To see why this is not the case consider a CID wave function for both systems, for example, $\ket{\Psi^A_\mathrm{CID}} = (1 + \hat{C}^A_2) \ket{\Phi_0^A}$, and similarly for B.
+A CID computation on $A\cdots B$ still includes only double and has the form
+\begin{equation}
+\ket{\Psi^{AB}_\mathrm{CID}}
+ =  (1 + \hat{C}^A_2 + \hat{C}^B_2) \ket{\Phi_0^A\Phi_0^B}.
+\end{equation}
+However, the total wave function for $A\cdots B$ at infinite separation should be
+\begin{equation}
+\ket{\Psi^A_\mathrm{CID} \Psi^B_\mathrm{CID}}
+=  (1 + \hat{C}^A_2) (1 + \hat{C}^B_2) \ket{\Phi_0^A\Phi_0^B}
+ =  (1 + \hat{C}^A_2 + \hat{C}^B_2 + \hat{C}^A_2\hat{C}^B_2) \ket{\Phi_0^A\Phi_0^B}.
+\end{equation}
+The last term, $\hat{C}^A_2\hat{C}^B_2 \ket{\Phi_0^A\Phi_0^B}$, contains so called \textbf{unlinked terms} that correspond to quadruply substituted determinants.
+These quadruples are missing from the CID wave function of $A\cdots B$ and that is why this method does not yield the correct energy.
+Size consistency is a necessary requirement of any electronic structure theory, because otherwise we could not compute consistent reaction energies.
+Note that corrections for the lack of size consistency in truncated CI do exists, for example, \textbf{Davidson's size-consistency correction}.
+
+\section{M{\o}ller--Plesset perturbation theory}
+A second approach to approximate the FCI wave function is to use perturbation theory. In the \textbf{M{\o}ller--Plesset} formalism, the Hamiltonian is first partitioned into a zeroth-order part ($\hat{H}_0$) plus a perturbation ($\hat{V}$), and  $\hat{H}_0$ is chosen to be the Fock operator
+\begin{align}
+\hat{H}_0  & = \hat{f},\\
+\hat{V}  & = \hat{H} - \hat{f}.
+\end{align}
+Here we assume that the orbitals have been variationally optimized via the Hartree--Fock method.
+This choice is convenient since the HF determinant is an eigenfunction of $\hat{H}_0$
+\begin{equation}
+\hat{H}_0\ket{\Phi_0} = \left(\sum_i^{\mathrm{occ}} \epsilon_i\right) \ket{\Phi_0}.
+\end{equation}
+
+The zeroth-order energy is then given by the sum of the energies of occupied orbitals
+\begin{equation}
+E^{(0)}_0 = \bra{\Phi_0} \hat{H}_0 \ket{\Phi_0} = \sum_i^{\mathrm{occ}} \epsilon_i.
+\end{equation}
+The first-order energy is then
+\begin{equation}
+E^{(1)}_0 = \bra{\Phi_0} \hat{V} \ket{\Phi_0} = E_\mathrm{HF} - \sum_i^{\mathrm{occ}} \epsilon_i,
+\end{equation}
+so that the sum of zeroth- and first-order energies is the Hartree--Fock energy
+\begin{equation}
+E^{(0)}_0 + E^{(1)}_0 = \bra{\Phi_0} \hat{H}_0 + \hat{V} \ket{\Phi_0} = E_\mathrm{HF}.
+\end{equation}
+Recall that the first-order correction to the wave function [$\Psi_0^{(1)}$] is given by the sum
+\begin{equation}
+\ket{\Psi_0^{(1)}} = \sum_{k \neq 0} \ket{\Psi_k^{(0)}} \frac{\braket{\Psi_k^{(0)}|\hat{V}|\Psi_0^{(0)}}}{E_0^{(0)} - E_k^{(0)}}
+\end{equation}
+where the set of states $\{\Psi_k^{(0)}\}$ are eigenstates of the zeroth-order Hamiltonian.
+In our case the state that we want to improve is the Hartree--Fock determinant, that is, $\Psi_0^{(0)} = \Phi_0$, and the other states in the set $\{\Psi_k^{(0)}\}$ are all singly, doubly, etc., substituted determinants, $\{\Phi_{i}^{a}, \Phi_{ij}^{ab}, \ldots \}$.
+The only matrix elements $\braket{\Psi_k^{(0)}|\hat{V}|\Psi_0^{(0)}}$ that are nonzero are those between the doubles [$\Psi_k^{(0)} = \Phi_{ij}^{ab}$] and the reference [$\Psi_0^{(0)} = \Phi_0$]
+\begin{equation}
+\braket{\Phi_{ij}^{ab}|\hat{V}|\Phi_0} = \aphystei{ab}{ij}.
+\end{equation}
+The denominator $E_0^{(0)} - E_k^{(0)}$ is the difference of the zeroth-order energy of these states and may be written as
+\begin{equation}
+E_0^{(0)} - E_k^{(0)} = \bra{\Phi_0} \hat{H}_0 \ket{\Phi_0} - 
+\bra{\Phi_{ij}^{ab}} \hat{H}_0 \ket{\Phi_{ij}^{ab}} = 
+\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b.
+\end{equation}
+This gives us the following expression for the first-order wave function correction
+\begin{equation}
+\ket{\Psi_0^{(1)}} = \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}}  \ket{\Phi_{ij}^{ab}} \frac{\aphystei{ab}{ij}}{\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b},
+\end{equation}
+where in the sum we include a factor $\frac{1}{4}$ to avoid double counting determinants.
+note that the first-order wave function coefficients
+\begin{equation}
+c_{ij}^{ab,(1)} =  \frac{\aphystei{ab}{ij}}{\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b},
+\end{equation}
+depend on the ratio of a two-electron integral ($\aphystei{ab}{ij}$) and a M{\o}ller--Plesset denominator ($\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b$). When the latter is small, the coefficient may diverge, that is $|c_{ij}^{ab,(1)}| \rightarrow \infty$ when $\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b \rightarrow 0.$
+This may happen if the virtual orbitals becomes near degenerate with the occupied ones, signaling that we are dealing with a problem in which static correlation effects play an important role.
+
+Corrections to the energy due to electron correlation enter at second order.
+Recall that the second-order energy is given by
+\begin{equation}
+E^{(2)}_0 = \sum_{k \neq 0}\frac{|\braket{\Psi_0^{(0)}|\hat{V}|\Psi_k^{(0)}}|^2}{E_0^{(0)} - E_k^{(0)}},
+\end{equation}
+which can be written as
+\begin{equation}
+E^{(2)}_0 = \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} 
+\frac{ |\braket{\Phi_0|\hat{V}|\Phi_{ij}^{ab}}|^2}{\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b}
+= \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} 
+\frac{ |\aphystei{ij}{ab}|^2}{\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b}.
+\end{equation}
+The sum of the HF energy plus this second-order correction ($E_{\mathrm{MP2}}$)
+\begin{equation}
+E_{\mathrm{MP2}} = E_{\mathrm{HF}} + E^{(2)}_0,
+\end{equation}
+is known as M{\o}ller--Plesset second-order perturbation theory (MP2) and is a commonly employed methods to treat dynamical correlation effects.
+For a Hartree--Fock reference, this correction is always negative since the energy of virtual orbitals is higher than  that of occupied ones, so that the denominator $\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b \leq 0$ is a negative quantity.
+As a consequence $E_{\mathrm{MP2}} \leq E_{\mathrm{HF}}$. However, the MP2 energy is not variational and in many cases it may be lower than the FCI energy.
+ t is not too difficult to see that the MP2 energy expression is additive for noninteracting fragments, that is,
+ \begin{equation}
+E^{(2)}_0(A\cdots B) = E^{(2)}_0(A) + E^{(2)}_0(B).
+\end{equation}
+
+Some aspects to keep into consideration when using MP$n$:
+\begin{itemize}
+\item The MP2 energy can be generalized to higher orders (MP3, MP4, etc.). However, this series is not guaranteed to converge. Cases are known where the correlation energy diverges after a certain point.
+\item MP perturbation theory is well suited for the weak correlation regime and cannot be applied to bond-breaking processes. In this case it is necessary to use a multireference perturbation theory (MRPT).
+\end{itemize}
+
+\section{Coupled Cluster theory}
+In our discussion of truncated CI we mentioned that it would be desirable for the wave function to be multiplicatively separable for noninteracting fragments. For two fragments A and B this means requiring that $\ket{\Psi^{AB}} = \ket{\Psi^A\Psi^B}$.
+Coupled cluster theory solves this problem by employing an exponential wave function of the form
+\begin{equation}
+\ket{\Psi_{\mathrm{CC}}} = e^{\hat{T}} \ket{\Phi_0}
+= \left(1 + \hat{T} + \frac{1}{2!}\hat{T}^2+ \frac{1}{3!}\hat{T}^3 + \ldots \right)\ket{\Phi_0},
+\end{equation}
+where the operator $\hat{T}$ is defined as the $\hat{C}$ operator encountered in CI as the sum of one-, two-, and higher-body operators up to order $n$
+\begin{equation}
+\hat{T} = \hat{T}_1 + \hat{T}_2 + \ldots + \hat{T}_n,
+\end{equation}
+where a generic $k$-body excitation operator $\hat{T}_k$ is defined as
+\begin{equation}
+ \hat{T}_k = \frac{1}{(k!)^2} \sum_{ij\cdots}^{\mathrm{occ}} \sum_{ab\cdots}^{\mathrm{vir}} t_{ij\cdots}^{ab\cdots} \underbrace{\cop{a} \cop{b} \cdots \aop{j} \aop{i}}_{k\text{-fold excitation}}.
+\end{equation}
+The quantities $t_{ij\cdots}^{ab\cdots}$ are called coupled cluster amplitudes and are the central variables in CC theory.
+
+To see why the CC wave function is multiplicatively separable we can take two individual molecules for which we have solved the CC equations
+\begin{align}
+\ket{\Psi_{\mathrm{CC}}^A} & = e^{\hat{T}^A} \ket{\Phi_0^A},\\
+\ket{\Psi_{\mathrm{CC}}^B} & = e^{\hat{T}^B} \ket{\Phi_0^B}.
+\end{align}
+The product wave function can then be shown to be equivalent to the CC wave function for the system $A\cdots B$
+\begin{align}
+\ket{\Psi_{\mathrm{CC}}^A \Psi_{\mathrm{CC}}^B} = e^{\hat{T}^A} e^{\hat{T}^B}\ket{\Phi_0^A\Phi_0^B}
+= e^{\hat{T}^A+\hat{T}^B}\ket{\Phi_0^A\Phi_0^B}
+= \ket{\Psi_{\mathrm{CC}}^{AB}},
+\end{align}
+due to the fact that $\exp(\hat{T}^A)\exp(\hat{T}^B) = \exp(\hat{T}^A + \hat{T}^B)$.
+Note that in general, given two operators $\hat{X}$ and $\hat{Y}$, we have that
+\begin{equation}
+\exp(\hat{X})\exp(\hat{Y}) = \exp(\hat{X} + \hat{Y}),
+\end{equation}
+only if $\hat{X}$ and $\hat{Y}$ commute, that is, $[\hat{X},\hat{Y}] = 0$.
+Since cluster operators involve only substitutions from occupied to virtual orbitals, they always commute, and in particular $[\hat{T}^A,\hat{T}^B] = 0$.
+
+Equations for the CC energy and amplitudes are obtained by plugging in the CC wave function into the Schr\"{o}dinger equation
+\begin{equation}
+\hat{H} e^{\hat{T}} \ket{\Phi_0} = E e^{\hat{T}} \ket{\Phi_0},
+\end{equation}
+followed by premultiplication with $\exp(-\hat{T})$ on the left
+\begin{equation}
+e^{-\hat{T} } \hat{H} e^{\hat{T} }\ket{\Phi_0} = E e^{-\hat{T} }e^{\hat{T}} \ket{\Phi_0} = E \ket{\Phi_0}.
+\end{equation}
+The energy is given by projecting onto $\bra{\Phi_0}$
+\begin{equation}
+E = \bra{\Phi_0} e^{-\hat{T} } \hat{H} e^{\hat{T} }\ket{\Phi_0},
+\end{equation}
+while the CC amplitudes are obtained from projections onto excited determinants $\bra{\Phi_{ij\cdots}^{ab\cdots}}$
+\begin{equation}
+0 = \bra{\Phi_{ij\cdots}^{ab\cdots}} e^{-\hat{T} } \hat{H} e^{\hat{T} }\ket{\Phi_0}.
+\end{equation}
+
+The simplest CC approximation is CC with doubles (CCD), which uses the approximation $\hat{T} \approx \hat{T}_2$.
+In this case the Schr{\"o}dinger equation reads
+\begin{equation}
+\hat{H} e^{\hat{T}_2}\ket{\Phi_0} = E_\mathrm{CCD} e^{\hat{T}_2}\ket{\Phi_0},
+\end{equation}
+which upon projection onto $\Phi_0$ gives
+\begin{equation}
+\label{eq:ccd_eq_proj}
+\bra{\Phi_0}\hat{H} e^{\hat{T}_2}\ket{\Phi_0} = E_\mathrm{CCD} \bra{\Phi_0}e^{\hat{T}_2}\ket{\Phi_0}.
+\end{equation}
+The matrix element on the left of this expression is given by
+\begin{equation}
+\begin{split}
+\bra{\Phi_0}e^{\hat{T}_2}\ket{\Phi_0} & = \bra{\Phi_0}\left(1 + \hat{T}_2 + \ldots\right)\ket{\Phi_0} \\
+& =  \braket{\Phi_0 | \Phi_0} + \underbrace{ \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} \braket{\Phi_{ij}^{ab} | \Phi_0} + \ldots}_{= 0} = 1,
+ \end{split}
+\end{equation}
+where the orthogonality of determinants makes all contributions but the first null.
+Similarly, the right hand side of Eq.~\eqref{eq:ccd_eq_proj} gives
+\begin{equation}
+\begin{split}
+\bra{\Phi_0}\hat{H}e^{\hat{T}_2}\ket{\Phi_0} & = \bra{\Phi_0}\hat{H}\left(1 + \hat{T}_2 + \ldots\right)\ket{\Phi_0} \\
+& =  \braket{\Phi_0 | \hat{H} | \Phi_0} + \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} \braket{\Phi_{ij}^{ab} |\hat{H} | \Phi_0} \\
+& = E_{\mathrm{HF}} + 
+\frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab} \aphystei{ij}{ab} t_{ij}^{ab}.
+ \end{split}
+\end{equation}
+It is interesting to analyze the CCD wave function to understand its structure. Expanding the exponential we get
+\begin{equation}
+\ket{\Psi_{\mathrm{CCD}}} = e^{\hat{T}_2} \ket{\Phi_0}
+= \ket{\Phi_0} + \hat{T}_2 \ket{\Phi_0} + \underbrace{\frac{1}{2!}\hat{T}_2^2\ket{\Phi_0} + \frac{1}{3!}\hat{T}_2^3\ket{\Phi_0} + \ldots}_{\text{unlinked quadruples, hextuples, \ldots}}. 
+\end{equation}
+The leading term in $\Psi_{\mathrm{CCD}}$ is the Hartree--Fock determinant, followed by double substitutions generated by the $\hat{T}_2$ operator. However, we also see contributions involving quadruple and higher substitutions that arise from the higher powers of the cluster operator ($\hat{T}_2^2$, etc.). These terms generate the unlinked excitations that were missing in the CID method.
+
+Because including singles is inexpensive, the CC with singles and doubles (CCSD) approximation is generally preferred. Note that singles play a special role in CC theory. Consider, for example, the CCSD wave function
+\begin{equation}
+\ket{\Psi_{\mathrm{CCSD}}} = e^{\hat{T}_1 + \hat{T}_2} \ket{\Phi_0}
+= e^{\hat{T}_2}e^{\hat{T}_1} \ket{\Phi_0},
+\end{equation}
+where we have used the fact that $\hat{T}_1$ and $\hat{T}_2$ commute to rearrange this expression.
+Thouless' theorem says that the effect of  $\exp(\hat{T}_1)$ applied onto a determinant $\Phi_0$ is to generate another (nonnormalized) determinant
+\begin{equation}
+e^{\hat{T}_1} \ket{\Phi_0} = C \ket{\tilde{\Phi}_0},
+\end{equation}
+where $C$ is a normalization constant.
+Therefore, the operator $\hat{T}_1$ in CC theory may be viewed as creating a different Slater determinant than the reference. This observation explains the reason why CCSD is also very insensitive to the choice of orbitals used to form the reference determinant.
+
+The CCSD method is generally insufficient to achieve chemical high accuracy, defined as an error of 1 \kcal or less.
+To improve the accuracy of CCSD one can add triples, however, this increases the cost from $O(N^6)$ to $O(N^8)$.
+A practical alternative is to introduce triples via perturbation theory. The most successful way to achieve this goal is the CCSD(T) method, which is considered by many the gold standard of quantum chemistry.
+In CCSD(T) one determines second-order triples, $\hat{T}_3^{(2)}$, and these are used to obtain fouth-order perturbative corrections to the energy [$E^{(4)}$] that involve singles, double, and triples, which are added to the CCSD energy
+\begin{equation}
+E_{\mathrm{CCSD(T)}} = E_{\mathrm{CCSD}} + E_{T}^{(4)} + E_{ST}^{(4)} + E_{DT}^{(4)}.
+\end{equation}
+The cost to evaluate $E_{\mathrm{CCSD(T)}}$ scales as $O(N^7)$ and this method yields results that are generally of equal or better quality than CCSDT.
+
+
+
+
+
+\end{document}
