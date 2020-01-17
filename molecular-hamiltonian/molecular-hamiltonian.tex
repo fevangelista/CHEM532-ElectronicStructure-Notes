@@ -49,7 +49,7 @@ Consider a molecule containing $N$ electrons and $M$ nuclei.
 We will indicate the position of the nuclei with $\vec{R}_A = \mathbf{R}_A = (X_A,Y_A,Z_A)$ and that of electrons with $\vec{r}_i = \mathbf{r}_i = (x_i,y_i,z_i)$.
 
 \begin{table}[h!]
-\caption{Symbols used in the definition of the molecular Hamiltonian [Eqs.~\eqref{eq:molecular_hamiltonian}].}
+\caption{Symbols used in the definition of the molecular Hamiltonian [Eq.~\eqref{eq:molecular_hamiltonian}].}
 \centering
 \begin{tabular}{llllll}
 \toprule
@@ -63,19 +63,19 @@ Nuclei & $M$ & $A, B, C, \ldots$ & $\vec{R}_A = (X_A,Y_A,Z_A)$ & $M_A = M_A/m_e$
 %\label{tab:atomicunits}
 \end{table}
 
-The total Hamiltonian is
+The total Hamiltonian is given by
 \begin{equation}
 \hat{H} = \hat{T}_N + \hat{T}_e + \hat{V}_{NN} + \hat{V}_{eN} + \hat{V}_{ee},
 \end{equation}
 where
 \begin{align}
-\hat{T}_\mathrm{N} &= -\frac{\hbar^2}{2} \sum_A^M \frac{1}{M_A} \nabla^2_A \\
-\hat{T}_\mathrm{e} &= -\frac{\hbar^2}{2 m_e} \sum_i^N \nabla^2_i \\
-\hat{V}_\mathrm{NN} &= +\sum_{A}^{M} \sum_{B > A}^{M} \frac{1}{4 \pi \epsilon_0} \frac{e^2 Z_A Z_B}{r_{AB}} \\
-\hat{V}_\mathrm{eN} &= - \sum_{i}^{N} \sum_{A}^{M} \frac{1}{4 \pi \epsilon_0} \frac{e^2 Z_A}{r_{iA}} \\
-\hat{V}_\mathrm{ee} &= +\sum_{i}^{N}\sum_{j > i}^{N} \frac{1}{4 \pi \epsilon_0} \frac{e^2}{r_{ij}}
+\hat{T}_\mathrm{N} &= -\frac{\hbar^2}{2} \sum_A^M \frac{1}{M_A} \nabla^2_A, \\
+\hat{T}_\mathrm{e} &= -\frac{\hbar^2}{2 m_e} \sum_i^N \nabla^2_i, \\
+\hat{V}_\mathrm{NN} &= +\sum_{A}^{M} \sum_{B > A}^{M} \frac{1}{4 \pi \epsilon_0} \frac{e^2 Z_A Z_B}{r_{AB}}, \\
+\hat{V}_\mathrm{eN} &= - \sum_{i}^{N} \sum_{A}^{M} \frac{1}{4 \pi \epsilon_0} \frac{e^2 Z_A}{r_{iA}}, \\
+\hat{V}_\mathrm{ee} &= +\sum_{i}^{N}\sum_{j > i}^{N} \frac{1}{4 \pi \epsilon_0} \frac{e^2}{r_{ij}},
 \end{align}
-where
+and the quantity $r_{ij}$ is the distance between electrons labeled with indices $i$ and $j$
 \begin{equation}
 r_{ij} = |\vec{r}_i - \vec{r}_j| = \sqrt{(x_i-x_j)^2 + (y_i-y_j)^2 + (z_i-z_j)^2},
 \end{equation}
