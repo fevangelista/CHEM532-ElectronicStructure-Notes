@@ -6,6 +6,7 @@
 
 \documentclass[../Main/chem532-notes.tex]{subfiles}
 
+\setcounter{chapter}{1}
 \begin{document}
 
 \chapter{H\"{u}ckel Theory}
@@ -14,13 +15,18 @@
 H\"{u}ckel molecular orbital theory is one of the simplest methods to determine the energy of $\pi$ electrons in conjugated organic molecules. This approach neglects the $\sigma$ electrons and makes several simplifications in the treatment of the $\pi$ electrons.
 %Consider only $\pi$ electrons of conjugated hydrocarbons.   Assume that the orbital (MO) each electron occupies is expressed as linear combination of atomic orbitals (LCAO).
 
-\begin{example}
-ethylene (2 electrons / 2 orbitals)
+\begin{example}[ethylene, 2 electrons / 2 orbitals]
+The simplest problem that can be solved with the H\"{u}ckel method is the ethylene molecule. For each carbon we describe the electrons in the C 2p$_z$ using one basis function ($\chi_1$ and $\chi_2$)
+\begin{center}
+\includegraphics[width =1in]{../huckel/ethylene_mos.png}
+\end{center}
 \end{example}
 
-\begin{example}
-%\medskip
-benzene (6 electrons / 6 orbitals)
+\begin{example}[benzene, 6 electrons / 6 orbitals]
+In the case of benzene, the H\"{u}ckel method only describes electrons in the C 2p$_z$ responsible for $\pi$ bonding
+\begin{center}
+\includegraphics[width =1in]{../huckel/benzene_mos.png}
+\end{center}
 \end{example}
 
 In the H\"{u}ckel method electrons occupy molecular orbitals (MOs), $\psi_i(\mathbf{r})$, that are written as a linear combination of atomic orbitals (LCAO).
@@ -157,7 +163,7 @@ where the matrix $\boldsymbol{\epsilon}$ contains all the orbital energies in th
 Convince yourself that Eq.~\ref{eq:eigensystem_matrix} is correct.
 \end{problem}
 
-The H\"{u}ckel method for conjugated hydrocarbons further assumes:
+The H\"{u}ckel method for conjugated hydrocarbons further \textbf{assumes}:
 \begin{itemize}
 \item $h_{\mu\mu} = \alpha < 0$ (same for all carbon atoms), where $\alpha$ is the energy of an electron in AO $\chi_\mu \approx - I_{\mu}$  (ionization energy)
 \item $h_{\mu\nu} =
@@ -165,7 +171,7 @@ The H\"{u}ckel method for conjugated hydrocarbons further assumes:
 0 \quad \text{otherwise}
 \end{cases}$
 
-$|\beta|$ measures the strength of interaction between AOs $\mu$ and $\nu$
+$|\beta|$ measures the strength of interaction between AOs $\mu$ and $\nu$ and it is a negative quantity.
 
 \item That we neglect the overlap of atomic orbitals. This means that atomic orbitals are normalized ($\braket{\chi_\mu | \chi_\mu} = 1$) and orthogonal ($\braket{\chi_\mu | \chi_\nu} = 0$ if $\mu \neq \nu$).
 This implies that the overlap matrix $\mathbf{S}$ is the identity matrix, that is, $S_{\mu\nu} = \delta_{\mu\nu} = \begin{cases}1 \quad \text{if } \mu = \nu\\
@@ -264,6 +270,19 @@ from this equation we obtain the eigenvalues:
 \Rightarrow
 \epsilon_i = \alpha \pm \beta
 \end{equation}
+
+\begin{center}
+\includegraphics[width = 2in]{../huckel/c2_ethylene_1.png}
+\end{center}
+
+\end{example}
+
+\begin{example}[Butadiene]
+Note that cis-butadiene and trans-butadiene are the same in Hückel MOs.
+\begin{center}
+\includegraphics[width = 4in]{../huckel/c2_butadiene.png}
+\end{center}
+
 \end{example}
 
 \begin{example}[Benzene]
@@ -321,6 +340,12 @@ where $n_i$ is the occupation number of the orbital $i$. This quantity can be 0,
 n_i \in \{0, 1, 2 \}.
 \end{equation}
 
+Note that some times the eigenvalues are also expressed in the following form
+\begin{equation}
+\epsilon_i = \alpha + \lambda_i \beta,
+\end{equation}
+in terms of the reduced variable $\lambda_i$.
+
 
 
 
@@ -335,9 +360,11 @@ In the case of acrolein we define modified H\"{u}ckel parameters:
 \item $\beta_{\rm CO} = \sqrt{2} \beta$	(C = 0 $\pi$ bond is shorter and stronger than C=C)
 \item $\alpha_{\rm C'} = \alpha + 0.2 \beta$	(C of CO is slightly more electronegative due to C$\rightarrow$O charge transfer)
 \end{itemize}
-\end{example}
 
-Hamiltonian for acrolein
+\begin{center}
+\includegraphics[width = 1in]{../huckel/c2_acrolein.png}
+\end{center}
+The H\"{u}ckel Hamiltonian for acrolein is
 \begin{equation}
 \mathbf{H}
 =
@@ -348,6 +375,10 @@ Hamiltonian for acrolein
 & &  \sqrt{2} \beta & \alpha + 2 \beta \\
 \end{pmatrix}.
 \end{equation}
+
+\end{example}
+
+
 
 \begin{table}[h!]
    \centering
@@ -469,7 +500,22 @@ Note that the energies and coefficients of MOs 1 and 3 are paired.
 
 When MOs are degenerate (i.e., two MOs have same energy), their MO coefficients can not be uniquely determined.  Any linear combination of degenerate MOs is also acceptable MO of the same energy.  Appropriate transformation among degenerate MOs is needed to show pairing.
 
-\begin{example}[H\"{u}ckel computation on benzene]
+\section{Symmetry of MOs}
+Each MO is symmetric or antisymmetric with respect to symmetry operations of the system.
+
+\begin{example}[Symmetry of the orbitals in butadiene]
+\includegraphics[width=4in]{../huckel/c2_symmetry_ex1.png}
+\end{example}
+
+\begin{example}[Symmetry of the orbitals in the allyl radical]
+\includegraphics[width=3in]{../huckel/c2_symmetry_ex2.png}
+\end{example}
+
+\begin{example}[Symmetry of the orbitals in benzene]
+This example shows that when MOs are degenerate, appropriate linear combinations of degenerate MOs can be made to satisfy symmetry.
+
+\includegraphics[width=4.5in]{../huckel/c2_symmetry_ex3.png}
+
 In this example, the MOs of the benzene molecule were transformed according to
 \begin{align*}
 \psi_2^\mathrm{new} & = +\cos \theta \psi_2 + \sin \theta \psi_3  \\
@@ -509,65 +555,45 @@ and chosen either to be such that $|C_{12}|$ is maximized, which in this case is
 Shown above are two sets of orbitals for benzene. Note that orbitals 2 and 3 and 4 and 5 are degenerate. Therefore, we are allowed to separately mix them without changing the orbital energies.
 \end{example}
 
-\section{Symmetry of MOs}
-Each MO is symmetric or antisymmetric with respect to symmetry operations of the system.
-
-\begin{example}[Symmetry of the orbitals in butadiene]
-\includegraphics[width=4in]{../huckel/c2_symmetry_ex1.png}
-\end{example}
-
-\begin{example}[Symmetry of the orbitals in the allyl radical]
-\includegraphics[width=3in]{../huckel/c2_symmetry_ex2.png}
-\end{example}
-
-\begin{example}[Symmetry of the orbitals in benzene]
-This example shows that when MOs are degenerate, appropriate linear combinations of degenerate MOs can be made to satisfy symmetry.
-\includegraphics[width=4.5in]{../huckel/c2_symmetry_ex3.png}
-\end{example}
-
-
-
-
-\section{NBMO (Non-bonding MO) back-of-the-envelope calculation}
-
-Once a wise man said: ``For odd alternant hydrocarbon radicals, the SOMO (Singly Occupied MO, $\lambda_i$=0) can be calculated by hand''.
-
-This is a consequence of the pairing theorem for odd alternant hydrocarbon. Recall that the $\mu$-th row of the secular equation for the SOMO and $\mu$ = a non-starred atom is given by:
-\begin{equation}
-C_{\sigma_1 i} - \lambda_i C_{\mu i} + C_{\sigma_2 i} + C_{\sigma_3 i} = 0,
-\quad \includegraphics[width=1in]{../huckel/c2_nbmo_1.png}
-\end{equation}
-where $\sigma_j$ stands for a surrounding starred atom.
-Since for the SOMO we have that $\lambda_i = 0$ then it follows that
-\begin{equation}
-\sum_{\sigma}^{\text{neighbors of non *atom}} C_{\sigma i} = 0.
-\end{equation}
-
-\begin{example}[Allyl radical]
-For the allyl radical we can easily compute the SOMO
-
-\includegraphics[width=4.5in]{../huckel/c2_nbmo_ex1.png}
-
-\end{example}
-
-\begin{example}[Benzyl radical] We can evaluate the reactivity
-
-\includegraphics[width=3in]{../huckel/c2_nbmo_ex2.png}
-
-\end{example}
-	
-What is this good for:
-\begin{enumerate}
-\item Showing off.
-\item Predict the qualitative spin density distribution. (exp. measured by ESR)
-\item Predict the qualitative reactivity of radicals.
-\end{enumerate}
-
-\begin{example}[Further examples] Consider the following molecules:
-
-\includegraphics[width=3in]{../huckel/c2_nbmo_ex3.png}
-
-\end{example}
+%\section{NBMO (Non-bonding MO) back-of-the-envelope calculation}
+%
+%Once a wise man said: ``For odd alternant hydrocarbon radicals, the SOMO (Singly Occupied MO, $\lambda_i$=0) can be calculated by hand''.
+%
+%This is a consequence of the pairing theorem for odd alternant hydrocarbon. Recall that the $\mu$-th row of the secular equation for the SOMO and $\mu$ = a non-starred atom is given by:
+%\begin{equation}
+%C_{\sigma_1 i} - \lambda_i C_{\mu i} + C_{\sigma_2 i} + C_{\sigma_3 i} = 0,
+%\quad \includegraphics[width=1in]{../huckel/c2_nbmo_1.png}
+%\end{equation}
+%where $\sigma_j$ stands for a surrounding starred atom.
+%Since for the SOMO we have that $\lambda_i = 0$ then it follows that
+%\begin{equation}
+%\sum_{\sigma}^{\text{neighbors of non *atom}} C_{\sigma i} = 0.
+%\end{equation}
+%
+%\begin{example}[Allyl radical]
+%For the allyl radical we can easily compute the SOMO
+%
+%\includegraphics[width=4.5in]{../huckel/c2_nbmo_ex1.png}
+%
+%\end{example}
+%
+%\begin{example}[Benzyl radical] We can evaluate the reactivity
+%
+%\includegraphics[width=3in]{../huckel/c2_nbmo_ex2.png}
+%
+%\end{example}
+%	
+%What is this good for:
+%\begin{enumerate}
+%\item Showing off.
+%\item Predict the qualitative spin density distribution. (exp. measured by ESR)
+%\item Predict the qualitative reactivity of radicals.
+%\end{enumerate}
+%
+%\begin{example}[Further examples] Consider the following molecules:
+%
+%\includegraphics[width=3in]{../huckel/c2_nbmo_ex3.png}
+%\end{example}
 
 \section{MO electron density and bond order, total electron density and total bond order}
 Recall that $i$-th MO can be expanded in terms of the AOs ($\chi_\mu$ = AO) and the coefficient matrix ($C_{\mu i}$) as:
@@ -779,5 +805,344 @@ NATOMS  NELECS  NINDEX   NLAB   NHOMO   NLUMO
     C3: 1 - 1.151= -0.151
 \end{verbatim}
 \end{example}
+
+\section{Orbital Interactions and Symmetry}
+H\"{u}ckel theory can be used to qualitatively understand how the interaction of orbitals leads to the stabilization or destabilization intermediate species formed during a chemical reaction.
+To estimate the interaction of a molecule with a reagent (R) use second order perturbation theory.
+Consider the case of an electrophile reagent (R) that interacts with atom $\mu$ of a given molecule. In H\"{u}ckel theory the matrix element corresponding to this interaction can be represented with a scaled version of the resonance integral $\beta$
+\begin{equation}
+\braket{\chi_\mu | \hat{h}'| \chi_R} = \gamma \beta,
+\end{equation}
+where $0 \leq \gamma <1$ is a parameter that describes the strength of this interaction.
+
+\begin{center}
+\begin{tikzpicture}
+\draw (2,2) circle (0.75);
+\fill[black] (2.75,2) circle (0.1);
+\node at (2.4,2) {$\mu$};
+\fill[black] (4,2) circle (0.1);
+\node at (4,1.6) {R};
+\draw[thick,->] (4.5,2) -- (5.5,2);
+\draw (7,2) circle (0.75);
+\fill[black] (7.75,2) circle (0.1);
+\node at (7.4,2) {$\mu$};
+\draw[dashed] (7.75,2) -- (9,2);
+\fill[black] (9,2) circle (0.1);
+\node at (9,1.6) {R};
+\node at (8.4,2.3) {$\gamma\beta$};
+\node[align=center] at (2,0) {molecule\\ MO $\phi_i$ \\$\epsilon_i$};
+\node[align=center] at (4,0) {reagent\\ $\chi_\mathrm{R}$\\$\alpha_\mathrm{R} = \alpha$};
+\node[align=center] at (8,0) {transition state \\ interaction \\ $\braket{\chi_\mu | \hat{h}'| \chi_R} = \gamma \beta$};
+\end{tikzpicture}
+\end{center}
+
+%Recall that the second-order perturbation energy correction of the energy for an orbital $\psi_i$ due to a perturbation $\hat{h}'$ is given by
+%\begin{equation}
+%\Delta E_i^{(2)} = \sum_{k \neq i}^\text{unoccupied states} \frac{|\braket{\psi_i|\hat{h}'|\psi_k}|^2}{\epsilon_i - \epsilon_k},
+%\end{equation}
+%where $\hat{h}'$ contains the terms that describe the interaction between A and B.
+
+
+Each  molecular orbital $\psi_i$ from H\"{u}ckel theory gets stabilized by an energy amount given by
+\begin{equation}
+\Delta E_i^{(2)} = \frac{|\braket{\psi_i|\hat{h}'|\chi_R}|^2}{\epsilon_i - \epsilon_R}.
+\end{equation}
+Note that there is no summation here because there is only one perturbing state (the empty orbital of the reagent). Here is a molecular orbital scheme that shows how the interaction of the reagent empty orbital stabilizes the orbitals in the transition state
+
+\begin{center}
+\includegraphics[width=3in]{../huckel/c2_reactivity_2.png}
+\end{center}
+
+The numerator of the expression for $\Delta E_i^{(2)}$ may be easily computed as
+\begin{equation}
+\braket{\psi_i|\hat{h}'|\chi_R} =\sum_\nu C_{\mu i} \braket{\chi_\nu|\hat{h}'|\chi_R}
+ = C_{\mu i} \braket{\chi_\mu|\hat{h}'|\chi_R} = \gamma \beta C_{\mu i}.
+\end{equation}
+because $\psi_i = \sum_\mu^{N} \chi_\mu C_{\mu i}$ and only the matrix element $ \braket{\chi_\mu|\hat{h}'|\chi_R}$ is nonzero.
+The denominator is instead given by
+\begin{equation}
+\epsilon_i - \epsilon_R = \alpha + \lambda_i \beta - \alpha = \lambda_i \beta,
+\end{equation}
+where we assumed that the electrophile is a carbon atom ($\epsilon_R = \alpha$).
+Putting everything together we get
+\begin{equation}
+\Delta E_i^{(2)} = \frac{(\gamma \beta C_{\mu i})^2}{\lambda_i \beta} = \frac{C_{\mu i}^2}{\lambda_i} \gamma^2 \beta.
+\end{equation}
+If we sum this contribution over all the doubly occupied orbitals we get a total energy stabilization equal to 
+\begin{equation}
+2 \sum_i^\text{occ} \Delta E_i^{(2)} = 2 \sum_i^\text{occ} \frac{C_{\mu i}^2}{\lambda_i} \gamma^2 \beta
+= S_R^\mathrm{E} \gamma^2 \beta.
+\end{equation}
+This equation partitions the interaction energy into a molecule specific part $S_R^\mathrm{E}$, called the \textit{superdelocalizability} and $\gamma^2 \beta$, a term that depends on the strength of the interaction.
+
+The largest contribution to $S_R^\mathrm{E}$ comes form the MO with the smallest $|\lambda_i|$, which is called highest occupied molecular orbital (HOMO) and is given by the single term
+\begin{equation}
+2\frac{C_{\mu,\mathrm{HOMO}}^2}{\lambda_\mathrm{HOMO}}
+\end{equation}
+If we ignore the denominator we can consider a simplified reactivity index, the \textit{frontier electron density}, given by
+\begin{equation}
+f_\mu^\mathrm{El} = 2 C_{\mu,\mathrm{HOMO}}^2.
+\end{equation}
+The most reactive atom towards an electrophile is the one with the largest value of $f_\mu^\mathrm{El}$, among all possible values of $\mu$.
+This means that the atom with the largest absolute coefficient in the HOMO is the most reactive.
+One can repeat the same analysis for nucleophilic reactions, in which case the reactivity can be connected to a corresponding frontier electron density
+\begin{equation}
+f_\mu^\mathrm{Nuc} = 2 C_{\mu,\mathrm{LUMO}}^2,
+\end{equation}
+where LUMO indicates the lowest unoccupied MO.
+These two indices allow to identify the atoms (labeled with $\mu$) with the highest reactivity towards electrophiles and nucleophiles by just looking at the HOMO and LUMO of a molecule.
+For radical reactions, on considers instead the average of $f_\mu^\mathrm{El}$ and $f_R^\mathrm{Nuc}$
+\begin{equation}
+f_\mu^\mathrm{Rad} = \frac{1}{2} ( f_\mu^\mathrm{El} + f_\mu^\mathrm{Nuc} ).
+\end{equation}
+
+\section{Two-center interactions}
+Another important application of H\"{u}ckel theory is in reactions that involve two centers, like cyclization of unsaturated hydrocarbons.
+If we now consider two molecules, A and B, with centers $\mu$ and $\nu$ on A interacting with centers $\mu'$ and $\nu'$ on B, we can ask how much is the energy of the complex A + B stabilized by the interaction of the frontier orbitals (HOMO/LUMO) on each fragment.
+\begin{center}
+\begin{tikzpicture}
+\draw (2,2) circle (0.75);
+\draw (4.5,2) circle (0.75);
+\fill[black] (2.7,2.25) circle (0.1);
+\fill[black] (2.7,1.75) circle (0.1);
+\fill[black] (3.8,2.25) circle (0.1);
+\fill[black] (3.8,1.75) circle (0.1);
+\draw[dashed] (2.7,2.25) -- (3.8,2.25);
+\draw[dashed] (2.7,1.75) -- (3.8,1.75);
+\node at (2.45,2.2) {$\mu$};
+\node at (2.45,1.7) {$\nu$};
+\node at (4.1,2.25) {$\mu'$};
+\node at (4.1,1.75) {$\nu'$};
+\node at (2,2) {A};
+\node at (4.5,2) {B};
+\node at (3.3,3.0) {perturbation};
+\node at (3.3,2.5) {$\gamma\beta$};
+\node at (3.3,1.4) {$\gamma\beta$};
+\end{tikzpicture}
+\end{center}
+
+Assuming again that each pair of orbitals interacts with a term equal to $\gamma \beta$, we can write
+\begin{equation}
+\begin{split}
+\braket{\chi_\mu | \hat{h}'| \chi_{\mu'}} = \gamma \beta, \\
+\braket{\chi_\nu | \hat{h}'| \chi_{\nu'}} = \gamma \beta.
+\end{split}
+\end{equation}
+
+
+
+Each orbital $\psi_i^\mathrm{A}$ on A will be stabilized by the interaction with the unoccupied orbitals on B
+\begin{equation}
+\Delta E_i^{\mathrm{A},(2)} = \sum_{k \neq i}^\text{virtual B} \frac{|\braket{\psi^\mathrm{A}_i|\hat{h}'|\psi^\mathrm{B}_k}|^2}{\epsilon^\mathrm{A}_i - \epsilon^\mathrm{B}_k}.
+\end{equation}
+Similarly, an orbital $\psi_i^\mathrm{B}$ on B will be stabilized by the interaction with the unoccupied orbitals on A by an amount
+\begin{equation}
+\Delta E_i^{\mathrm{B},(2)} = \sum_{k \neq i}^\text{virtual B} \frac{|\braket{\psi^\mathrm{B}_i|\hat{h}'|\psi^\mathrm{A}_k}|^2}{\epsilon^\mathrm{B}_i - \epsilon^\mathrm{A}_k}.
+\end{equation}
+Now let us suppose that the most important contribution comes from the interaction of the HOMO on A with the LUMO on B. The numerator for this contribution is given by
+\begin{equation}
+\Delta E_\mathrm{HOMO}^{\mathrm{A},(2)} = \frac{|\braket{\psi^\mathrm{A}_{\mathrm{HOMO}}|\hat{h}'|\psi^\mathrm{B}_{\mathrm{LUMO}}}|^2}{\epsilon^\mathrm{A}_{\mathrm{HOMO}}- \epsilon^\mathrm{B}_{\mathrm{LUMO}}}.
+\end{equation}
+If we plug in the definition of these two orbitals we get for the numerator
+\begin{equation}
+\begin{split}
+\braket{\psi^\mathrm{A}_{\mathrm{HOMO}}|\hat{h}'|\psi^\mathrm{B_{\mathrm{LUMO}}}} &=
+\sum_{\rho\sigma} 
+\braket{\chi_\rho|\hat{h}'|\chi_\sigma}
+C_{\rho,\mathrm{HOMO}}^\mathrm{A} C_{\sigma,\mathrm{LUMO}}^\mathrm{B} \\
+&=
+\braket{\chi_\mu|\hat{h}'|\chi_{\mu'}}
+C_{\mu,\mathrm{HOMO}}^\mathrm{A} C_{\mu',\mathrm{LUMO}}^\mathrm{B}
++\braket{\chi_\nu|\hat{h}'|\chi_{\nu'}}
+C_{\nu,\mathrm{HOMO}}^\mathrm{A} C_{\nu',\mathrm{LUMO}}^\mathrm{B}
+\\
+&=
+\gamma\beta \underbrace{(
+C_{\mu,\mathrm{HOMO}}^\mathrm{A} C_{\mu',\mathrm{LUMO}}^\mathrm{B}
++
+C_{\nu,\mathrm{HOMO}}^\mathrm{A} C_{\nu',\mathrm{LUMO}}^\mathrm{B}
+)}_{\delta}
+=
+\gamma\beta\delta
+\end{split}
+\end{equation}
+We can now use this result to analyze the cyclization reaction between two molecules.
+
+\section{Cyclization Reaction Between Two Molecules}
+Consider the case of the HOMO of butadiene interacting with the LUMO of ethylene. In this case we can use simple symmetry considerations to learn something about the interaction of these two molecules in a cyclization reaction. The following plot show the HOMO and LUMO of butadiene and ethylene
+
+\begin{center}
+\includegraphics[width=3in]{../huckel/c2_cyclization_1.png}
+\end{center}
+
+For butadiene (A) the HOMO is antisymmetric, that is, it takes values with opposite signs on the two interacting atoms
+\begin{equation}
+C_{\mu,\mathrm{HOMO}}^\mathrm{A} = -C_{\nu,\mathrm{HOMO}}^\mathrm{A}
+\end{equation}
+and this is also true for the LUMO of ethylene (B)
+\begin{equation}
+C_{\mu',\mathrm{LUMO}}^\mathrm{B} = -C_{\nu',\mathrm{LUMO}}^\mathrm{B}.
+\end{equation}
+Taking these results into considerations we obtain
+\begin{equation}
+\delta = C_{\mu,\mathrm{HOMO}}^\mathrm{A} C_{\mu',\mathrm{LUMO}}^\mathrm{B}
++
+C_{\nu,\mathrm{HOMO}}^\mathrm{A} C_{\nu',\mathrm{LUMO}}^\mathrm{B}
+= 
+2 C_{\mu,\mathrm{HOMO}}^\mathrm{A} C_{\mu',\mathrm{LUMO}}^\mathrm{B}
+\end{equation}
+This interaction leads to a lowering in energy since ${\epsilon^\mathrm{A}_{\mathrm{HOMO}}- \epsilon^\mathrm{B}_{\mathrm{LUMO}}} < 0$, therefore, we say that this interaction is \textbf{allowed}.
+In general, the interaction of orbitals with the same symmetry is allowed.
+For example, the interaction of the butadiene LUMO with the ethylene HOMO (the opposite of what we considered above) is a case where both orbitals are symmetric since
+\begin{equation}
+C_{\mu,\mathrm{LUMO}}^\mathrm{A} = C_{\nu,\mathrm{LUMO}}^\mathrm{A},
+\end{equation}
+and
+\begin{equation}
+C_{\mu',\mathrm{HOMO}}^\mathrm{B} = C_{\nu',\mathrm{HOMO}}^\mathrm{B}.
+\end{equation}
+For this case the quantity $\delta$ is also nonzero
+\begin{equation}
+\delta = 2 C_{\mu,\mathrm{LUMO}}^\mathrm{A} C_{\mu',\mathrm{HOMO}}^\mathrm{B}
+\end{equation}
+
+The interaction of two ethylene molecules is an example where the HOMO and LUMO have different symmetry
+
+\includegraphics[width=3in]{../huckel/c2_cyclization_2.png}
+
+In this case since
+\begin{equation}
+C_{\mu,\mathrm{HOMO}}^\mathrm{A} = C_{\nu,\mathrm{HOMO}}^\mathrm{A},
+\end{equation}
+and
+\begin{equation}
+C_{\mu',\mathrm{LUMO}}^\mathrm{B} = - C_{\nu',\mathrm{LUMO}}^\mathrm{B}.
+\end{equation}
+we find that $\delta = 0$.
+This means that the interaction between orbitals of different symmetry is \textbf{forbidden}.
+For general polyenes one has the following result:
+\begin{equation}
+(4n + 2) + (4n') \rightarrow 4 n'' + 2 \quad \text{symmetry allowed},
+\end{equation}
+while
+\begin{equation}
+\begin{split}
+(4n + 2) + (4n' + 2) & \rightarrow 4 n'' +4\quad \text{forbidden}, \\
+(4n) + (4n') & \rightarrow 4 n''\quad \text{forbidden}.
+\end{split}
+\end{equation}
+
+
+\section{Orbital mixing rules}
+Let's consider two atomic orbitals $\psi_i$ and $\psi_j$ and let them interact by, for example, bringing them together.
+The interacting orbitals may be described by a two by two matrix of the form
+\begin{equation}
+\mathbf{h} = 
+\begin{pmatrix}
+\braket{\psi_i | \hat{h} |\psi_i} & \braket{\psi_i | \hat{h} |\psi_j} \\
+\braket{\psi_j | \hat{h} |\psi_i} & \braket{\psi_j | \hat{h} |\psi_j}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\epsilon_i & v \\
+v & \epsilon_j
+\end{pmatrix}.
+\end{equation}
+
+By examining the properties of the eigenvalues/eigenvectors of this matrix we can deduce some useful rules that can help us predict how orbitals mix.
+
+\begin{itemize}
+\item \textbf{Rule 1}. A pair of orbitals with zero overlap (orthogonal) do not mix. This is the case $v=0$, which basically means that the two orbitals do not interact due to symmetry.
+
+\includegraphics[width=3in]{../huckel/c2_mix_rule_1.png}
+
+\item \textbf{Rule 2}. When a pair of orbitals interact, they form a bonding (in-phase) orbital and an anti-bonding (out-of-phase) orbital. The bonding orbital is lower in energy than the antibonding orbital.
+
+\includegraphics[width=2in]{../huckel/c2_mix_rule_2.png}
+
+This rule follows from the equation for the eigenvalues of $\mathbf{h}$
+\begin{equation}
+\lambda_\pm = \frac{1}{2} (\epsilon_i + \epsilon_j)
+\pm \frac{1}{2} \sqrt{(\epsilon_i - \epsilon_j)^2 + 4 v^2}.
+\end{equation}
+%Suppose $\epsilon_i \geq \epsilon_j$,
+%The lowest eigenvalue ($\lambda_-$) corresponds to the eigenvector
+%\begin{equation}
+%v_1 = (\frac{\epsilon_i-\epsilon_j - \sqrt{(\epsilon_i - \epsilon_j)^2 + 4 v^2} }{2v} ,1)
+%\end{equation}
+
+\item \textbf{Rule 3}.  When the energy difference between a pair of orbitals before mixing is small and/or the overlap between a pair of orbitals is large, the energy separation becomes large after mixing.
+
+\includegraphics[width=4in]{../huckel/c2_mix_rule_3.png}
+
+\item \textbf{Rule 4}.  When a pair of orbitals with different energies interact, the newly formed MO has large contribution of the original orbital whose energy is closest to the newly formed MO.
+
+\begin{center}
+\includegraphics[width=4in]{../huckel/c2_mix_rule_4.png}
+\end{center}
+
+
+\item \textbf{Rule 5}. The same number of new MOs are created from the original orbitals before mixing ($N$ MOs from $N$ AOs).
+
+\item \textbf{Rule 6}.    Suppose another orbital $\chi_c$ affects the two orbitals $\phi_1$  and $\phi_2$, which were formed mainly by interacting two orbitals $\chi_a$ and $\chi_b$.   The perturbation caused by the third orbital $\chi_c$ causes a small change of the orbital shape of $\phi_1$ and $\phi_2$.   When the energy of $\chi_c$ is higher than the energies of $\phi_1$ and $\phi_2$, the mixing of $\chi_c$ with $\phi_1$ and $\phi_2$ is in-phase.   When the energy of $\chi_c$ is lower than the energies of $\phi_1$ and $\phi_2$, the mixing of $\chi_c$ into $\phi_1$ and $\phi_2$ is out-of-phase.
+ When three orbitals are interacting, the newly formed three MO's can be expressed with a linear combination of the original three orbitals.   The mixing coefficients depend on the energies of the original three orbitals.
+
+\begin{center}
+\includegraphics[width=4in]{../huckel/c2_mix_rule_6.png}
+\end{center}
+\end{itemize}
+
+
+\section{Examples and Problems}
+\subsection{Molecular orbitals of \ce{H3}}
+Let us construct the molecular orbitals for the triangular and linear \ce{H3} species from the hydrogen atom and the molecular orbital of the \ce{H2} molecule. 
+
+\textbf{Triangular \ce{H3}}
+
+\begin{center}
+\includegraphics[width=3in]{../huckel/c2_h3_tri.png}
+\end{center}
+
+ In the case of triangular \ce{H3}, let us assume that atomic hydrogen approaches on the bisecting axis of the hydrogen molecule.
+ Note that $\chi_a$ interacts only with $\chi_b$ since the symmetry of $\chi_c$ is such that no mixing happens.
+ The newly formed molecular orbital $\psi_1$ is the bonding combination between $\chi_a$ and $\chi_b$, and the molecular orbital $\psi_2$ is the corresponding anti-bonding combination. $\psi_3$ is the original $\chi_c$. 
+
+\textbf{Linear \ce{H3}} (\ce{H. . . H-H})
+
+\begin{center}
+\includegraphics[width=3in]{../huckel/c2_h3_lin.png}
+\end{center}
+
+In the linear form of \ce{H3}, an hydrogen atom approaches the molecular axis of the hydrogen molecule.   The situation becomes different from the triangular \ce{H3} case, because all orbitals $\chi_a$, $\chi_b$, and $\chi_c$  interact with each other.
+Comparing these two cases, we predict that the hydrogen exchange reaction \ce{H2 + H} prefers the linear transition-state structure since orbital interactions lead to an overall stabilization of the energy.
+
+\begin{problem}[Molecular orbitals of \ce{H4}]
+Construct the molecular orbitals for square \ce{H4} and linear \ce{H4} species from the two sets of molecular orbitals of the \ce{H2} molecule. 
+Draw the orbital energy diagrams and discuss which structure is more stable.
+
+\begin{center}
+\includegraphics[width=2in]{../huckel/c2_problem_h4.png}
+\end{center}
+
+\end{problem}
+
+\begin{problem}[$\pi$ MOs of benzene]
+Create the six $\pi$-molecular orbitals of benzene by combining the two sets of $\pi$-orbitals of the allyl radical.   The picture shows only one side of $\pi$-plane (top view).
+
+\begin{center}
+\includegraphics[width=3in]{../huckel/c2_problem_benzene.png}
+\end{center}
+
+\end{problem}
+
+%Once you know all the $\pi$-molecular orbitals of benzene, you can construct any -orbital of substituted benzene.   Let us make the HOMO (highest occupied molecular orbital) of phenol from benzene and the oxygen atom.
+%   Assuming that the oxygen atom approaches to one of the carbon atoms of benzene along the C2v axis.   Before we construct the MOs of phenol, we should assign all of the unperturbed MOs under the C2v symmetry.   The MO of benzene does not interact with 2p-orbital of oxygen atom unless the symmetry of -MOs of benzene is b1 symmetry.   The HOMO of phenol 4 must be constructed from the anti-bonding combination between HOMO of the benzene 3 and the oxygen p-orbital o.   The second contributing orbital to the HOMO of phenol is the LUMO of benzene 5 which has a bonding combination with the oxygen p-orbital o.   We can neglect all other contributions from benzene -MO qualitatively, because the energy difference between 4 and 1 or 6 is larger than that between 4 and 3 or 5. 
+
+
+ 
+
+ 
+
+
 
 \end{document}

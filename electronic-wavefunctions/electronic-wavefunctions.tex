@@ -5,9 +5,12 @@
 % !TEX TS-program = xelatex
 
 \documentclass[../Main/chem532-notes.tex]{subfiles}
+
+\setcounter{chapter}{2}
+
 \begin{document}
 
-\chapter{Electronic wave functions}
+\chapter{Many-electron wave functions and Full Configuration Interaction}
 
 \section{Spin}
 So far we have neglected to account for spin.
@@ -384,19 +387,39 @@ We may form six unique determinants:
 Symmetry greatly simplifies this problem.\mnote{Recall that when an operator $\hat{O}$ commutes with the Hamiltonian, $[\hat{H},\hat{O}] = 0$, then it is possible to find a set of states that simultaneously diagonalize $\hat{H}$ and $\hat{O}$. For a set of symmetry operations this result implies that the eigensolutions of $\hat{H}$ may be classified according to the irreducible representations.}
 The determinants $\ket{\Phi_1}$ and $\ket{\Phi_4}$ are gerade since the product $\psi_{\mathrm{g}}\psi_{\bar{\mathrm{g}}}$ has symmetry equal to g $\times$ g = g.\mnote{Recall that for molecules that possess a center of inversion the following rules apply: g $\times$ g = g, g $\times$ u = u $\times$ g = u, u $\times$ u = g.}
 Determinants $\ket{\Phi_2}$, $\ket{\Phi_3}$, $\ket{\Phi_5}$, $\ket{\Phi_6}$ instead are ungerade.
-Spin (which is another symmetry) helps.
-Determinants 1--4 have all $M_S = 0$, while 5 and 6 have $M_S = +1$ and $-1$, respectively.
-Determinants with different symmetry and spin will not contribute to the same eigenfunction.
-As a consequence, the eigenfunctions for H$_2$ will be either a gerade state with $M_S = 0$ and wave function:
+Spin (which is another symmetry) also helps to classify the determinants.
+As shown in the table below, determinants 1--4 have $M_S = 0$, while 5 and 6 have $M_S = +1$ and $-1$, respectively.
+\begin{equation}
+   \begin{array}{c|ccc}
+    \text{Determinant} & \text{Occupied spin orbitals} & \text{Symmetry} & M_S \\
+    \hline
+    \Phi_1 & \psi_{\mathrm{g}}\psi_{\bar{\mathrm{g}}}  &\mathrm{g} & 0 \\
+    \Phi_2 & \psi_{\mathrm{g}}\psi_{\bar{\mathrm{u}}}  &\mathrm{u} & 0 \\
+    \Phi_3 & \psi_{\mathrm{u}}\psi_{\bar{\mathrm{g}}}  &\mathrm{u} & 0 \\    
+    \Phi_4 & \psi_{\mathrm{u}}\psi_{\bar{\mathrm{u}}}  &\mathrm{g} & 0 \\        
+    \Phi_5 & \psi_{\mathrm{g}}\psi_{\mathrm{u}}  &\mathrm{u} & 1 \\
+    \Phi_6 & \psi_{\bar{\mathrm{g}}}\psi_{\bar{\mathrm{u}}}  &\mathrm{u} & -1 \\
+   \end{array}
+\end{equation}
+
+Why is this classification helpful? Because determinants with different symmetry and spin will not contribute to the same eigenfunction.
+We can immediately notice that there are only two determinants ($\Phi_1$ and $\Phi_4$) of gerade symmetry, and both have $M_S = 0$. Out of these two determinants one can form eigenfunctions of the form
 \begin{equation}
 C_1 \ket{\Phi_1} + C_4 \ket{\Phi_4},
 \end{equation}
-or a ungerade state with $M_S = 0$ and wave function:
+which will continue to have gerade symmetry and $M_S = 0$.
+What is spin state (singlet, double, triplets, etc.) corresponding to these solutions?
+Remember that for a system with total spin quantum number $S$ the allowed values of $M_S$ are $-S, -S + 1, \ldots, S - 1, S$, in total $2S + 1$.
+The only value of $S$ that is compatible with the states that we found (g, $M_S = 0$) is $S = 0$, since then $M_S = 0$.
+Therefore, the states of the form $C_1 \ket{\Phi_1} + C_4 \ket{\Phi_4}$ are singlet states.
+
+From the ungerade determinants with $M_S = 0$ we can form wave functions that look like:
 \begin{equation}
 C_2 \ket{\Phi_2} + C_3 \ket{\Phi_3},
 \end{equation}
-or one of the two ungerade states with $M_S = \pm1$ ($\ket{\Phi_5}$, $\ket{\Phi_6}$).
+plus we have two ungerade states with $M_S = \pm1$ ($\ket{\Phi_5}$, $\ket{\Phi_6}$) that will not mix with any other determinants because their symmetry is distinct from that of all other determinants.
 
+\section{Electronic states of \ce{H2}}
 Let us now analyze these determinants in terms of the atomic basis functions.
 Consider $\Phi_1$, the lowest energy determinant.
 If we plug in the definitions of the spin orbitals we obtain:
@@ -409,7 +432,7 @@ If we plug in the definitions of the spin orbitals we obtain:
 +\ket{\chi_{1\rm s}^{\rm B}\alpha \chi_{1\rm s}^{\rm B}\beta}].
 \end{split}
 \end{equation}
-The first and last terms correspond to ionic configurations of electrons: 
+The first and last terms correspond to \textbf{ionic configurations} of electrons: 
 \begin{equation}
  \ket{\chi_{1\rm s}^{\rm A}\alpha \chi_{1\rm s}^{\rm A}\beta} \equiv 
  \begin{tikzpicture}[baseline={([yshift=-.5ex]current bounding box.center)},vertex/.style={anchor=base, minimum size=18pt, inner sep=2pt}]
@@ -434,7 +457,7 @@ and
   \end{tikzpicture}
 \end{equation}
 since both electrons occupy the atomic orbitals on atom A or B.
-The remaining contributions describe covalent bonds in which each atomic orbital is occupied with one electrons. These are:
+The remaining contributions describe \textbf{covalent bonds} in which each atomic orbital is occupied with one electrons. These are:
 \begin{equation}
  \ket{\chi_{1\rm s}^{\rm A}\alpha \chi_{1\rm s}^{\rm B}\beta} \equiv 
  \begin{tikzpicture}[baseline={([yshift=-.5ex]current bounding box.center)},vertex/.style={anchor=base, minimum size=18pt, inner sep=2pt}]
@@ -500,7 +523,7 @@ We also eliminated the Pauli-principle violating terms like this:
     \draw (1.25,0.5) -- (1.75,0.5);
   \end{tikzpicture}
 \end{equation}
-In other words, this determinant accounts for Fermi correlation.
+In other words, this determinant includes a form of correlation that is a consequence of the antisymmetry of the wave function of electrons, the so-called \textbf{Fermi correlation}.
 The state $\Phi_5$ corresponds to having each atomic orbital occupied by one alpha electron.
 
 Finally, we will consider the spin of the determinants.
@@ -574,5 +597,20 @@ and
 \hat{S}^2 \ket{\Phi_{-}} = 2 \ket{\Phi_{-}}.
 \end{equation}
 Therefore, $\Phi_{-}$ is a triplet state while $\Phi_{+}$ is a singlet state.
+
+Putting everything together we can summarize the our results as
+\begin{equation}
+   \begin{array}{ccccc}
+    \text{State} & \text{Symmetry} & S & M_S & \text{Note}\\
+    \hline
+    C_1 \ket{\Phi_1} + C_4 \ket{\Phi_4} & \mathrm{g} & 0 & 0 & \text{Ground singlet state}\\
+    C'_1 \ket{\Phi_1} + C'_4 \ket{\Phi_4} & \mathrm{g} & 0 & 0 & \text{Excited singlet state} \\ 
+    \frac{1}{\sqrt{2}} \left(  \ket{\Phi_2} + \ket{\Phi_3} \right) & \mathrm{u} & 0 & 0 & \text{Excited singlet state}\\
+        \ket{\Phi_5} & \mathrm{u} & 1 & 1 & \text{Triplet state}\\    
+        \frac{1}{\sqrt{2}} \left(  \ket{\Phi_2} - \ket{\Phi_3} \right) & \mathrm{u} & 1 & 0 & \text{triplet state}\\
+        \ket{\Phi_6} & \mathrm{u} & 1 & -1 & \text{Triplet state}
+   \end{array}
+\end{equation}
+
 
 \end{document}

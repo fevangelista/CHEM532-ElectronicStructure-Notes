@@ -68,7 +68,9 @@
 
 % Chapter format
 \titleformat{\chapter}[display]
-  {\color{white!20!black} \huge\headingfont}{\color{white!20!black} \bfseries\chaptertitlename\ \thechapter}{32pt}{\huge}
+ {\color{white!20!black} \huge\headingfont}
+ {\color{white!20!black} \bfseries{\large\textsc{CHAPTER}}\ \thechapter \\ \noindent\rule{6in}{0.5pt}}{0pt}
+ {\huge }
   
 % Section format
 \titleformat*{\section}{\color{white!20!black} \large\headingfont\bfseries}

@@ -2,11 +2,13 @@
 % To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
 % or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
-% !TEX TS-program = xelatex
+% !TEX TS-program = xelatex	
 
 \documentclass[../Main/chem532-notes.tex]{subfiles}
 
 \begin{document}
+
+\setcounter{chapter}{7}
 
 \chapter{Single-reference wave function methods}
 
@@ -168,35 +170,67 @@ Size consistency is a necessary requirement of any electronic structure theory, 
 Note that corrections for the lack of size consistency in truncated CI do exists, for example, \textbf{Davidson's size-consistency correction}.
 
 \section{M{\o}ller--Plesset perturbation theory}
-A second approach to approximate the FCI wave function is to use perturbation theory. In the \textbf{M{\o}ller--Plesset} formalism, the Hamiltonian is first partitioned into a zeroth-order part ($\hat{H}_0$) plus a perturbation ($\hat{V}$), and  $\hat{H}_0$ is chosen to be the Fock operator
-\begin{align}
-\hat{H}_0  & = \hat{f},\\
-\hat{V}  & = \hat{H} - \hat{f}.
-\end{align}
-Here we assume that the orbitals have been variationally optimized via the Hartree--Fock method.
-This choice is convenient since the HF determinant is an eigenfunction of $\hat{H}_0$
+A second approach to approximate the FCI wave function is to use perturbation theory. Recall that the Hamiltonian in second quantization reads
+\begin{equation}
+\hat{H} = \sum_{pq} h_{pq} \cop{p} \aop{q}
++ \frac{1}{4} \sum_{pqrs} \aphystei{pq}{rs} \cop{p}\cop{q}\aop{s}\aop{r},
+\end{equation}
+where the quantities $h_{pq} = \bra{\psi_p} \hat{h} \ket{\psi_q}$ are matrix elements of the one-body operator while $\aphystei{pq}{rs}$ are two-electron integrals.
+
+In the \textbf{M{\o}ller--Plesset} formalism, the Hamiltonian is first partitioned into a zeroth-order part ($\hat{H}_0$) plus a perturbation ($\hat{V}$), and  $\hat{H}_0$ is chosen to be the Fock operator
+\begin{equation}
+\hat{H}_0   = \hat{f} = \sum_p \epsilon_p \cop{p} \aop{p}.
+\end{equation}
+Here we assume that the orbitals have been variationally optimized via the Hartree--Fock method and rotated to the canonical basis (so that $f_{pq} = \epsilon_p  \delta_{pq}$).
+It follows that the perturbation contains one- and two-body terms
+\begin{equation}
+\hat{V}  = \hat{H} - \hat{f} = \sum_{pq} ( h_{pq}  - \epsilon_p \delta_{pq}) \cop{p} \aop{q}
++ \frac{1}{4} \sum_{pqrs} \aphystei{pq}{rs} \cop{p}\cop{q}\aop{s}\aop{r} .
+\end{equation}
+This choice is convenient since the HF determinant is an eigenfunction of $\hat{H}_0$\mnote{
+As a matter of fact, any determinant is an eigenfunction of a diagonal one-body operator like $\hat{H}_0$ with eigenvalue given by the sum of the orbital energies $\epsilon_i$ of all the occupied spin orbitals.
+}
 \begin{equation}
 \hat{H}_0\ket{\Phi_0} = \left(\sum_i^{\mathrm{occ}} \epsilon_i\right) \ket{\Phi_0}.
 \end{equation}
+%For example, consider a determinant $\ket{\Phi_I}= \ket{\psi_{i_1} \psi_{i_2} \cdots \psi_{i_N}}$ where the indices $i_1, i_2, \ldots, i_N$ indicate which spin orbitals are occupied.
+%When we apply $\hat{H}_0$ to $\ket{\Phi_I}$ we get
+%\begin{equation}
+%\hat{H}_0 \ket{\Phi_I} = \sum_p \epsilon_p \cop{p} \aop{p}  \ket{\psi_{i_1} \psi_{i_2} \cdots \psi_{i_N}}.
+%\end{equation}
+%The effect of the pair of operators $\cop{p} \aop{p}$ on a determinant is to count the number of electrons in spin orbital $\psi_p$ (you can see this using the occupation number representation tricks), that is,
+%\begin{equation}
+%\cop{p} \aop{p}  \ket{\psi_{i_1} \psi_{i_2} \cdots \psi_{i_N}} =  \ket{\psi_{i_1} \psi_{i_2} \cdots \psi_{i_N}} \delta_{p \in \mathrm{occ}},
+%\end{equation}
+%where $\delta_{p \in \mathrm{occ}} = 1$ if $\psi_p$ is occupied, while it is equal to zero if $\psi_p$ is unoccupied.
+%Therefore,
+%\begin{equation}
+%\hat{H}_0 \ket{\Phi_I} = \sum_p \epsilon_p \ket{\psi_{i_1} \psi_{i_2} \cdots \psi_{i_N}} \delta_{p \in \mathrm{occ}} = \epsilon_{i_1} + \epsilon_{i_2} + \ldots + \epsilon_{i_N} =
+%\sum_i^{\mathrm{occ}(\Phi_I)} \epsilon_{i},
+%\end{equation}
+%where in the last sum the index $i$ runs over all the occupied orbitals of $\Phi_I$ [$\mathrm{occ}(\Phi_I)$].
 
-The zeroth-order energy is then given by the sum of the energies of occupied orbitals
+
+Using this result we find that the first-order energy is given by
 \begin{equation}
-E^{(0)}_0 = \bra{\Phi_0} \hat{H}_0 \ket{\Phi_0} = \sum_i^{\mathrm{occ}} \epsilon_i.
-\end{equation}
-The first-order energy is then
-\begin{equation}
-E^{(1)}_0 = \bra{\Phi_0} \hat{V} \ket{\Phi_0} = E_\mathrm{HF} - \sum_i^{\mathrm{occ}} \epsilon_i,
+E^{(1)}_0 = \bra{\Phi_0} \hat{V} \ket{\Phi_0} = E_\mathrm{HF} - \sum_i^{\mathrm{occ}} \epsilon_i = -\frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{ij}{ij},
 \end{equation}
 so that the sum of zeroth- and first-order energies is the Hartree--Fock energy
 \begin{equation}
-E^{(0)}_0 + E^{(1)}_0 = \bra{\Phi_0} \hat{H}_0 + \hat{V} \ket{\Phi_0} = E_\mathrm{HF}.
+E^{(0)}_0 + E^{(1)}_0 = \bra{\Phi_0} \hat{H}_0 + \hat{V} \ket{\Phi_0} = \bra{\Phi_0}  \hat{H} \ket{\Phi_0} =  E_\mathrm{HF}.
 \end{equation}
-Recall that the first-order correction to the wave function [$\Psi_0^{(1)}$] is given by the sum
+Recall that in standard perturbation theory, the first-order correction to the wave function [$\Psi_0^{(1)}$] is given by the sum
 \begin{equation}
 \ket{\Psi_0^{(1)}} = \sum_{k \neq 0} \ket{\Psi_k^{(0)}} \frac{\braket{\Psi_k^{(0)}|\hat{V}|\Psi_0^{(0)}}}{E_0^{(0)} - E_k^{(0)}}
 \end{equation}
 where the set of states $\{\Psi_k^{(0)}\}$ are eigenstates of the zeroth-order Hamiltonian.
 In our case the state that we want to improve is the Hartree--Fock determinant, that is, $\Psi_0^{(0)} = \Phi_0$, and the other states in the set $\{\Psi_k^{(0)}\}$ are all singly, doubly, etc., substituted determinants, $\{\Phi_{i}^{a}, \Phi_{ij}^{ab}, \ldots \}$.
+The matrix element between singly excited determinants [$\Psi_k^{(0)} = \Phi_{i}^{a}$]  and the reference are zero
+\begin{equation}
+\braket{\Phi_{i}^{a}|\hat{V}|\Phi_0} = 
+\end{equation}
+
+
 The only matrix elements $\braket{\Psi_k^{(0)}|\hat{V}|\Psi_0^{(0)}}$ that are nonzero are those between the doubles [$\Psi_k^{(0)} = \Phi_{ij}^{ab}$] and the reference [$\Psi_0^{(0)} = \Phi_0$]
 \begin{equation}
 \braket{\Phi_{ij}^{ab}|\hat{V}|\Phi_0} = \aphystei{ab}{ij}.
@@ -285,6 +319,18 @@ Note that in general, given two operators $\hat{X}$ and $\hat{Y}$, we have that
 only if $\hat{X}$ and $\hat{Y}$ commute, that is, $[\hat{X},\hat{Y}] = 0$.
 Since cluster operators involve only substitutions from occupied to virtual orbitals, they always commute, and in particular $[\hat{T}^A,\hat{T}^B] = 0$.
 
+\begin{problem}
+Show that the single ($\hat{T}_1$) and double ($\hat{T}_2$) excitation operators defined as follow commute, that is, $[\hat{T}_1, \hat{T}_2] = 0$. 
+\begin{equation}
+\hat{T}_1 = \sum_{i}^{\mathrm{occ}} \sum_{a}^{\mathrm{vir}} t_{i}^{a} \cop{a} \aop{i}.
+\end{equation}
+\begin{equation}
+\hat{T}_2 = \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} t_{ij}^{ab} \cop{a}\cop{b} \aop{j}\aop{i}.
+\end{equation}
+Remember to avoid using the same dummy index in two independent quantities.
+\end{problem}
+
+
 Equations for the CC energy and amplitudes are obtained by plugging in the CC wave function into the Schr\"{o}dinger equation
 \begin{equation}
 \hat{H} e^{\hat{T}} \ket{\Phi_0} = E e^{\hat{T}} \ket{\Phi_0},
@@ -302,6 +348,21 @@ while the CC amplitudes are obtained from projections onto excited determinants 
 0 = \bra{\Phi_{ij\cdots}^{ab\cdots}} e^{-\hat{T} } \hat{H} e^{\hat{T} }\ket{\Phi_0}.
 \end{equation}
 
+How can we compute the term $e^{-\hat{T} } \hat{H} e^{\hat{T} }$? Well, there is a very useful formula named after Baker--Campbell--Hausdorff (BCH) that says that this expression can be rewritten as a series of commutators
+\begin{equation}
+\begin{split}
+e^{-\hat{T} } \hat{H} e^{\hat{T} } = &
+\hat{H} + [\hat{H},\hat{T}] + \frac{1}{2!} [[\hat{H},\hat{T}],\hat{T}] + 
+ \frac{1}{3!} [[[\hat{H},\hat{T}],\hat{T}],\hat{T}] +
+  \frac{1}{4!} [[[[\hat{H},\hat{T}],\hat{T}],\hat{T}],\hat{T}]  + \ldots \\
+  = & \hat{H} + \sum_{k=1}^\infty \underbrace{[\ldots[[\hat{H},\hat{T}],\hat{T}] \ldots ]}_{k\text{ nested commutators}}.
+\end{split}  
+\end{equation}
+This series is infinite, but because of the structure of the Hamiltonian and the fact that all the components in the $\hat{T}$ operators commute, we have that the BCH series \textbf{truncates after the four-fold commutator term}, and this result is independent on the number of electrons.
+This is important because it means that we can find all the terms in the CC equations and so we do not need to approximate the expression for $e^{-\hat{T} } \hat{H} e^{\hat{T} }$.
+
+To develop a hierarchy of coupled cluster methods that approximate the FCI energy better and better we can truncate the $\hat{T}$ operator to some low particle number (2-4).
+Because we do not use any argument from perturbation theory to come up with these schemes, we usually think of CC theory as a \textbf{nonperturbative method}.
 The simplest CC approximation is CC with doubles (CCD), which uses the approximation $\hat{T} \approx \hat{T}_2$.
 In this case the Schr{\"o}dinger equation reads
 \begin{equation}
@@ -316,7 +377,7 @@ The matrix element on the left of this expression is given by
 \begin{equation}
 \begin{split}
 \bra{\Phi_0}e^{\hat{T}_2}\ket{\Phi_0} & = \bra{\Phi_0}\left(1 + \hat{T}_2 + \ldots\right)\ket{\Phi_0} \\
-& =  \braket{\Phi_0 | \Phi_0} + \underbrace{ \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} \braket{\Phi_{ij}^{ab} | \Phi_0} + \ldots}_{= 0} = 1,
+& =  \braket{\Phi_0 | \Phi_0} + \underbrace{ \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} \braket{\Phi_0 | \Phi_{ij}^{ab}} + \ldots}_{= 0} = 1,
  \end{split}
 \end{equation}
 where the orthogonality of determinants makes all contributions but the first null.
@@ -326,7 +387,7 @@ Similarly, the right hand side of Eq.~\eqref{eq:ccd_eq_proj} gives
 \bra{\Phi_0}\hat{H}e^{\hat{T}_2}\ket{\Phi_0} & = \bra{\Phi_0}\hat{H}\left(1 + \hat{T}_2 + \ldots\right)\ket{\Phi_0} \\
 & =  \braket{\Phi_0 | \hat{H} | \Phi_0} + \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} \braket{\Phi_{ij}^{ab} |\hat{H} | \Phi_0} \\
 & = E_{\mathrm{HF}} + 
-\frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab} \aphystei{ij}{ab} t_{ij}^{ab}.
+\frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} \aphystei{ij}{ab} t_{ij}^{ab}.
  \end{split}
 \end{equation}
 It is interesting to analyze the CCD wave function to understand its structure. Expanding the exponential we get
@@ -335,31 +396,178 @@ It is interesting to analyze the CCD wave function to understand its structure. 
 = \ket{\Phi_0} + \hat{T}_2 \ket{\Phi_0} + \underbrace{\frac{1}{2!}\hat{T}_2^2\ket{\Phi_0} + \frac{1}{3!}\hat{T}_2^3\ket{\Phi_0} + \ldots}_{\text{unlinked quadruples, hextuples, \ldots}}. 
 \end{equation}
 The leading term in $\Psi_{\mathrm{CCD}}$ is the Hartree--Fock determinant, followed by double substitutions generated by the $\hat{T}_2$ operator. However, we also see contributions involving quadruple and higher substitutions that arise from the higher powers of the cluster operator ($\hat{T}_2^2$, etc.). These terms generate the unlinked excitations that were missing in the CID method.
+The cost of CCD is proportional to $O^2V^4$, where $O$ and $V$ are the number of occupied and virtual orbitals, respectively.
 
-Because including singles is inexpensive, the CC with singles and doubles (CCSD) approximation is generally preferred. Note that singles play a special role in CC theory. Consider, for example, the CCSD wave function
+Because add singles does not change the computational scaling, the CC with singles and doubles (CCSD) approximation is generally preferred to CCD. Note that singles play a special role in CC theory. Consider, for example, the CCSD wave function
 \begin{equation}
 \ket{\Psi_{\mathrm{CCSD}}} = e^{\hat{T}_1 + \hat{T}_2} \ket{\Phi_0}
 = e^{\hat{T}_2}e^{\hat{T}_1} \ket{\Phi_0},
 \end{equation}
 where we have used the fact that $\hat{T}_1$ and $\hat{T}_2$ commute to rearrange this expression.
-Thouless' theorem says that the effect of  $\exp(\hat{T}_1)$ applied onto a determinant $\Phi_0$ is to generate another (nonnormalized) determinant
+\textbf{Thouless' theorem} says that the effect of  $\exp(\hat{T}_1)$ applied onto a determinant $\Phi_0$ is to generate another (nonnormalized) determinant
 \begin{equation}
 e^{\hat{T}_1} \ket{\Phi_0} = C \ket{\tilde{\Phi}_0},
 \end{equation}
 where $C$ is a normalization constant.
 Therefore, the operator $\hat{T}_1$ in CC theory may be viewed as creating a different Slater determinant than the reference. This observation explains the reason why CCSD is also very insensitive to the choice of orbitals used to form the reference determinant.
 
+Note that the CC energy can be written in general as
+\begin{equation}
+\begin{split}
+\bra{\Phi_0}\hat{H}e^{\hat{T}}\ket{\Phi_0} & = \bra{\Phi_0}\hat{H}\left(1 + \hat{T}_1 + \hat{T}_2  + \frac{1}{2} \hat{T}_1^2+ \ldots\right)\ket{\Phi_0} \\
+& = E_{\mathrm{HF}} + 
+\sum_{i}^{\mathrm{occ}} \sum_{a}^{\mathrm{vir}} f_{ia} t_{i}^{a}
++ \frac{1}{4} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} \aphystei{ij}{ab} t_{ij}^{ab}
++ \frac{1}{2} \sum_{ij}^{\mathrm{occ}} \sum_{ab}^{\mathrm{vir}} \aphystei{ij}{ab} t_{i}^{a} t_{j}^{b}.
+ \end{split}
+\end{equation}
+
 The CCSD method is generally insufficient to achieve chemical high accuracy, defined as an error of 1 \kcal or less.
-To improve the accuracy of CCSD one can add triples, however, this increases the cost from $O(N^6)$ to $O(N^8)$.
+To improve the accuracy of CCSD one can add triples and arrive at the CCSDT method defined by the wave function
+\begin{equation}
+\ket{\Psi_{\mathrm{CCSDT}}} = e^{\hat{T}_1 + \hat{T}_2+ \hat{T}_3} \ket{\Phi_0},
+\end{equation}
+however, the cost of this method is now proportional to $O^3V^5$!
 A practical alternative is to introduce triples via perturbation theory. The most successful way to achieve this goal is the CCSD(T) method, which is considered by many the gold standard of quantum chemistry.
 In CCSD(T) one determines second-order triples, $\hat{T}_3^{(2)}$, and these are used to obtain fouth-order perturbative corrections to the energy [$E^{(4)}$] that involve singles, double, and triples, which are added to the CCSD energy
 \begin{equation}
 E_{\mathrm{CCSD(T)}} = E_{\mathrm{CCSD}} + E_{T}^{(4)} + E_{ST}^{(4)} + E_{DT}^{(4)}.
 \end{equation}
-The cost to evaluate $E_{\mathrm{CCSD(T)}}$ scales as $O(N^7)$ and this method yields results that are generally of equal or better quality than CCSDT.
+The cost to evaluate $E_{\mathrm{CCSD(T)}}$ scales as $O^3V^4$ and this method yields results that are generally of equal or better quality than CCSDT.
 
+\section*{Appendix: derivation of second-order perturbation theory}
 
+In Rayleigh--Schr\"{o}dinger perturbation theory we partition the Hamiltonian into a zeroth-order part ($\hat{H}^{(0)}$) plus a first-order perturbation ($\hat{H}^{(1)}$)
+\begin{equation}
+\hat{H}(\lambda) = \hat{H}^{(0)} + \lambda \hat{H}^{(1)},
+\end{equation}
+where $\lambda$ is a parameter that ranges from 0 to 1. When $\lambda = 0$ the Hamiltonian is equal to $\hat{H}(0) = \hat{H}^{(0)}$, while when $\lambda = 1$ we recover the full Hamiltonian $\hat{H}(1) = \hat{H}$.
 
+In perturbation theory we expand a given exact state $\Psi_0$ and its corresponding eigenvalue $E_0$ as a power series in $\lambda$
+\begin{align}
+\ket{\Psi_0(\lambda)} &= \ket{\Psi_0^{(0)}}
++ \lambda \ket{\Psi_0^{(1)}} + \lambda \ket{\Psi_0^{(2)}} + \ldots = \sum_{n = 0}^\infty \lambda^n \ket{\Psi_0^{(n)}} , \\
+E_0(\lambda) &= E_0^{(0)}
++ \lambda E_0^{(1)} + \lambda E_0^{(2)} + \ldots = \sum_{n = 0}^\infty \lambda^n E_0^{(n)},
+\end{align}
+where $\ket{\Psi_0^{(n)}}$ and $E_0^{(n)}$ indicate a generic $n$-th order correction to the wave function and energy, respectively.
+For convenience, we assume that the zeroth-order wave function is normalized,
+\begin{equation}
+\braket{\Psi_0^{(0)}|\Psi_0^{(0)}} = 1,
+\end{equation}
+and that all corrections are orthogonal to $\ket{\Psi_0^{(0)}}$, that is
+ \begin{equation}
+\braket{\Psi_0^{(0)}|\Psi_0^{(n)}} = 0, \quad n = 1, 2, \ldots.
+\end{equation}
+This implies that the wave function satisfies the \textbf{intermediate normalization} convention, that is 
+\begin{equation}
+\braket{\Psi_0^{(0)}|\Psi_0} = 1.
+\end{equation}
+
+To obtain order-by-order expressions for perturbation theory we plug in the definition of $\ket{\Psi_0(\lambda)}$ and $E_0(\lambda)$ into the Schr\"{o}dinger equation
+\begin{equation}
+[\hat{H}^{(0)} + \lambda \hat{H}^{(1)}] \ket{\Psi_0(\lambda)} = E_0(\lambda) \ket{\Psi_0(\lambda)},
+\end{equation}
+more explicitly
+\begin{equation}
+(\hat{H}^{(0)} + \lambda \hat{H}^{(1)})
+\left(
+\ket{\Psi_0^{(0)}}
++ \lambda \ket{\Psi_0^{(1)}}  + \ldots 
+\right)
+= \left( E_0^{(0)}
++ \lambda E_0^{(1)} + \ldots\right)
+\left(
+\ket{\Psi_0^{(0)}}
++ \lambda \ket{\Psi_0^{(1)}} +  \ldots 
+\right).
+\end{equation}
+Next, we proceed to collect terms with the same value of $\lambda$. For example, we can explicitly identify the terms of order zero and one
+\begin{equation}
+\hat{H}^{(0)} \ket{\Psi_0^{(0)}} + \lambda (\hat{H}^{(0)}\ket{\Psi_0^{(1)}} + \hat{H}^{(1)}\ket{\Psi_0^{(0)}}) + \ldots = E_0^{(0)}\ket{\Psi_0^{(0)}} + \lambda (E_0^{(1)}\ket{\Psi_0^{(0)}} + E_0^{(0)}\ket{\Psi_0^{(1)}}) + \ldots.
+\end{equation}
+This equation must be valid for every value of $\lambda$, so terms with equal power of $\lambda$ must be equal for each order of perturbation.
+The zeroth-order terms on both sides of this equation are
+\begin{equation}
+\hat{H}^{(0)} \ket{\Psi_0^{(0)}} = E_0^{(0)}\ket{\Psi_0^{(0)}}.
+\end{equation}
+This equation tells us two things. First, it tells us that the zeroth-order wave function $\ket{\Psi_0^{(0)}}$ must be an eigenfunction of $\hat{H}^{(0)}$.
+Second, if we apply $\bra{\Psi_0^{(0)}}$ from the left we get an expression for $E_0^{(0)}$
+\begin{equation}
+\bra{\Psi_0^{(0)}}\hat{H}^{(0)} \ket{\Psi_0^{(0)}} = \bra{\Psi_0^{(0)}}E_0^{(0)}\ket{\Psi_0^{(0)}} =E_0^{(0)}.
+\end{equation}
+
+The first-order terms give the equation
+\begin{equation}
+\hat{H}^{(0)}\ket{\Psi_0^{(1)}} + \hat{H}^{(1)}\ket{\Psi_0^{(0)}}= E_0^{(1)}\ket{\Psi_0^{(0)}} + E_0^{(0)}\ket{\Psi_0^{(1)}}.
+\end{equation}
+Applying $\bra{\Psi_0^{(0)}}$ from the left to both sides we get
+\begin{equation}
+\bra{\Psi_0^{(0)}}\hat{H}^{(0)}\ket{\Psi_0^{(1)}} + \bra{\Psi_0^{(0)}}\hat{H}^{(1)}\ket{\Psi_0^{(0)}}= E_0^{(1)}\underbrace{\braket{\Psi_0^{(0)}|\Psi_0^{(0)}}}_{=1} + E_0^{(0)}\underbrace{\braket{\Psi_0^{(0)}|\Psi_0^{(1)}}}_{=0},
+\end{equation}
+and the last term drops because we assumed that $\braket{\Psi_0^{(0)}|\Psi_0^{(1)}}= 0$.
+The first term of this expression is zero as well because $\bra{\Psi_0^{(0)}}\hat{H}^{(0)}\ket{\Psi_0^{(1)}} = E_0^{(0)}\braket{\Psi_0^{(0)} | \Psi_0^{(1)}} = 0$.
+Therefore, we get (after rearranging terms)
+\begin{equation}
+ E_0^{(1)} = \bra{\Psi_0^{(0)}}\hat{H}^{(1)}\ket{\Psi_0^{(0)}}.
+\end{equation}
+So we can compute the first-order energy correction from the zeroth-order wave function! That is like getting something for nothing.
+
+To derive the first-order wave function we rearrange the terms in the Schr\"{o}dinger equation
+\begin{equation}
+(\hat{H}^{(0)} - E_0^{(0)})\ket{\Psi_0^{(1)}} = (E_0^{(1)} - \hat{H}^{(1)})\ket{\Psi_0^{(0)}}.
+\end{equation}
+Next we will project this expression onto the basis of eigenfunctions of $\hat{H}^{(0)}$. These are the states $\ket{\Psi_k^{(0)}}$ with $k = 0, 1, \ldots$ that satisfy
+\begin{equation}
+\label{eq:wfn:pt:zero}
+\hat{H}^{(0)} \ket{\Psi_k^{(0)}}
+= E_k^{(0)}  \ket{\Psi_k^{(0)}}.
+\end{equation}
+After projection we need to simplify the expression a bit using Eq.~\eqref{eq:wfn:pt:zero}
+\begin{equation}
+\begin{split}
+\bra{\Psi_k^{(0)}}(\hat{H}^{(0)} - E_0^{(0)})\ket{\Psi_0^{(1)}} & = \bra{\Psi_k^{(0)}}(E_0^{(1)} - \hat{H}^{(1)})\ket{\Psi_0^{(0)}} \\
+\bra{\Psi_k^{(0)}}(E_k^{(0)} - E_0^{(0)})\ket{\Psi_0^{(1)}} & = - \bra{\Psi_k^{(0)}} \hat{H}^{(1)}\ket{\Psi_0^{(0)}} \\
+(E_k^{(0)} - E_0^{(0)}) \braket{\Psi_k^{(0)} | \Psi_0^{(1)}} & = - \bra{\Psi_k^{(0)}} \hat{H}^{(1)}\ket{\Psi_0^{(0)}}.
+\end{split}
+\end{equation}
+Assuming that $\Psi_0^{(0)}$ is not degenerate with any of the excited states $\Psi_k^{(0)}$, all of the terms with $k \neq 0$ of the last expression can be divided by $(E_k^{(0)} - E_0^{(0)})$ to obtain
+\begin{equation}
+\label{eq:wfn:pt:overlap_01}
+ \braket{\Psi_k^{(0)} | \Psi_0^{(1)}}  = \frac{\bra{\Psi_k^{(0)}} \hat{H}^{(1)}\ket{\Psi_0^{(0)}}}{E_0^{(0)} - E_k^{(0)}}.
+\end{equation}
+Note, however, that when $k = 0$, the term $\braket{\Psi_0^{(0)} | \Psi_0^{(1)}} = 0$ because we assumed it so when we choose to use intermediate normalization.
+
+With this information we can now construct the first-order wave function correction.
+If we multiply $\ket{\Psi_0^{(1)}}$ by the resolution of the identity $\hat{1} = \sum_{k = 0}^\infty \ket{\Psi_k^{(0)}}\bra{\Psi_k^{(0)}}$ we can write [using Eq.~\eqref{eq:wfn:pt:overlap_01} to express $ \braket{\Psi_k^{(0)} | \Psi_0^{(1)}}$] 
+\begin{equation}
+\begin{split}
+\ket{\Psi_0^{(1)}} = & \sum_{k = 0}^\infty \ket{\Psi_k^{(0)}}\braket{\Psi_k^{(0)} | \Psi_0^{(1)}} \\
+= &\sum_{k > 0}^\infty 
+\frac{\bra{\Psi_k^{(0)}} \hat{H}^{(1)}\ket{\Psi_0^{(0)}}}{E_0^{(0)} - E_k^{(0)}}  \ket{\Psi_k^{(0)}}\\
+=&\sum_{k > 0}^\infty 
+C_k^{(1)} \ket{\Psi_k^{(0)}}.
+\end{split}
+\end{equation}
+Note that the sum excludes the term with $k = 0$ because $ \braket{\Psi_0^{(0)} | \Psi_0^{(1)}} = 0$.
+The quantity $ \braket{\Psi_k^{(0)} | \Psi_0^{(1)}}$ that appears in this expression is nothing else that the first-order wave function coefficient $C_k^{(1)}$ for determinant $\ket{\Psi_k^{(0)}}$
+\begin{equation}
+C_k^{(1)}  = \frac{\bra{\Psi_k^{(0)}} \hat{H}^{(1)}\ket{\Psi_0^{(0)}}}{E_0^{(0)} - E_k^{(0)}}.
+\end{equation}
+This quantity is proportional to the off-diagonal matrix element of the first-order Hamiltonian  $\bra{\Psi_k^{(0)}} \hat{H}^{(1)}\ket{\Psi_0^{(0)}}$ (also called a coupling term), and inversely proportional to $E_0^{(0)} - E_k^{(0)}$, which is an energy difference between two zeroth-order states.
+
+At second-order the Schr\"{o}dinger equation gives
+\begin{equation}
+\hat{H}^{(0)}\ket{\Psi_0^{(2)}} + \hat{H}^{(1)}\ket{\Psi_0^{(1)}}= E_0^{(2)}\ket{\Psi_0^{(0)}} + E_0^{(1)}\ket{\Psi_0^{(1)}}
++ E_0^{(0)}\ket{\Psi_0^{(2)}}.
+\end{equation}
+From this expression we can derive $E_0^{(2)}$ by projecting on the left by $\bra{\Psi_0^{(0)}}$ and removing all the zero terms
+\begin{equation}
+E_0^{(2)} = \bra{\Psi_0^{(0)}}\hat{H}^{(1)}\ket{\Psi_0^{(1)}}
+= \sum_{k > 0}^\infty 
+\frac{|\bra{\Psi_k^{(0)}} \hat{H}^{(1)}\ket{\Psi_0^{(0)}}|^2}{E_0^{(0)} - E_k^{(0)}}.
+\end{equation}
+The last term was obtained using the expression for $\ket{\Psi_0^{(1)}}$ we derived before.
 
 
 \end{document}

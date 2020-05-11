@@ -7,6 +7,8 @@
 \documentclass[../Main/chem532-notes.tex]{subfiles}
 \begin{document}
 
+\setcounter{chapter}{6}
+
 \chapter{Density Functional Theory}
 
 \section{What is a functional?}
@@ -26,15 +28,15 @@ F[\rho(x)] = \int_a^b dx\,f(\rho(x),\rho'(x)),
 where $\rho'(x)$ is the derivative of $\rho(x)$.
 
 As in the case of functions, we may define the derivative of a functional.
-Consider a function $\rho(x)$ and an arbitrary function $\phi(x)$.
-We define the functional derivative $\frac{\delta F}{\delta \rho}$ as the function that satisfies the following condition:
+Consider a function $\rho(x)$ and an arbitrary small variation $\delta\rho(x) = \epsilon \phi(x)$.
+We define the functional derivative $\frac{\delta F[\rho]}{\delta \rho}$ as the function that satisfies the following condition:
 \begin{equation}
 \lim_{\epsilon \rightarrow 0} \frac{F[\rho + \epsilon \phi] - F[\rho]}{\epsilon}
 = \int dx \,\frac{\delta F(x)}{\delta \rho(x)} \phi(x).
 \end{equation}
-In other words, for a small variation in the function $\rho(x)$, say $\delta \rho(x) = \epsilon \phi(x)$, the difference in the functional is given by:
+In other words, for a small variation in the function $\rho(x)$, $\delta \rho(x)$, the difference in the value of the functional is linear in the functional derivative:
 \begin{equation}
-\delta F[\rho] = F[\rho + \epsilon \phi] - F[\rho] = \int dx \,\frac{\delta F(x)}{\delta \rho(x)} \underbrace{\epsilon \phi(x)}_{\delta \rho(x)}.
+\delta F[\rho] = F[\rho + \delta\rho] - F[\rho] = \int dx \,\frac{\delta F[\rho]}{\delta \rho(x)} \delta\rho(x) + \text{ terms of order } [\delta\rho(x)]^2 \text{ and higher}.
 \end{equation}
 
 \section{Early developments in DFT}

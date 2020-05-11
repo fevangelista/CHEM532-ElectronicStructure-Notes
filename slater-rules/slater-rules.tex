@@ -96,65 +96,6 @@ This is an eigenvalue problem that can be written compactly as
 where $\mathbf{H}$ is a matrix of dimension $N_{\mathrm{FCI}} \times N_{\mathrm{FCI}}$, where $N_{\mathrm{FCI}}$ is the number of FCI determinants.
 To solve this equation we have to derive equations for the matrix elements of the Hamiltonian operator $H_{IJ} = \braket{\Phi_J |\hat{H} | \Phi_I}$. The set of rules that determine the value of these matrix elements are called \textbf{Slater rules}.
 
-\section{Deriving the FCI equations using the Lagrangian approach}
-In this section we will derive the FCI equations using a different approach based on the formalism of Lagrange multipliers.
-In this approach we seek to minimize the Rayleigh--Ritz functional
-\begin{equation}
-E_\mathbf{RR}[\Psi] = \frac{\bra{\Psi} \hat{H} \ket{\Psi}}{\braket{\Psi|\Psi}}.
-\end{equation}
-Note that the denominator $\braket{\Psi|\Psi}$ is necessary to guarantee that the functional is valid irrespective of the way we normalize the wave function $\Psi$.
-If the smallest eigenvalue of the Hamiltonian ($E_0$) is bound, that is, $E_0 > - \infty$, then minimization of $E_\mathrm{RR}[\Psi]$ with respect to $\Psi$ will give the lowest eigenvalue and eigenstate ($\Psi_0$) of the Hamiltonian 
-\begin{equation}
-\min_{\Psi} E_\mathbf{RR}[\Psi] = E_0.
-\end{equation}
-The minimum of $E_\mathrm{RR}[\Psi]$ is obtained by solving the set of equations
-\begin{equation}
-\frac{\partial E_\mathrm{RR}[\Psi]}{\partial c_I} = 0.
-\end{equation}
-This approach is a bit clumsy because the expression that we want to minimize contains the quantity $\braket{\Psi|\Psi}$ in the denominator.
-
-The Lagrangian approach offers a more direct way to find the FCI equations.
-To begin with, we write a Lagrangian, that is a function that contains the quantity that we want to minimize and the constraints that we need to satisfy.
-
-\begin{example}[Minimization of a function of two variables with a constraint]
-Let us consider the problem of minimizing the function $f(x,y) = x^2 + 2 y^2$ with the constraint that $x + y = 2$.
-We rewrite the constraint as a function $g(x,y) = x + y - 2$ and we will try to impose $g(x,y) = 0$.
-Consider the Lagrangian function of three independent variables $(x,y,\lambda)$:
-\begin{equation}
-\mathcal{L}(x,y,\lambda) = f(x,y) - \lambda g(x,y) =  x^2 + 2 y^2 - \lambda (x + y - 2).
-\end{equation}
-The stationary point of $\mathcal{L}(x,y,\lambda)$ with respect to the variables $x$, $y$, and $\lambda$ corresponds to:
-\begin{align}
-\frac{\partial \mathcal{L}(x,y,\lambda)}{\partial x} &= 2 x - \lambda = 0 \label{eq:hf:lagrange1}\\
-\frac{\partial \mathcal{L}(x,y,\lambda)}{\partial y} &= 4 y - \lambda = 0 \label{eq:hf:lagrange2}\\
-\frac{\partial \mathcal{L}(x,y,\lambda)}{\partial \lambda} &= g(x,y)  = 0.\label{eq:hf:lagrange3}
-\end{align}
-From Eqs.~\eqref{eq:hf:lagrange1} and \eqref{eq:hf:lagrange2} we obtain:
-\begin{equation}
-x = 2y,
-\end{equation}
-which combined with Eq.~\eqref{eq:hf:lagrange3} gives: 
-\begin{equation}
-g(2y,y)  = 2y + y - 2 = 0 \quad \Rightarrow \quad y = \frac{2}{3},
-\end{equation}
-and $x = \frac{4}{3}$.
-\end{example}
-
-The FCI Lagrangian is given by the energy minus the normalization constraint
-\begin{equation}
-\begin{split}
-\mathcal{L}[\Psi] & = \underbrace{\bra{\Psi} \hat{H} \ket{\Psi}}_{\text{energy}} - \underbrace{\lambda (\braket{\Psi|\Psi} - 1)}_{\text{normalization constraint}} \\
-& = \sum_{IJ} c_I^{*} H_{IJ} c_J - \lambda (\sum_{I} |c_I^2| - 1).
-\end{split}
-\end{equation}
-Taking the derivative of $\mathcal{L}[\Psi]$ with respect to $c_I^{*}$ gives
-\begin{equation}
-\frac{\partial \mathcal{L}[\Psi] }{\partial c_I^{*}} = \sum_{J} H_{IJ} c_J - \lambda c_I,
-\end{equation}
-from which we conclude that the FCI vector $\mathbf{c}$ must satisfy the eigenvalue equation
-\begin{equation}
-\sum_{J} H_{IJ} c_J = \lambda c_I.
-\end{equation}
 
 
 
@@ -512,6 +453,66 @@ The inverse $(\mathbf{H} - \tilde{E})^{-1}$ can be simplified by retaining only 
 \end{equation}
 This equation shows that if we want to improve the trial eigenvector, we just need to evaluate an expression in which only the product, $\mathbf{H}\tilde{\mathbf{c}}$, appears. This quantity is usually called the \textbf{sigma vector} and it is indicated with $\boldsymbol{\sigma} = \mathbf{H}\tilde{\mathbf{c}}$.
 Approaches based on direct diagonalization methods have extended the domain of FCI from several thousand determinants to several billions.
+
+\section*{Appendix A: Deriving the FCI equations using the Lagrangian approach}
+In this section we will derive the FCI equations using a different approach based on the formalism of Lagrange multipliers.
+In this approach we seek to minimize the Rayleigh--Ritz functional
+\begin{equation}
+E_\mathbf{RR}[\Psi] = \frac{\bra{\Psi} \hat{H} \ket{\Psi}}{\braket{\Psi|\Psi}}.
+\end{equation}
+Note that the denominator $\braket{\Psi|\Psi}$ is necessary to guarantee that the functional is valid irrespective of the way we normalize the wave function $\Psi$.
+If the smallest eigenvalue of the Hamiltonian ($E_0$) is bound, that is, $E_0 > - \infty$, then minimization of $E_\mathrm{RR}[\Psi]$ with respect to $\Psi$ will give the lowest eigenvalue and eigenstate ($\Psi_0$) of the Hamiltonian 
+\begin{equation}
+\min_{\Psi} E_\mathbf{RR}[\Psi] = E_0.
+\end{equation}
+The minimum of $E_\mathrm{RR}[\Psi]$ is obtained by solving the set of equations
+\begin{equation}
+\frac{\partial E_\mathrm{RR}[\Psi]}{\partial c_I} = 0.
+\end{equation}
+This approach is a bit clumsy because the expression that we want to minimize contains the quantity $\braket{\Psi|\Psi}$ in the denominator.
+
+The Lagrangian approach offers a more direct way to find the FCI equations.
+To begin with, we write a Lagrangian, that is a function that contains the quantity that we want to minimize and the constraints that we need to satisfy.
+
+\begin{example}[Minimization of a function of two variables with a constraint]
+Let us consider the problem of minimizing the function $f(x,y) = x^2 + 2 y^2$ with the constraint that $x + y = 2$.
+We rewrite the constraint as a function $g(x,y) = x + y - 2$ and we will try to impose $g(x,y) = 0$.
+Consider the Lagrangian function of three independent variables $(x,y,\lambda)$:
+\begin{equation}
+\mathcal{L}(x,y,\lambda) = f(x,y) - \lambda g(x,y) =  x^2 + 2 y^2 - \lambda (x + y - 2).
+\end{equation}
+The stationary point of $\mathcal{L}(x,y,\lambda)$ with respect to the variables $x$, $y$, and $\lambda$ corresponds to:
+\begin{align}
+\frac{\partial \mathcal{L}(x,y,\lambda)}{\partial x} &= 2 x - \lambda = 0 \label{eq:hf:lagrange1}\\
+\frac{\partial \mathcal{L}(x,y,\lambda)}{\partial y} &= 4 y - \lambda = 0 \label{eq:hf:lagrange2}\\
+\frac{\partial \mathcal{L}(x,y,\lambda)}{\partial \lambda} &= g(x,y)  = 0.\label{eq:hf:lagrange3}
+\end{align}
+From Eqs.~\eqref{eq:hf:lagrange1} and \eqref{eq:hf:lagrange2} we obtain:
+\begin{equation}
+x = 2y,
+\end{equation}
+which combined with Eq.~\eqref{eq:hf:lagrange3} gives: 
+\begin{equation}
+g(2y,y)  = 2y + y - 2 = 0 \quad \Rightarrow \quad y = \frac{2}{3},
+\end{equation}
+and $x = \frac{4}{3}$.
+\end{example}
+
+The FCI Lagrangian is given by the energy minus the normalization constraint
+\begin{equation}
+\begin{split}
+\mathcal{L}[\Psi] & = \underbrace{\bra{\Psi} \hat{H} \ket{\Psi}}_{\text{energy}} - \underbrace{\lambda (\braket{\Psi|\Psi} - 1)}_{\text{normalization constraint}} \\
+& = \sum_{IJ} c_I^{*} H_{IJ} c_J - \lambda (\sum_{I} |c_I^2| - 1).
+\end{split}
+\end{equation}
+Taking the derivative of $\mathcal{L}[\Psi]$ with respect to $c_I^{*}$ gives
+\begin{equation}
+\frac{\partial \mathcal{L}[\Psi] }{\partial c_I^{*}} = \sum_{J} H_{IJ} c_J - \lambda c_I,
+\end{equation}
+from which we conclude that the FCI vector $\mathbf{c}$ must satisfy the eigenvalue equation
+\begin{equation}
+\sum_{J} H_{IJ} c_J = \lambda c_I.
+\end{equation}
 
 \end{document}
 

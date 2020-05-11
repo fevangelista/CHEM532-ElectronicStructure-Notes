@@ -7,6 +7,8 @@
 \documentclass[../Main/chem532-notes.tex]{subfiles}
 \begin{document}
 
+\setcounter{chapter}{5}
+
 \chapter{Molecular properties and characterization of stationary points}
 
 \section{Density matrices and molecular properties}
@@ -43,10 +45,10 @@ Consider one element of this sum with the operator $\hat{o}(x_i)$.
 It is easy to show that it may be written in terms of the one-electron density matrix by relabeling the  coordinates $x_1 \leftrightarrow x_i$, then using the anti-symmetry of the wave function, and lastly, by introducing the auxiliary variable $x_1'$
 \begin{equation}
 \begin{split}
-&\int dx_1 \cdots dx_N \Psi(x_1,\ldots,x_i,\ldots)^* \hat{o}(x_i) \Psi(x_1,\ldots,x_i,\ldots) \\
-&= \int dx_1 \cdots dx_N \Psi(x_i,\ldots,x_1,\ldots)^* \hat{o}(x_1) \Psi(x_i,\ldots,x_1,\ldots)\\
-&= \int dx_1 \cdots dx_N \Psi(x_1,\ldots,x_i,\ldots)^* \hat{o}(x_1) \Psi(x_1,\ldots,x_i,\ldots)\\
-&= \int dx_1 \left[ \hat{o}(x_1) \int dx_2 \cdots dx_N \Psi(x_1',\ldots,x_i,\ldots)^* \Psi(x_1,\ldots,x_i,\ldots) \right]_{x_1' = x_1}\\
+&\int dx_1 \cdots dx_N \Psi^*(x_1,\ldots,x_i,\ldots) \hat{o}(x_i) \Psi(x_1,\ldots,x_i,\ldots) \\
+&= \int dx_1 \cdots dx_N \Psi^*(x_i,\ldots,x_1,\ldots) \hat{o}(x_1) \Psi(x_i,\ldots,x_1,\ldots)\\
+&= \int dx_1 \cdots dx_N \Psi^*(x_1,\ldots,x_i,\ldots) \hat{o}(x_1) \Psi(x_1,\ldots,x_i,\ldots)\\
+&= \int dx_1 \left[ \hat{o}(x_1) \int dx_2 \cdots dx_N \Psi^*(x_1',\ldots,x_i,\ldots)^* \Psi(x_1,\ldots,x_i,\ldots) \right]_{x_1' = x_1}\\
 &= \frac{1}{N} \int dx_1 \left[ \hat{o}(x_1) \gamma(x_1';x_1) \right]_{x_1' = x_1}.
 \end{split}
 \end{equation}
