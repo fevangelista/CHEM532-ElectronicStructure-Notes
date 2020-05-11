@@ -1,4 +1,4 @@
-# Electronic Structure Notes
+# Notes on Electronic Structure Theory (Graduate level)
 
 These notes are for the Advanced Quantum II course at Emory (CHEM532) and cover the basics of electronic structure theory.
 
