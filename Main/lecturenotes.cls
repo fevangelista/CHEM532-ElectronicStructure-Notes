@@ -106,8 +106,8 @@ innerbottommargin=5pt]{ImportantBox}
 % Custom theorem styles
 %
 \newtheoremstyle{ocrenumbox}% % Theorem style name
-{0pt}% Space above
-{0pt}% Space below
+{6pt}% Space above
+{6pt}% Space below
 {\normalfont}% % Body font
 {}% Indent amount
 {\small\bf\color{gray}}% % Theorem head font
@@ -118,8 +118,8 @@ innerbottommargin=5pt]{ImportantBox}
 \renewcommand{\qedsymbol}{$\blacksquare$}% Optional qed square
 
 \newtheoremstyle{blacknumex}% Theorem style name
-{9pt}% Space above
-{9pt}% Space below
+{0pt}% Space above
+{6pt}% Space below
 {\small}% Body font set to small size
 {} % Indent amount
 {\small\bf\sffamily}% Theorem head font
@@ -163,8 +163,11 @@ linewidth=2pt]{eBox}
 \theoremstyle{ocrenumbox}
 \newtheorem{problemT}{Problem}[section]
 \newtheorem{exerciseT}{Exercise}[section]
+\newtheorem*{questionsT}{Questions}
 \theoremstyle{blacknumex}
 \newtheorem{exampleT}{Example}[section]
+\newtheorem*{detailsT}{Advanced topic}
+
 %\theoremstyle{blacknumbox}
 %\newtheorem{importantEquationT}[dummy]{ImportantEquation}
 
@@ -195,12 +198,19 @@ linewidth=2pt]{eBox}
 	{\end{problemT}\vspace{6pt}\end{eBox}}
 
 \newenvironment{example}
-	{\begin{exampleT}}
-	{\hfill{\tiny\ensuremath{\blacksquare}}\end{exampleT}}
+	{\begin{eBox}\begin{exampleT}}
+	{\hfill{\tiny\ensuremath{\blacksquare}}\end{exampleT}\end{eBox}}
+
+\newenvironment{questions}
+	{\begin{questionsT}}
+	{\hfill{\tiny\ensuremath{\blacksquare}}\end{questionsT}}
 
 \newenvironment{exercise}
-	{\begin{eBox}\begin{exerciseT}}
-	{\hfill{\color{gray}\tiny\ensuremath{\blacksquare}}\end{exerciseT}\end{eBox}}			
+	{\begin{exerciseT}}
+	{\hfill{\color{gray}\tiny\ensuremath{\blacksquare}}\end{exerciseT}}	
+\newenvironment{details}
+	{\begin{eBox}\begin{detailsT}}
+	{\hfill{\tiny\ensuremath{\blacksquare}}\end{detailsT}\end{eBox}}			
 
 \newenvironment{ibox}
 	{\begin{ImportantBox}}
@@ -230,14 +240,32 @@ linewidth=2pt]{eBox}
 		\setlength{\parsep}{0pt}
 	}
 	{\end{itemize}}
+	
+\newenvironment{myenumerate}
+	{
+		\begin{enumerate}
+		\setlength{\itemsep}{3pt}
+		\setlength{\parskip}{0pt}
+		\setlength{\parsep}{0pt}
+	}
+	{\end{enumerate}}	
 
 \newcounter{mnotecount}
-\renewcommand\themnotecount{$^{\arabic{mnotecount}}$}
-\newcommand\mnote[1]{
-	\refstepcounter{mnotecount}$^{\arabic{mnotecount}}$\marginpar{
-		\setstretch{0.9}\themnotecount\textmd{\footnotesize{#1}}
+\renewcommand\themnotecount{$^{\textrm{\arabic{mnotecount}}}$}
+
+\newcommand\mnote[1]{\refstepcounter{mnotecount}\themnotecount%$^{\arabic{mnotecount}}$
+%\themnotecount%
+	\marginpar{
+		\setstretch{0.9}\themnotecount\footnotesize{#1}
 	}
 }
+%\newcounter{mnotecount}
+%\renewcommand\themnotecount{$^{\arabic{mnotecount}}$}
+%\newcommand\mnote[1]{
+%	\refstepcounter{mnotecount}$^{\arabic{mnotecount}}$\marginpar{
+%		\setstretch{0.9}\themnotecount\textmd{\footnotesize{#1}}
+%	}
+%}
 \newcommand\mfigure[1]{
 	\marginpar{
 		\setstretch{0.9}\themnotecount\textmd{\footnotesize{#1}}
