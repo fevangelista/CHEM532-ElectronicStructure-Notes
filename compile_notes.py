@@ -3,7 +3,8 @@
 import os
 from shutil import copy
 
-chapters = ['molecular-hamiltonian']
+chapters = ['molecular-hamiltonian',
+            'huckel']
 
 root_dir = os.getcwd()
 
