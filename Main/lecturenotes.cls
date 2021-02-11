@@ -26,7 +26,7 @@
 \RequirePackage{topcapt}
 \RequirePackage{booktabs}
 \RequirePackage{braket}
-\RequirePackage{mhchem}
+\RequirePackage[version=4]{mhchem}
 \RequirePackage{cancel}
 
 % Typography

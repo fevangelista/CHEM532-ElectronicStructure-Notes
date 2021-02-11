@@ -4,7 +4,8 @@ import os
 from shutil import copy
 
 chapters = ['molecular-hamiltonian',
-            'huckel']
+            'huckel',
+            'electronic-wavefunctions']
 
 root_dir = os.getcwd()
 

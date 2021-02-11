@@ -10,7 +10,7 @@
 
 \begin{document}
 
-\chapter{Many-electron wave functions and Full Configuration Interaction}
+\chapter[Many-electron wave functions]{Many-electron wave functions and Full Configuration Interaction}
 
 \section{Spin}
 So far we have neglected to account for spin.
@@ -88,15 +88,23 @@ The $\hat{s}^2$ operator may be represented using the raising and lowering opera
 \end{equation}
 
 It is also convenient to introduce many-electron generalizations of the spin operators.
-For a system of $N$ electrons, we define total spin operators as the sum of operators action on each particle.
+For a system of $N$ electrons, we can generalize the six spin operators that we introduced above by taking the sum of operators acting on each particle
+\begin{align*}
+\hat{S}_x &= \sum_i^N \hat{s}_{x}(i), \quad \hat{S}_y = \sum_i^N \hat{s}_{y}(i), \quad \hat{S}_z = \sum_i^N \hat{s}_{z}(i), \\
+\hat{S}^2 &= \sum_i^N \hat{s}^{2}(i), \quad \hat{S}_+ = \sum_i^N \hat{s}_{+}(i), \quad
+\hat{S}_- = \sum_i^N \hat{s}_{-}(i),
+\end{align*}
+where, for example, $\hat{s}^{2}(i)$ means that an operator $\hat{s}^{2}$ acts only on electron $i$.
+These operators satisfy the same commutation relationships of their one-electron versions (the lowercase operators). This implies that for  $N$ electron systems we can still find eigenstates of both $\hat{S}^2$ and $\hat{S}_z$. Then the corresponding spin eigenfunctions will be of the form $\ket{S,M_S}$, and these will satisfy
 \begin{align}
-\hat{S}^2 &= \sum_i^N \hat{s}^{2}(i), \\
-\hat{S}_z &= \sum_i^N \hat{s}_{z}(i), \\
-\hat{S}_+ &= \sum_i^N \hat{s}_{+}(i), \\
-\hat{S}_- &= \sum_i^N \hat{s}_{-}(i),
+\hat{S}^2 \ket{S,M_S} &= S(S+1) \ket{S,M_S}, \\
+\hat{S}_z \ket{S,M_S} &= M_S \ket{S,M_S}, \quad M_S = -S, -S + 1, \ldots, S-1, S.
 \end{align}
-where $\hat{s}^{2}(i)$ means that an operator $\hat{s}^{2}$ acts only on electron $i$.
-
+When describing a spin state with quantum number $S$, it is more common to refer to its multiplicity, which is given by
+\begin{iequation}
+\text{multiplicity} = 2 S + 1
+\end{iequation}
+States with multiplicity = 1 ($S = 0$) are called singlets, multiplicity = 2 ($S = 1/2$) are called doublets, and so on.
 
 \section{Spin orbitals}
 Let us introduce some important nomenclature.
@@ -104,9 +112,9 @@ Functions that describe electrons in real space are called \textbf{spatial orbit
 In general the set $\{ \phi_i(\vec{r}) \}$ is infinite, complete, and may be orthonormalized.\mnote{A set of functions $\{ \phi_i(\vec{r}) \}$  is called \textbf{orthonormal} if any two functions satisfy $\int d\vec{r} \, \phi_i^*(\vec{r}) \phi_j(\vec{r})  = \delta_{ij}$.}
 If the functions $\phi_i(\vec{r})$ are normalized then the quantity $|\phi_i(\vec{r})|^2 d\vec{r}$ is the probability of finding the electron in the volume element $d\vec{r}$.
 The completeness condition implies that we can expand any function $f(\vec{r})$ using the set $\{ \phi_i(\vec{r}) \}$
-\begin{equation}
+\begin{iequation}
 f(\vec{r}) = \sum_{i}^{\infty} a_i \phi_i(\vec{r}).
-\end{equation}
+\end{iequation}
 In practice, we use finite sets, so that $\dim \{ \phi_i(\vec{r}) \} = K < \infty$.
 
 \textbf{Spin orbitals} are the product of a spatial orbital and a spin function:\mnote{We will abbreviate the spatial and spin coordinates with the symbol $x \equiv (\vec{r},\omega)$.}
@@ -114,15 +122,33 @@ In practice, we use finite sets, so that $\dim \{ \phi_i(\vec{r}) \} = K < \inft
 \psi_{i,\sigma} (x) = \psi_{i,\sigma} (\vec{r},\omega) = \phi_i(\vec{r}) \sigma(\omega),
 \end{equation}
 where $\sigma(\omega) \in \{\alpha(\omega),\beta(\omega)\}$ indicates a generic spin function.
-For a basis of spatial orbitals with dimension $K$ we can collect the indices $(i,\sigma)$ in one integer and define $2K$ spin orbitals:
+Note that if the spatial orbitals are orthonormal, then the spin orbital basis is also orthonormal in the following sense
+\begin{iequation}
+\begin{split}
+\braket{\psi_{i,\sigma} | \psi_{j,\sigma'}} = & 
+\int d\vec{r} \,d\omega \, \psi_{i,\sigma}^*(\vec{r},\omega) \psi_{j,\sigma'}(\vec{r},\omega) \\
+= &
+\int d\vec{r} \,\phi_{i}^*(\vec{r}) \phi_{j}(\vec{r})
+\int d\omega \, 
+\sigma^*(\omega)  \sigma'(\omega) \\
+ = &\delta_{ij} \delta_{\sigma \sigma'}.
+\end{split}
+\end{iequation}
+Note that even if the spatial part of a spin orbital is the same ($\psi_i = \psi_j$) the overlap integral can still be zero if the spin functions $\sigma$ and $\sigma'$ are different.
+
+To avoid having to write the two subscripts $i$ and $\sigma$ every time we indicated a spin orbital, we will often collect the indices $(i,\sigma)$ into one index $k$ and specify an ordering of the spin orbitals.
+For example, for basis of $K$ spatial orbitals we can define $2K$ spin orbitals as:
 \begin{align}
 \psi_{2i - 1}(x) &= \phi_i(\vec{r}) \alpha(\omega), \\
-\psi_{2i}(x) &= \phi_i(\vec{r}) \beta(\omega).
+\psi_{2i}(x) &= \phi_i(\vec{r}) \beta(\omega),
 \end{align}
-Note that if the spatial orbitals are orthonormal, then the spin orbital basis is also orthonormal:
+which is equivalent to ordering the spin orbitals in the following way
 \begin{equation}
-\int d\vec{r} \, \psi_i^*(\vec{r}) \psi_j(\vec{r})  = \delta_{ij}.
+(\psi_1, \psi_2, \psi_3, \psi_4, \ldots) =  
+(\phi_1\alpha, \phi_1\beta, \phi_2\alpha, \phi_2\beta,\ldots) .
 \end{equation}
+
+
 
 
 \section{$N$-electron wave functions}
@@ -174,8 +200,9 @@ This conditions may also be written as
 \begin{equation}
 a_{ij} = - a_{ji}.
 \end{equation}
-As a consequence, the diagonal elements of $a_{ij}$, $a_{ii}$, are zero.\mnote{To see this set $j = i$. Then $a_{ii} + a_{ii} = 2 a_{ii} = 0$, so that $a_{ii} = 0$.}
-Eq.~\eqref{eq:two_electron_wfn_expansion3} shows that the when we expand an antisymmetric wave function using a single-particle basis, the antisymmetry condition is reflected in the properties of the coefficients $a_{ij}$.\mnote{The quantity $a_{ij}$ is a skew-symmetric or antisymmetric matrix. For $N$ electrons, the expansion coefficient will be an antisymmetric \textbf{tensor} with $N$ indices, that is $a_{i_1 i_2 i_3 \cdots i_N}$.}
+As a consequence, the diagonal elements of $a_{ij}$, $a_{ii}$, are zero.
+To see this set $j = i$. Then $a_{ii} + a_{ii} = 2 a_{ii} = 0$, so that $a_{ii} = 0$.
+Eq.~\eqref{eq:two_electron_wfn_expansion3} shows that the when we expand an antisymmetric wave function using a single-particle basis, the antisymmetry condition is reflected in the properties of the coefficients $a_{ij}$. The quantity $a_{ij}$ is a skew-symmetric or antisymmetric matrix. For $N$ electrons, the expansion coefficient will be an antisymmetric \textbf{tensor} with $N$ indices, that is $a_{i_1 i_2 i_3 \cdots i_N}$.
 
 
 Using Eq.~\eqref{eq:two_electron_wfn_expansion3} we may write the two-electron wave function as:
@@ -231,11 +258,11 @@ For convenience we will write a Slater determinant, \textbf{including its normal
 omitting the labels of the electrons.
 The basis of Slater determinants $\{ \ket{
 \psi_i \psi_j \psi_k \cdots} \}$ with $i, j, k, \ldots \in \{0, 1, 2, \ldots \}$ is complete.\mnote{This property is inherited from the fact that the one-electron spin orbital basis is complete.}
-Therefore, we may expand any electronic wave function using the Slater determinant basis:
-\begin{equation}
-\ket{\Psi} = \sum_{i<j<k\cdots} C_{ijk\cdots} \ket{
+Therefore, we may expand any electronic wave function $\Psi$ using the Slater determinant basis:
+\begin{iequation}
+\ket{\Psi} = \sum_{i<j<k\cdots}^{\infty} C_{ijk\cdots} \ket{
 \psi_i \psi_j \psi_k \cdots}.
-\end{equation}
+\end{iequation}
 This expansion is called a \textbf{full configuration interaction} (FCI) wave function.
 The FCI wave function can provide the exact solution to the electronic Schr\"{o}dinger equation.
 In practice, we always work with a finite spin orbital basis. Then we say that the FCI wave function provides the exact solution of the Schr\"{o}dinger equation \textbf{within a finite basis}.
@@ -293,7 +320,6 @@ P_i(\mathbf{r}_1) P_j(\mathbf{r}_2) +  P_j(\mathbf{r}_1) P_i(\mathbf{r}_2) \\
 &- \phi_j^*(\mathbf{r}_1)\phi_i(\mathbf{r}_1) \phi_j(\mathbf{r}_2) \phi_i^*(\mathbf{r}_2)].
 \end{split}
 \end{equation}
-
 We say that a Slater determinant accounts for \textbf{Fermi correlation}, a consequence of the antisymmetry of fermionic wave functions.
 This form of correlation prevents two electrons with same spin to be found at the same point in space.
 \end{example}
@@ -419,7 +445,7 @@ C_2 \ket{\Phi_2} + C_3 \ket{\Phi_3},
 \end{equation}
 plus we have two ungerade states with $M_S = \pm1$ ($\ket{\Phi_5}$, $\ket{\Phi_6}$) that will not mix with any other determinants because their symmetry is distinct from that of all other determinants.
 
-\section{Electronic states of \ce{H2}}
+\section{Electronic states of H$_2$}
 Let us now analyze these determinants in terms of the atomic basis functions.
 Consider $\Phi_1$, the lowest energy determinant.
 If we plug in the definitions of the spin orbitals we obtain:
@@ -601,16 +627,36 @@ Therefore, $\Phi_{-}$ is a triplet state while $\Phi_{+}$ is a singlet state.
 Putting everything together we can summarize the our results as
 \begin{equation}
    \begin{array}{ccccc}
-    \text{State} & \text{Symmetry} & S & M_S & \text{Note}\\
+    \text{Wave function} & \text{Symmetry} & S & M_S & \text{Note}\\
     \hline
     C_1 \ket{\Phi_1} + C_4 \ket{\Phi_4} & \mathrm{g} & 0 & 0 & \text{Ground singlet state}\\
     C'_1 \ket{\Phi_1} + C'_4 \ket{\Phi_4} & \mathrm{g} & 0 & 0 & \text{Excited singlet state} \\ 
     \frac{1}{\sqrt{2}} \left(  \ket{\Phi_2} + \ket{\Phi_3} \right) & \mathrm{u} & 0 & 0 & \text{Excited singlet state}\\
-        \ket{\Phi_5} & \mathrm{u} & 1 & 1 & \text{Triplet state}\\    
-        \frac{1}{\sqrt{2}} \left(  \ket{\Phi_2} - \ket{\Phi_3} \right) & \mathrm{u} & 1 & 0 & \text{triplet state}\\
-        \ket{\Phi_6} & \mathrm{u} & 1 & -1 & \text{Triplet state}
+        \ket{\Phi_5} & \mathrm{u} & 1 & 1 & \\    
+        \frac{1}{\sqrt{2}} \left(  \ket{\Phi_2} - \ket{\Phi_3} \right) & \mathrm{u} & 1 & 0 & \text{Triplet state (degenerate)}\\
+        \ket{\Phi_6} & \mathrm{u} & 1 & -1 &
    \end{array}
 \end{equation}
+
+\section*{Study Questions}
+%\begin{questions}[Molecular Hamiltonian and the Born--Oppenheimer approximation]
+\begin{myenumerate}
+\item What is spin?
+\item What is the commutation relationship for the three components of the spin operator?
+\item What are the allowed $s$ and $m_s$ values for one electron?
+\item What are spin raising and lowering operators?
+\item How do spin operator generalize to $N$ particle systems?
+\item What is the multiplicity of a spin state?
+\item What is a spin orbital?
+\item What does it mean to expand a function in a complete basis set?
+\item What is special about wave functions for fermions?
+\item What is a Slater determinant?
+\item What is the full configuration interaction wave function?
+\item How do Hartree products and Slater determinant differ?
+\item What is Fermi correlation?
+\item How many orbitals are there for H$_2$ in a minimal basis set?
+\item What are the electronic states of H$_2$ in a minimal basis set?
+\end{myenumerate}
 
 
 \end{document}
