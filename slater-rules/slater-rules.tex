@@ -5,6 +5,9 @@
 % !TEX TS-program = xelatex
 
 \documentclass[../Main/chem532-notes.tex]{subfiles}
+
+\setcounter{chapter}{3}
+
 \begin{document}
 
 \chapter{The full CI equations and Slater rules}
@@ -12,13 +15,15 @@
 \section{The FCI equations and their solution}
 
 In this section we will derive the equations that determine the coefficients in the FCI wave function.
+In this chapter, \textbf{we always assume that the spin orbital basis is orthonormal}, that is $\braket{\psi_i|\psi_j} = \delta_{ij}$, and that there are $2K$ spin orbitals formed from a set of $K$ spatial orbitals $\{\phi_j\}$.
 For convenience, we will introduce a short-hand notation for a Slater determinant $\Phi_{ijk\cdots}(x_1,x_2,\ldots,x_N)$ where we condense all the orbital indices ${ijk\cdots}$ to a multi-index $I = \{i_1,i_2,i_3,\cdots\}$ with $i_1 < i_2 < i_3 < \ldots$, so that we can write determinants with only one label as $\Phi_I$.\mnote{The index $I$ is also called a \textit{string} of indices $I = \{ i_1,i_2, \ldots, i_N \}$ that indicate the occupied spin orbitals.}
 Then the FCI wave function can be written as
 \begin{equation}
 \ket{\Psi_{\mathrm{FCI}}} = \sum_I c_I \ket{\Phi_I}.
 \end{equation}
 
-To derive the FCI equations we first have to establish the properties of the basis of Slater determinant. Recall that a determinant may be written as
+To derive the FCI equations we first have to establish the properties of the basis of Slater determinant.
+Recall that a determinant may be written as
 \begin{equation}
 \begin{split}
 \Phi_{i_1 i_2 \cdots i_N}(x_1,x_2,\ldots,x_N) &= \frac{1}{\sqrt{N!}}
@@ -50,7 +55,7 @@ P_{\pi}\left[
 \right].
 \end{split}
 \end{equation}
-Since the spin-orbital basis is assumed to be orthonormal,\mnote{$\braket{\psi_i|\psi_j} = \delta_{ij}$.} the integrals for each separate variable must contain the square of the same spin orbital to get a non-zero result.
+Since the spin-orbital basis is assumed to be orthonormal, the integrals for each separate variable must contain the square of the same spin orbital to get a non-zero result.
 This happens when the two permutations coincide, $\pi = \pi'$, in which case the integral simplifies to:
 \begin{equation}
  \int dx_1 dx_2 \cdots dx_N 
@@ -69,6 +74,7 @@ Show that two determinants $\Phi_I$ and $\Phi_J$ that differ by one or more spin
 \begin{equation}
 \braket{\Phi_I | \Phi_J} = 0.
 \end{equation}
+To do so, plug in the definition of Slater determinants in $\braket{\Phi_I | \Phi_J}$, break down this integral as a product of one-electron integrals, and then show that each term contains one integral that is always zero.
 \end{problem}
 The orthonormality condition for the Slater determinants may be summarized as:
 \begin{equation}
@@ -108,7 +114,7 @@ For convenience we will write the electronic Hamiltonians as
 \end{equation}
 where
 \begin{align}
-V_{NN} &= \sum_{A}^{M} \sum_{B > A}^{M} \frac{Z_A Z_B}{r_{AB}}\\
+V_\mathrm{NN} &= \sum_{A}^{M} \sum_{B > A}^{M} \frac{Z_A Z_B}{r_{AB}}\\
 \hat{H}_1 &= -\frac{1}{2} \sum_i^N \nabla^2_i
 - \sum_{i}^{N} \sum_{A}^{M} \frac{Z_A}{r_{iA}} = \sum_i \hat{h}(i)\\
 \hat{H}_2 &= \sum_{i}^{N}\sum_{j > i}^{N} \frac{1}{r_{ij}} = \sum_{i}^{N}\sum_{j > i}^{N} \hat{v}(i,j).
@@ -121,7 +127,7 @@ The simplest matrix element is that of the scalar term ($V_{NN}$), which can be 
 = V_\mathrm{NN} \braket{\Phi_I | \Phi_J} = V_\mathrm{NN} \delta_{IJ}.
 \end{equation}
 
-\subsection{Matrix elements of the Hamiltonian}
+\subsection{Matrix elements of the one-electron Hamiltonian}
 Let us consider the matrix element of the one-body operator:
 \begin{equation}
 \begin{split}
@@ -182,11 +188,13 @@ Each permutation of the integral will give a contribution equal to:
 = \sum_j^{N} \bra{\psi_{i_j}} \hat{h} \ket{\psi_{i_j}} = \sum_i^{\rm occ} \bra{\psi_i}\hat{h}\ket{\psi_i},
 \end{equation}
 and since there are $N!$ permutations, we find that 
-\begin{equation}
+\begin{iequation}
 \bra{\Phi_I} \hat{H}_1 \ket{\Phi_I} = \frac{1}{N!}
 \sum_{\pi}^{N!}   \sum_i^{\rm occ} \bra{\psi_i}\hat{h}\ket{\psi_i} =  \sum_i^{\rm occ} \bra{i}\hat{h}\ket{i}.
-\end{equation}
+\end{iequation}
 In the last term we introduced the abbreviated notation $\bra{i}\hat{h}\ket{i} \equiv \bra{\psi_i}\hat{h}\ket{\psi_i}$.
+
+\subsection{Matrix elements of the two-electron Hamiltonian}
 The derivation of the two-electron contribution is more involved, and it gives the following result:
 \begin{equation}
 \bra{\Phi_I} \hat{H}_2 \ket{\Phi_I} = \sum_{i} \sum_{j < i}
@@ -201,10 +209,10 @@ If we introduce the antisymmetrized two-electron integral:
 \aphystei{i j}{k l}  = \braket{i j|k l} - \braket{i j|l k},
 \end{equation}
 then it is possible to rewrite as an unconstrained double sum
-\begin{equation}
+\begin{iequation}
 \bra{\Phi_I} \hat{H}_2 \ket{\Phi_I} = \sum_{i} \sum_{j < i}
 \aphystei{i j}{i j} = \frac{1}{2} \sum_{ij} \aphystei{i j}{i j},
-\end{equation}
+\end{iequation}
 since the term that corresponds to $i = j$ is null\mnote{This is simple to see: $\braket{i i\| i i} = \braket{i i| i i} - \braket{i i| i i} = 0$.} and $\aphystei{j i}{j i} = \aphystei{i j}{i j}$.
 %The permutation operators in the integral may divided into two types.
 %Permutations that shuffle the indices $x_2,x_3,\ldots,x_N$ or those that exchange $x_1$ and shuffle  
@@ -213,14 +221,16 @@ since the term that corresponds to $i = j$ is null\mnote{This is simple to see: 
 %\sum_j \int dx_1 \psi_{j}^{*}(x_1) \hat{h}(x_1) \psi_{j}(x_1) 
 %= \sum_j \braket{j | \hat{h} | j} = \sum_{j} h_{jj}.
 
+\subsection{Slater rule for a diagonal matrix element}
+
 In summary we can express the diagonal element of the Hamiltonian matrix as
 \begin{iequation}
 \label{eq:slater_rule1}
-\bra{\Phi_I} \hat{H}_1 \ket{\Phi_I} = V_\mathrm{NN}
+\bra{\Phi_I} \hat{H} \ket{\Phi_I} = V_\mathrm{NN}
 + \sum_i^{\rm occ} \bra{i}\hat{h}\ket{i}
 + \frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{i j}{i j},
 \end{iequation}
-where each sum is over the set of occupied molecular orbitals in $\Phi_I$ [denotes as $\mathrm{occ}(\Phi_I)$]. 
+where each sum is over the set of occupied molecular orbitals in $\Phi_I$ [also denoted as $\mathrm{occ}(\Phi_I)$]. 
 
 \begin{example}[Energy of a single electron]
 Consider the determinant for a single electron:
@@ -241,7 +251,7 @@ Let us consider the determinant:
 The energy is given by:
 \begin{equation}
 \begin{split}
-\bra{\Psi_I} \hat{H} \ket{\Psi_I} =& \bra{\psi_1}\hat{h}\ket{\psi_1} + \bra{\psi_{\bar{1}}} \hat{h} \ket{\psi_{\bar{1}}}\\ 
+\bra{\Phi_I} \hat{H} \ket{\Phi_I} =& \bra{\psi_1}\hat{h}\ket{\psi_1} + \bra{\psi_{\bar{1}}} \hat{h} \ket{\psi_{\bar{1}}}\\ 
 &+ \frac{1}{2} \left[ 
 \aphystei{\psi_1 \psi_1}{\psi_1 \psi_1}
 + \aphystei{\psi_1\psi_{\bar{1}}}{\psi_1\psi_{\bar{1}}} 
@@ -268,11 +278,11 @@ K_{ij} =\braket{ij|ji} =
 \int dx_1 dx_2 \frac{\psi_{i}^{*}(x_1) \psi_{j}^{*}(x_1) \psi_{j}(x_2) \psi_{i}(x_2) }{|\mathbf{r}_1 - \mathbf{r}_2|}.
 \end{equation}
 Using these two quantities the energy of a determinant may be written as
-\begin{equation}
-\bra{\Phi_I} \hat{H}_1 \ket{\Phi_I} = V_{NN}
+\begin{iequation}
+\bra{\Phi_I} \hat{H} \ket{\Phi_I} = V_{NN}
 + \sum_i^{\mathrm{occ}(\Phi_I)} \bra{i}\hat{h}\ket{i}
 + \frac{1}{2} \sum_{ij}^{\mathrm{occ}(\Phi_I)} (J_{ij} - K_{ij}).
-\end{equation}
+\end{iequation}
 
 \section{Slater rules for off-diagonal terms}
 For matrix elements between two Slater determinants with different spin orbitals we have to consider different case.
@@ -311,13 +321,27 @@ In many cases, the FCI wave function is well approximated by a single Slater det
 \begin{equation}
 \ket{\Phi_0} = \ket{\psi_1 \psi_2 \cdots \psi_N}.
 \end{equation}
-Then, we can think of all other determinants as being obtained by \textbf{exciting} electrons from orbitals that are occupied in $\Psi_0$ ($\psi_1 \psi_2 \cdots \psi_N)$ to those that are unoccupied ($\psi_{N+1} \psi_{N+2} \cdots \psi_{2K}$).
+This is called the \textbf{reference} determinant and it plays an important role because we can define all other Slater determinants in the FCI expansion in terms of \textbf{excitations} of electrons starting from $\Phi_0$.
+These excitations promote electrons from the occupied orbitals in $\Phi_0$
+\begin{equation}
+\text{occupied} = \{\psi_1, \psi_2, \cdots, \psi_N\},
+\end{equation}
+to those that are unoccupied
+\begin{equation}
+\text{unoccupied} =  \{\psi_{N+1}, \psi_{N+2}, \cdots, \psi_{2K}\}.
+\end{equation}
+
+
 Determinants that differ from $\Phi_0$ by one spin orbital, for example, by replacing $\psi_N \rightarrow \psi_{N+1}$ 
 \begin{equation}
 \ket{\psi_1 \psi_2 \cdots \psi_{N -1 }\psi_{N + 1}},
 \end{equation}
 are called \textbf{singly excited}.
 We can similarly define determinants with two, three, etc. spin orbital replaced as doubly, triply, etc. excited determinants.
+In physics, especially in the field of condensed matter, occupied orbitals are also called \textbf{holes} while the unoccupied orbitals are called \textbf{particles}.
+This language is consistent with the view that an excited determinant can be seen as combination of creating holes (by removing electrons from occupied orbitals) and particles (by adding electrons to the unoccupied orbitals).
+Therefore, excited determinants are also referred to as \textbf{particle-hole} excitations.\mnote{In band theory another convention is used. Occupied orbitals are referred to as \textbf{valence bands} while unoccupied ones as \textbf{conduction bands}.}
+
 This classification of determinants allows us to rearrange the FCI wave function as
 \begin{equation}
 \ket{\Psi_\mathrm{FCI}} = c_0 \ket{\Phi_0} + \sum_S c_S \ket{\Phi_S} + \sum_D c_D \ket{\Phi_D} + \sum_T c_T \ket{\Phi_T} + \ldots,
@@ -513,6 +537,22 @@ from which we conclude that the FCI vector $\mathbf{c}$ must satisfy the eigenva
 \begin{equation}
 \sum_{J} H_{IJ} c_J = \lambda c_I.
 \end{equation}
+
+\section*{Study Questions}
+\begin{myenumerate}
+\item What is the value of $\braket{\Phi_I | \Phi_J}$ for two arbitrary Slater determinants $\Phi_I$ and $\Phi_J$?
+\item What is the equation that determines the FCI energy and eigenvector?
+\item What are Slater rules?
+\item What is a one-electron integral?
+\item What is a two-electron integral?
+\item What is the expectation value of the Hamiltonian for a Slater determinant?
+\item What are Slater rules for off-diagonal terms?
+\item What is a reference determinant?
+\item What is an excited determinant?
+\item How do we write the FCI wave function using singly, doubly, etc. excited determinants?
+\item What is the structure of the Hamiltonian matrix?
+\item What are direct diagonalization methods?
+\end{myenumerate}
 
 \end{document}
 
