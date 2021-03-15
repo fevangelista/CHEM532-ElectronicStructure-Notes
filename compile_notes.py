@@ -6,7 +6,9 @@ from shutil import copy
 chapters = ['molecular-hamiltonian',
             'huckel',
             'electronic-wavefunctions',
-            'slater-rules']
+            'slater-rules',
+            'hartree-fock',
+            'properties']
 
 root_dir = os.getcwd()
 

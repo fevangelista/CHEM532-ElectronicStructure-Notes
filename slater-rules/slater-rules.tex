@@ -478,7 +478,8 @@ The inverse $(\mathbf{H} - \tilde{E})^{-1}$ can be simplified by retaining only 
 This equation shows that if we want to improve the trial eigenvector, we just need to evaluate an expression in which only the product, $\mathbf{H}\tilde{\mathbf{c}}$, appears. This quantity is usually called the \textbf{sigma vector} and it is indicated with $\boldsymbol{\sigma} = \mathbf{H}\tilde{\mathbf{c}}$.
 Approaches based on direct diagonalization methods have extended the domain of FCI from several thousand determinants to several billions.
 
-\section*{Appendix A: Deriving the FCI equations using the Lagrangian approach}
+\begin{details}[Deriving the FCI equations using the Lagrangian approach]
+%\section*{Appendix A: Deriving the FCI equations using the Lagrangian approach}
 In this section we will derive the FCI equations using a different approach based on the formalism of Lagrange multipliers.
 In this approach we seek to minimize the Rayleigh--Ritz functional
 \begin{equation}
@@ -497,6 +498,23 @@ This approach is a bit clumsy because the expression that we want to minimize co
 
 The Lagrangian approach offers a more direct way to find the FCI equations.
 To begin with, we write a Lagrangian, that is a function that contains the quantity that we want to minimize and the constraints that we need to satisfy.
+
+The FCI Lagrangian is given by the energy minus the normalization constraint
+\begin{equation}
+\begin{split}
+\mathcal{L}[\Psi] & = \underbrace{\bra{\Psi} \hat{H} \ket{\Psi}}_{\text{energy}} - \underbrace{\lambda (\braket{\Psi|\Psi} - 1)}_{\text{normalization constraint}} \\
+& = \sum_{IJ} c_I^{*} H_{IJ} c_J - \lambda (\sum_{I} |c_I^2| - 1).
+\end{split}
+\end{equation}
+Taking the derivative of $\mathcal{L}[\Psi]$ with respect to $c_I^{*}$ gives
+\begin{equation}
+\frac{\partial \mathcal{L}[\Psi] }{\partial c_I^{*}} = \sum_{J} H_{IJ} c_J - \lambda c_I,
+\end{equation}
+from which we conclude that the FCI vector $\mathbf{c}$ must satisfy the eigenvalue equation
+\begin{equation}
+\sum_{J} H_{IJ} c_J = \lambda c_I.
+\end{equation}
+\end{details}
 
 \begin{example}[Minimization of a function of two variables with a constraint]
 Let us consider the problem of minimizing the function $f(x,y) = x^2 + 2 y^2$ with the constraint that $x + y = 2$.
@@ -521,22 +539,6 @@ g(2y,y)  = 2y + y - 2 = 0 \quad \Rightarrow \quad y = \frac{2}{3},
 \end{equation}
 and $x = \frac{4}{3}$.
 \end{example}
-
-The FCI Lagrangian is given by the energy minus the normalization constraint
-\begin{equation}
-\begin{split}
-\mathcal{L}[\Psi] & = \underbrace{\bra{\Psi} \hat{H} \ket{\Psi}}_{\text{energy}} - \underbrace{\lambda (\braket{\Psi|\Psi} - 1)}_{\text{normalization constraint}} \\
-& = \sum_{IJ} c_I^{*} H_{IJ} c_J - \lambda (\sum_{I} |c_I^2| - 1).
-\end{split}
-\end{equation}
-Taking the derivative of $\mathcal{L}[\Psi]$ with respect to $c_I^{*}$ gives
-\begin{equation}
-\frac{\partial \mathcal{L}[\Psi] }{\partial c_I^{*}} = \sum_{J} H_{IJ} c_J - \lambda c_I,
-\end{equation}
-from which we conclude that the FCI vector $\mathbf{c}$ must satisfy the eigenvalue equation
-\begin{equation}
-\sum_{J} H_{IJ} c_J = \lambda c_I.
-\end{equation}
 
 \section*{Study Questions}
 \begin{myenumerate}

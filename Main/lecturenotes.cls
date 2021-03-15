@@ -127,7 +127,7 @@ innerbottommargin=5pt]{ImportantBox}
 {0.25em}% Space after theorem head
 {\small\headingfont{\tiny\ensuremath{\blacksquare}}\nobreakspace\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}
 }% Theorem text (e.g. Theorem 2.1)
-\thmnote{\nobreakspace\the\thm@notefont\headingfont\bfseries\nobreakspace(#3).}}% Optional theorem note
+\thmnote{\nobreakspace\the\thm@notefont\headingfont\bfseries | #3.}}% Optional theorem note
 
 \newtheoremstyle{blacknumbox} % Theorem style name
 {0pt}% Space above
