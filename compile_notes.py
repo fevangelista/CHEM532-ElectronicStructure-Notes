@@ -3,7 +3,8 @@
 import os
 from shutil import copy
 
-chapters = ['molecular-hamiltonian',
+chapters = ['background',
+            'molecular-hamiltonian',
             'huckel',
             'electronic-wavefunctions',
             'slater-rules',

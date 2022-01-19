@@ -1,0 +1,490 @@
+% This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+% or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% !TEX TS-program = xelatex
+
+\documentclass[../Main/chem532-notes.tex]{subfiles}
+\begin{document}
+
+\setcounter{chapter}{-1}
+
+\chapter{Background}
+
+\section{Complex vector spaces}
+
+\subsection{Definition}
+
+The idea of a complex vector space is a convenient generalization of the concept of a space of vectors that forms the basis of much of quantum chemistry.
+We define a $N$-dimensional complex vector space as the set of abstract vectors
+\begin{equation}
+S = \{ \ket{a} \}
+\end{equation}
+together with two operations: 1) addition of two vectors $\ket{a},\ket{b} \in S$
+\begin{equation}
+\ket{a} +\ket{b} = \ket{c} \in S
+\end{equation}
+and 2) multiplication of a vector $\ket{a}$ by a scalar (a complex number) $\alpha \in \mathbb{C}$:
+\begin{equation}
+\alpha \ket{a} = \ket{b} \in S
+\end{equation}
+from which it follows that for any $\alpha, \beta \in \mathbb{C}$ and $\ket{a},\ket{b} \in S$ the following linear combination is a vector in $S$
+\begin{equation}
+\alpha \ket{a} + \beta \ket{b} = \ket{c} \in S
+\end{equation}
+
+These two operations satisfy several conditions: commutativity and associativity of the addition 
+\begin{equation}
+\begin{split}
+\ket{a} +\ket{b} &= \ket{b} + \ket{a} \\
+(\ket{a} +\ket{b}) +\ket{c} &= \ket{a} + (\ket{b} + \ket{c})
+\end{split}
+\end{equation}
+existence of the zero element $\ket{0}$ and of the inverse $-\ket{a}$
+\begin{equation}
+\begin{split}
+\ket{a} +\ket{0} = \ket{0} + \ket{a} = \ket{a} \\
+\ket{a} + (-\ket{a}) = \ket{0}
+\end{split}
+\end{equation}
+existence of a multiplicative identity 1
+\begin{equation}
+1 \ket{a} = \ket{a}
+\end{equation}
+and the associativity and distributivity of sums of scalars and vectors
+\begin{equation}
+\begin{split}
+\alpha (\beta \ket{a}) = (\alpha \beta) \ket{a} \\
+(\alpha + \beta) \ket{a} = \alpha \ket{a}  + \beta \ket{a} \\
+\alpha (\ket{a} + \ket{b}) = \alpha \ket{a} + \alpha \ket{b}
+\end{split}
+\end{equation}
+where $\alpha,\beta \in \mathbb{C}$.
+
+\begin{example}[Examples of vector spaces]
+Here we give some examples of vector spaces.
+
+\textbf{Complex vectors}. One of the simplest complex vector spaces is the space of $N$-dimensional complex vectors $\mathbf{v} = (v_1, v_2, \ldots, v_N)$ where each component $v_i$ is a complex number.
+In this case the addition of two vectors is defined in a component-wise way
+\begin{equation}
+\mathbf{u} + \mathbf{v} = (u_1, u_2, \ldots, u_N) + (v_1, v_2, \ldots, v_N) = (u_1 + v_1, u_2 + v_2, \ldots, u_N + v_N)
+\end{equation}
+
+\textbf{Polynomials}. Another example of vector space is the space of polynomials up to order $N - 1$.
+This space contains the elements $\{1, x, x^2, x^3, \ldots, x^{N-1} \}$ and all possible polynomials of the form
+\begin{equation}
+a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \ldots + a_{N - 1} x^{N-1} 
+\end{equation}
+with the factors $a_i \in \mathbb{C}$.
+
+\textbf{Qubits}. One of the simplest complex vector spaces is that of a single qubit. It contains elements of the form
+\begin{equation}
+c_0 \ket{0} + c_1 \ket{1} = \sum_q^{\{0,1\}} c_q \ket{q}
+\end{equation}
+with the factors $c_i \in \mathbb{C}$. The states $\ket{0}$ and $\ket{1}$ correspond to the false (0) and true (1) values of a classical bit.
+\end{example}
+
+
+For each element $\alpha \ket{a}$ of the complex vector space $S$ we define a \textbf{dual} vector $\alpha^* \bra{a}$, where $\alpha^*$ is the complex conjugate of $\alpha$.
+
+The \textbf{inner product of two vectors} $\ket{a}$ and $\ket{b}$ is a scalar number and is indicated with
+\begin{equation}
+\braket{a|b} = \alpha \in \mathbb{C}
+\end{equation}
+This operation is a generalization of the dot product of vectors ($\mathbf{u} \cdot \mathbf{v}$) and it is defined in such a way that if we swap the order of the two vectors we obtain the complex conjugate of the original inner product
+\begin{equation}
+\label{eq:bg:braket_conjugate}
+\braket{b|a}  = \braket{a|b}^* = \alpha^*
+\end{equation}
+We call two vectors $\ket{a}$ and $\ket{b}$ with zero inner product ($ \braket{a|b} = 0$) \textbf{orthogonal}.
+The inner product is \textbf{linear} in the right-hand-side argument
+\begin{equation}
+\braket{c|\alpha a + \beta b}  = \alpha \braket{c|a} + \beta \braket{c|b} 
+\end{equation}
+and \textbf{anti-linear} in the left-hand-side argument
+\begin{equation}
+\braket{\alpha a + \beta b | c}  = \alpha^* \braket{a|c} + \beta^* \braket{b|c} 
+\end{equation}
+
+
+With the notion of the inner product we can define the 2-norm of a vector
+\begin{equation}
+\| \ket{a} \| = \sqrt{ \braket{a|a} } \in \mathbb{R} 
+\end{equation}
+This norm satisfies the following conditions
+\begin{equation}
+\begin{split}
+\| \ket{a} \| > 0 \text{ if } \ket{a} \neq \ket{0} \\
+\| \ket{a} \| = 0 \text{ if } \ket{a} = \ket{0}
+\end{split}
+\end{equation}
+We call a vector $\ket{a}$ with unit norm ($\braket{a|a} = 0$) \textbf{normalized}.
+
+\subsection{Bases}
+A basis of an $N$-dimensional complex vector space $S$ is a set of vectors $\{ \ket{\phi_i}, i = 1,\ldots,N \}$ of dimension $N$ such that each vector $\ket{a} \in S$ can be expressed as a linear combination of the elements of the basis
+\begin{iequation}
+\label{eq:bg:basis}
+\ket{a} = \sum_{i = 1}^N a_i \ket{\phi_i}
+\end{iequation}
+where the coefficients $a_i$ are unique.
+Note at times it might also be convenient to think of the state $\ket{a}$ as the dot product of the row vector of basis functions $\ket{\boldsymbol \phi} =  (\ket{\phi_1}, \ket{\phi_2}, \ldots, \ket{\phi_N})$ with the column vector of coefficients $\mathbf{a}  = (a_1,a_2,\ldots,a_N)^T$
+\begin{equation}
+\label{eq:bg:basis}
+\ket{a} = (\ket{\phi_1}, \ket{\phi_2}, \ldots, \ket{\phi_N})
+\begin{pmatrix}
+a_1 \\
+a_2 \\
+\vdots \\
+a_N
+\end{pmatrix}
+= \ket{\boldsymbol \phi} \mathbf{a} 
+\end{equation}
+where the coefficients $a_i$ are unique.
+In this notation, the $\bra{\boldsymbol \phi}$ stands for the column vector of dual vectors
+
+\begin{equation}
+\bra{\boldsymbol \phi}=
+\begin{pmatrix}
+\bra{\phi_1} \\
+\bra{\phi_2} \\
+\vdots \\
+\bra{\phi_N}
+\end{pmatrix}
+\end{equation}
+
+An important quantity that characterizes the properties of a basis is the \textbf{metric or overlap matrix}
+\begin{iequation}
+S_{ij} = \braket{ \phi_i | \phi_j }
+\end{iequation}
+
+Often, we will work with \textbf{orthonormal bases}, that is, bases with elements that are normalized and mutually orthogonal
+\begin{equation}
+\begin{split}
+\braket{\phi_i | \phi_i} &= 1 \quad \forall i \\
+\braket{\phi_i | \phi_j} &= 0 \quad \forall ij, i \neq j
+\end{split}
+\end{equation}
+We can equivalently express the orthonormality condition in the following way
+\begin{iequation}
+\braket{\phi_i | \phi_j} = \delta_{ij} \quad \forall ij
+\end{iequation}
+where $\delta_{ij}$ is the Kronecker delta function.
+The overlap matrix can also be expressed as
+\begin{equation}
+\mathbf{S} = \braket{\boldsymbol \phi | \boldsymbol \phi }
+= 
+\begin{pmatrix}
+\bra{\phi_1} \\
+\bra{\phi_2} \\
+\vdots \\
+\bra{\phi_N}
+\end{pmatrix}
+ (\ket{\phi_1}, \ket{\phi_2}, \ldots, \ket{\phi_N})
+ =
+ \begin{pmatrix}
+\braket{\phi_1 | \phi_1} & \braket{\phi_1 | \phi_2} & \cdots & \braket{\phi_1 | \phi_N}  \\
+\braket{\phi_2 | \phi_1} & \braket{\phi_2 | \phi_2} & \cdots & \braket{\phi_2 | \phi_N}  \\
+\vdots & & \ddots& \vdots \\
+\braket{\phi_N | \phi_1} & \braket{\phi_N| \phi_2} & \cdots & \braket{\phi_N | \phi_N}
+\end{pmatrix}
+\end{equation}
+
+
+
+Given an \textbf{orthonormal basis} we can find the value of the coefficients that enter in Eq.~\eqref{eq:bg:basis} by \textbf{taking the inner product} of $\ket{a}$ with each element of the basis:
+\begin{equation}
+\label{eq:bg:basis2}
+\braket{\phi_k | a} = \sum_{i = 1}^N a_i \braket{\phi_k |\phi_i} = \sum_{i = 1}^N a_i  \delta_{ki} = 
+a_1 \delta_{k1} + a_2 \delta_{k2} + \ldots + a_k \underbrace{\delta_{kk}}_{1} + \ldots = a_k 
+\end{equation}
+In simplifying this equation, we have used the fact that the only term in the sum that survives is the one for which the index $i$ equals $k$.
+We will encounter this trick over and over again, so you should become comfortable with this simplification.
+Equation~\eqref{eq:bg:basis2} shows that for an orthonormal basis the coefficient $a_k$ in the expansion of a vector $\ket{a}$ is the inner product $\braket{\phi_k | a}$.
+
+If we have two vectors, $\ket{a}$ and $\ket{b}$, expanded in the same orthonormal basis
+\begin{equation}
+\begin{split}
+\ket{a} &= \sum_{i = 1}^N a_i \ket{\phi_i} \\
+\ket{b} &= \sum_{i = 1}^N b_i \ket{\phi_i}
+\end{split}
+\end{equation}
+we can express their inner product as
+\begin{equation}
+\begin{split}
+\braket{a|b} &= \braket{\sum_{i = 1}^N a_i \phi_i | \sum_{j = 1}^N b_j \phi_j }
+= \sum_{i = 1}^N  \sum_{j = 1}^N a_i^*  \underbrace{\braket{ \phi_i | \phi_j }}_{\delta_{ij}} b_j \\
+&= \sum_{i = 1}^N a_i^* b_i = (\alpha^*_1, \alpha^*_2,\ldots)
+\begin{pmatrix}
+b_1 \\
+b_2 \\
+\vdots
+\end{pmatrix} = 
+  \mathbf{a}^\dagger\mathbf{b}
+\end{split}
+\end{equation}
+In the rightmost part of this equation we have written the inner product in terms of a vector-vector dot product ($\mathbf{a}^\dagger \mathbf{b}$). The superscript symbol ``${}^\dagger$'' indicates the \textbf{conjugate transpose of a vector} (transpose and take the complex conjugate of each element). This shows that in an orthonormal basis, we can express the inner product of two vectors with the inner product of the corresponding coefficient vectors (remembering to take the complex conjugate of the left vector). 
+
+\subsection{Linear operators}
+Operators are mathematical objects that transform a vector into another vector, for example:
+\begin{equation}
+\label{eq:bg:operator}
+\hat{A} \ket{a} = \ket{b}
+\end{equation}
+In this course we are particularly concerned with \textbf{linear operators}, which satisfy the following condition
+\begin{equation}
+\hat{A} (\alpha \ket{a} + \beta \ket{b}) = \alpha \hat{A} \ket{a} + \beta \hat{A} \ket{b}
+\end{equation}
+
+As we have seen in the case of states, once we defined an orthonormalized basis, we can express the action of an operator on a vector in terms of linear algebra operations on matrix and vectors that represent operators and states.
+If we compute the inner product of a generic element of the basis $\phi_k$ with Eq.~\eqref{eq:bg:operator}, we can write
+\begin{equation}
+\begin{split}
+\bra{\phi_k}\hat{A} \ket{a} &= \braket{\phi_k | b}
+\end{split}
+\end{equation}
+After expanding the states $\ket{a}$ and $\ket{b}$ in the basis we can write
+\begin{equation}
+\begin{split}
+\sum_{i = 1}^N \underbrace{\bra{\phi_k}\hat{A} \ket{\phi_i}}_{A_{ki} } a_i &= \sum_i b_i \braket{\phi_k | \phi_i} \\
+\sum_{i = 1}^N A_{ki} a_i&= b_k
+\end{split}
+\end{equation}
+where we have introduced the \textbf{matrix representation} of the operator $\hat{A}$, defined as $A_{ki} = \bra{\phi_k}\hat{A} \ket{\phi_i}$.
+This equation can be written compactly in the following way using matrix-vector notation
+\begin{equation}
+\mathbf{b} = \mathbf{A} \mathbf{a}
+\end{equation}
+where $\mathbf{A}$ is a matrix with elements $(\mathbf{A})_{ki} = \bra{\phi_k}\hat{A} \ket{\phi_i}$.
+This result shows that once we have computed the matrix representation of the linear operator $\hat{A}$, we can compute its action on any vector by computing a matrix-vector product.
+
+\begin{problem}
+Show that given the two linear operators $\hat{A}$ and $\hat{B}$ that the action of the product $\hat{A} \hat{B}$ is \textbf{represented} in an orthonormal basis by the matrix
+\begin{equation}
+\mathbf{A} \mathbf{B}
+\end{equation}
+where 
+$(\mathbf{A})_{ki} = \bra{\phi_k}\hat{A} \ket{\phi_i}$ and $(\mathbf{B})_{ki} = \bra{\phi_k}\hat{B} \ket{\phi_i}$.
+\end{problem}
+
+Next, we will look at how we can express operators in terms of outer products of the elements of a basis.
+The \textbf{outer product} of two vectors $\ket{a}$ and $\ket{b}$ is indicated as
+\begin{equation}
+\ket{a}\bra{b}
+\end{equation}
+When the outer product is multiplied to the right with a ket vector, we take the inner product to the left, for example
+\begin{equation}
+(\ket{a}\bra{b}) \ket{c} = \ket{a} \braket{b|c}
+\end{equation}
+and similarly if we multiply on the left with a bra vector.
+We can now see that the operator $\hat{A}$ that applied to the state $\ket{a}$ gives $\ket{b}$, that is $\hat{A}\ket{a} = \ket{b}$ can be expressed as
+\begin{equation}
+\hat{A} = \ket{b}\bra{a}
+\end{equation}
+since 
+\begin{equation}
+\hat{A} \ket{a} = \ket{b} \underbrace{\braket{a|a} }_{=1} = \ket{b}
+\end{equation}
+In general a linear operator can be represented by a sum of outer products multiplied by appropriate matrix elements.
+For example, consider an orthonormal basis $\{ \phi_i \}$ and the sum of the outer products of each element of the basis with itself
+\begin{equation}
+\hat{1} = \sum_i \ket{\phi_i}\bra{\phi_i}
+\end{equation}
+It is easy to see that this quantity is the \textbf{identity operator} resolved (expressed) in the basis $\{ \phi_i \}$. To verify this, we apply $\hat{1}$ to a generic vector $\ket{a}$
+\begin{equation}
+\hat{1}\ket{a} = \sum_i \ket{\phi_i}\underbrace{\braket{\phi_i | a}}_{a_i}
+= \sum_i \ket{\phi_i} a_i = \ket{a}
+\end{equation}
+It is important to note that $\hat{1} = \sum_i \ket{\phi_i}\bra{\phi_i}$ is only valid for orthonormal bases, and for more general bases a different expression can be derived. 
+
+To express an operator as a sum of outer products, we can just multiply it on the left and right with the identity
+\begin{equation}
+\hat{1}\hat{A}\hat{1} = \sum_{ij} \ket{\phi_i}\underbrace{\braket{\phi_i | \hat{A} |\phi_j}}_{A_{ij}} \bra{\phi_j}
+= \sum_{ij} \ket{\phi_i} A_{ij} \bra{\phi_j}
+\end{equation}
+This result shows that the outer product representation of the operator $\hat{A}$ in an orthonormal basis is sum weighted by the matrix representation of the operator ($ A_{ij}$).
+
+\subsection{Connection between different representations}
+The formalism we are setting up encompasses quantum mechanics as formulated in terms of wave functions.
+To see this point, we will consider the position basis $\{ \ket{x}, -\infty < x < \infty \}$.
+This basis is orthogonal, that is, $\braket{x | x'} = 0$ if $x \neq x'$, but its normalized to a delta
+\begin{equation}
+\braket{x | x'} = \delta(x - x')
+\end{equation}
+so that its integral is equal to one
+\begin{equation}
+\int dx \braket{x | x'} = 1
+\end{equation}
+
+The common wave function of quantum mechanics is then nothing else that the representation of a vector $\ket{\Psi}$ on the position basis
+\begin{equation}
+\Psi(x) \equiv \braket{x | \Psi}
+\end{equation}
+The resolution of the identity in the position basis is written as
+\begin{equation}
+\hat{1} = \int dx \ket{x} \bra{x} 
+\end{equation}
+Using this definition we can express the inner product $\braket{\Psi|\Psi}$ in the way you first learned it in quantum mechanics
+\begin{equation}
+\braket{\Psi|\Psi} = \bra{\Psi} \left( \int dx \ket{x} \bra{x} \right) \ket{\Psi}
+= \int dx  \braket{\Psi|x} \braket{x|\Psi} = \int dx  \Psi(x)^* \Psi(x) = \int dx  |\Psi(x)|^2
+\end{equation}
+
+
+
+
+\subsection{The Hermitian conjugate of an operator}
+
+Given an operator $\hat{A}$, we defined its Hermitian conjugate $\hat{A}^\dagger$ as the corresponding operator that acts on the dual vectors.
+By this we mean that the dual of the vector $\hat{A} \ket{a}$ is the vector $\bra{a} \hat{A}^\dagger$. As a consequence, for any two vectors $\ket{a}$ and $\ket{b}$, the Hermitian conjugate satisfies the condition
+\begin{iequation}
+\label{eq:bg:braAket_conjugate}
+\bra{a} \hat{A} \ket{b} = \bra{b} \hat{A}^\dagger \ket{a}^*
+\end{iequation}
+
+An important property of the Hermitian conjugation is that the Hermitian conjugate of a product of two operators is the product of the Hermitian conjugate in reverse order
+\begin{equation}
+(\hat{A} \hat{B})^\dagger = \hat{B}^\dagger \hat{A}^\dagger
+\end{equation}
+
+\subsection{Some special operators and functions of operators}
+
+An \textbf{Hermitian operator} is such that the Hermitian conjugate and the original operator are the same
+\begin{iequation}
+\hat{A}^\dagger = \hat{A}
+\end{iequation}
+Because of their properties, Hermitian operators play an important role in quantum mechanics. Hermitian operators have real eigenvalues, that is, the solutions of the eigenvector equation
+\begin{equation}
+\hat{A} \ket{a} = \lambda \ket{a}
+\end{equation}
+are such that $\lambda \in \mathbb{R}$.
+To verify this result, take the eigenvalue product and compute the inner product with $\ket{a}$
+\begin{equation}
+\bra{a} \hat{A} \ket{a} = \lambda \braket{a|a} \Rightarrow \lambda = \frac{\bra{a} \hat{A} \ket{a}}{\braket{a|a}}
+\end{equation}
+Taking the complex conjugate of $\lambda$ we find
+\begin{equation}
+\lambda^* = \frac{\bra{a} \hat{A} \ket{a}^*}{\braket{a|a}^*} = \frac{\bra{a} \hat{A}^\dagger \ket{a}}{\braket{a|a}} = 
+\frac{\bra{a} \hat{A} \ket{a}}{\braket{a|a}} = \lambda
+\end{equation}
+where in the second step we have used Eqs.~\eqref{eq:bg:braket_conjugate} and \eqref{eq:bg:braAket_conjugate}, and then used the fact that $\hat{A}^\dagger = \hat{A}$.
+
+A \textbf{Unitary operator} is such that the Hermitian conjugate is the \textbf{inverse} of the original operator
+\begin{iequation}
+\hat{A}^\dagger = \hat{A}^{-1}
+\end{iequation}
+For a unitary operator we have
+\begin{equation}
+\begin{split}
+\hat{A}^\dagger \hat{A} = \hat{A}^{-1} \hat{A} = 1 \\
+\hat{A} \hat{A}^\dagger = \hat{A} \hat{A}^{-1} = 1
+\end{split}
+\end{equation}
+Unitary operators do not change the norm of the state to which they are applied. We show this by considering the operation
+\begin{equation}
+\hat{U} \ket{a} = \ket{b}
+\end{equation}
+The norm of the resulting vector $\ket{b}$ is given by
+\begin{equation}
+\| \ket{b} \| = \sqrt{ \braket{b|b} } =  \sqrt{ \bra{a}\hat{U}^\dagger \hat{U} \ket{a}  }
+= \sqrt{ \bra{a} \underbrace{\hat{U}^{-1} \hat{U}}_{\hat{1}} \ket{a}  } = \sqrt{ \braket{a|a}  } = \| \ket{a} \|
+\end{equation}
+Therefore, a unitary operator preserves the norm of the state to which it is applied.
+
+\subsection{Functions of operators}
+
+Given a linear operator $\hat{A}$ one can also define \textbf{functions of operators}.
+Given a function $f(x)$ that can be expanded in a Taylor series, for example, the exponential $\exp(x)$, 
+\begin{equation}
+\exp(x) = 1 + x + \frac{x^2}{2} + \frac{x^3}{6} + \ldots = \sum_{k = 0}^{\infty} \frac{x^k}{k!}
+\end{equation}
+we define the function of the operator by replacing $x$ with an operator $\hat{A}$. In the case of the exponential this means
+\begin{equation}
+\exp(\hat{A}) = 1 + \hat{A} + \frac{\hat{A}^2}{2} + \frac{\hat{A}^3}{6} + \ldots = \sum_{k = 0}^{\infty} \frac{\hat{A}^k}{k!}
+\end{equation}
+where we take $\hat{A}^0 = 1$.
+The exponential so defined satisfies many properties of the exponential, for example,
+\begin{equation}
+\exp(\hat{A}) \exp(-\hat{A}) = \hat{1}
+\end{equation}
+However the product rule $\exp(x) \exp(y) = \exp(x + y)$ in the case of operators is only valid if the two operators commute
+\begin{equation}
+\exp(\hat{A}) \exp(\hat{B}) = \exp(\hat{A} + \hat{B}) \quad \text{ only if } [\hat{A}, \hat{B}] = 0.
+\end{equation}
+
+\subsection{Tensor product}
+
+When we describe multiple quantum mechanical particles it is convenient to introduce the concept of tensor product.
+The tensor product of two vectors $\ket{a}$ and $\ket{b}$ is denoted with the symbol $\otimes$, but often this notation is abbreviated by writing a single ket vector or two vectors without the multiplication sign
+\begin{equation}
+\ket{a} \otimes \ket{b} \equiv \ket{ab} \equiv \ket{a}\ket{b}
+\end{equation}
+This vector can be interpreted as a quantum state of two particles, where the first one (left) is in the state $\ket{a}$ and the second one in the state $\ket{b}$.
+The tensor product is linear in the vectors $\ket{a}$ and $\ket{b}$, meaning, for example, that if we expand these vectors in a basis we can write
+\begin{iequation}
+\ket{a} \otimes \ket{b} = (\sum_{i} \ket{\phi_i} a_i) \otimes (\sum_{j} \ket{\phi_j} b_j)
+= \sum_{ij} a_i b_j \ket{\phi_i} \otimes \ket{\phi_j} 
+\end{iequation}
+In the space of tensor product of two vectors, we can think of the quantities $\ket{\phi_i} \otimes \ket{\phi_j}$ as a \textbf{basis for the tensor product space}. In this basis, the elements $\ket{\phi_i} \otimes \ket{\phi_j}$ and $\ket{\phi_j} \otimes \ket{\phi_i}$ are considered to be distinct.
+Once we have a tensor product, we can also define a corresponding inner product. Consider the two states
+\begin{equation}
+\begin{split}
+\ket{ab} = \ket{a} \otimes \ket{b} \\
+\ket{cd} = \ket{c} \otimes \ket{d}
+\end{split}
+\end{equation}
+their inner product is defined as the number
+\begin{equation}
+\braket{ab|cd} = \left( \bra{a} \otimes \bra{b} \right) \left( \ket{c} \otimes \ket{d} \right)
+= \braket{a|c} \braket{b|d}
+\end{equation}
+
+
+
+
+The tensor product can be extended to an arbitrary number of factors. For example, consider a system consisting of spins on $N$ sites.
+Each spin spans a vector space of dimension 2 with basis elements $\ket{\uparrow}$ and $\ket{\downarrow}$, corresponding to the spin up and spin down states, and a generic state can be written as
+\begin{equation}
+c_{\uparrow} \ket{\uparrow} + c_{\downarrow} \ket{\downarrow} = \sum_{\sigma}^{\{\uparrow, \downarrow \} } c_\sigma \ket{\sigma}
+\end{equation}
+The state of 3 spins is then the tensor product of all the elements in the basis 
+\begin{equation}
+\sum_{\sigma_1 \sigma_2 \sigma_3}^{\{\uparrow, \downarrow \} } c_{\sigma_1 \sigma_2 \sigma_3} \ket{\sigma_1} \otimes \ket{\sigma_2} \otimes \ket{\sigma_3}
+\end{equation}
+We can write this state out explicitly by enumerating all possible arrangements of spins and find that the tensor product space has dimension $2^3 = 8$
+\begin{equation}
+\begin{split}
+   c_{\uparrow\uparrow\uparrow}  \ket{\uparrow} \otimes \ket{\uparrow} \otimes \ket{\uparrow} \\
++ c_{\downarrow\uparrow\uparrow}  \ket{\downarrow} \otimes \ket{\uparrow} \otimes \ket{\uparrow}
++ c_{\uparrow\downarrow\uparrow}   \ket{\uparrow} \otimes \ket{\downarrow} \otimes \ket{\uparrow}
++ c_{\uparrow\uparrow\downarrow}   \ket{\uparrow} \otimes \ket{\uparrow} \otimes \ket{\downarrow} \\
++ c_{\downarrow\downarrow\uparrow}  \ket{\downarrow} \otimes \ket{\downarrow} \otimes \ket{\uparrow}
++ c_{\uparrow\downarrow\downarrow}   \ket{\uparrow} \otimes \ket{\downarrow} \otimes \ket{\downarrow}
++ c_{\downarrow\uparrow\downarrow}   \ket{\downarrow} \otimes \ket{\uparrow} \otimes \ket{\downarrow} \\
++ c_{\downarrow\downarrow\downarrow}   \ket{\downarrow} \otimes \ket{\downarrow} \otimes \ket{\downarrow}
+\end{split}
+\end{equation}
+
+Another useful mathematical concept is that of the \textbf{exterior product} or \textbf{wedge product} ($\wedge$).
+The exterior product of two vectors is similar to the tensor product, but now the product changes sign if we permute the arguments
+\begin{equation}
+\ket{a} \wedge  \ket{b} = - \ket{b} \wedge  \ket{a} 
+\end{equation}
+The wedge product can be expressed as a linear combination of tensor products, for example
+\begin{equation}
+\ket{a} \wedge  \ket{b} =  \frac{1}{\sqrt{2}} \left( \ket{a} \otimes  \ket{b}  - \ket{b} \otimes  \ket{a}  \right)
+\end{equation}
+where the constant $\frac{1}{\sqrt{2}}$ is introduced to make sure that if $\ket{a}$ and $\ket{b}$ are orthonormal, that the resulting wedge product state will have norm equal to one.
+Due to its definition, it follows that the wedge product of a vector with itself is zero
+\begin{equation}
+\ket{a} \wedge  \ket{a} = - \ket{a} \wedge  \ket{a} = 0
+\end{equation}
+This property is closely related to the Pauli principle: two electrons cannot be in the same quantum state. Indeed, we will see later that the wedge product will be useful to define the quantum state of many-electron systems.
+
+%\section*{Problems}
+%\begin{problem}[Inner product]
+%Consider the 
+%\end{problem}
+
+
+
+\end{document}

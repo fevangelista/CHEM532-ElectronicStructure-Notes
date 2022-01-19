@@ -225,10 +225,15 @@ since the term that corresponds to $i = j$ is null\mnote{This is simple to see: 
 
 In summary we can express the diagonal element of the Hamiltonian matrix as
 \begin{iequation}
+\begin{split}
 \label{eq:slater_rule1}
-\bra{\Phi_I} \hat{H} \ket{\Phi_I} = V_\mathrm{NN}
+\bra{\Phi_I} \hat{H} \ket{\Phi_I} = & V_\mathrm{NN}
 + \sum_i^{\rm occ} \bra{i}\hat{h}\ket{i}
-+ \frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{i j}{i j},
++ \frac{1}{2} \sum_{ij}^{\rm occ} \aphystei{i j}{i j},\\
+=& V_\mathrm{NN}
++ \sum_i^{\rm occ} \bra{i}\hat{h}\ket{i}
++ \sum_{i < j}^{\rm occ} \aphystei{i j}{i j},
+\end{split}
 \end{iequation}
 where each sum is over the set of occupied molecular orbitals in $\Phi_I$ [also denoted as $\mathrm{occ}(\Phi_I)$]. 
 
