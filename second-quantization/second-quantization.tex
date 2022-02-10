@@ -1,0 +1,563 @@
+% This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+% or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% !TEX TS-program = xelatex
+
+\documentclass[../Main/chem532-notes.tex]{subfiles}
+\begin{document}
+
+\chapter{Second quantization and Wick's theorem}
+
+\section{Introduction to second quantization}
+
+Slater rules help with the evaluation of matrix elements of the type:
+\begin{equation}
+\bra{\Phi_I} \hat{H} \ket{\Phi_J},
+\end{equation}
+but in many cases we deal with expressions that are much more complicated, for example
+\begin{equation}
+\bra{\Phi_I} \hat{H} e^{\hat{T}} \ket{\Phi_J},
+\end{equation}
+where $e^{\hat{T}}$ is the exponential of the operator $\hat{T}$.
+
+A more convenient way to compute matrix elements is provided by the formalism of second quantization.
+In second quantization we plan an emphasis on operators rather than specific Slater determinants.
+
+\section{Occupation number representation of determinants}
+
+To introduce second quantization we will start by introducing the occupation number representation of determinants.
+The main idea is to associate to each Slater determinant $\Phi_I$ a vector of occupation numbers
+\begin{equation}
+\ket{\mathbf{n}} = \ket{n_1 n_2 \cdots n_{2K}} \leftrightarrow \ket{(\psi_1)^{n_1} (\psi_2)^{n_2} \cdots (\psi_K)^{n_{2K}} }.
+\end{equation}
+where $2K$ is the number of spinorbitals. Each occupation number $n_i$ indicates if a given spinorbital $\psi_i$ is present ($n_i = 1$) or not ($n_i = 0$) in the determinant represented by $\ket{\mathbf{n}}$.
+%More specifically we have that
+%\begin{equation}
+%n_i = \begin{cases}
+%1 \text{ if } \psi_i \in \Phi_I \\
+%0 \text{ if } \psi_i \notin \Phi_I
+%\end{cases}
+%\end{equation}
+In this formalism we can easily represent a state with zero electron (the true vacuum) with the state vector
+\begin{equation}
+\ket{-} = \ket{0 0 \cdots 0}.
+\end{equation}
+This state represents zero electrons and by definition it is normalized:
+\begin{equation}
+\braket{-|-} = 1.
+\end{equation}
+
+One-electron determinants are represented by vectors that contain only one ``1'' and all of the remaining entries set to zero, for example
+\begin{equation}
+\ket{\psi_p} \leftrightarrow \ket{0 \cdots 1_p \cdots 0}.
+\end{equation}
+Similarly, two-electron determinants correspond to occupation vectors with two ``1''
+\begin{equation}
+\ket{\psi_p \psi_q} \leftrightarrow \ket{0 \cdots 1_p \cdots 1_q \cdots 0}.
+\end{equation}
+Note that the occupation number notation removes the ambiguity in the definition of the determinants that comes from the antisymmetry with respect to permutations of spinorbitals.
+For example, the determinant with spinorbitals $\psi_1$ and $\psi_2$ can be written either as $\ket{\psi_1 \psi_2}$ or $\ket{\psi_2 \psi_1}$, with the two related by a sign change
+\begin{equation}
+\ket{\psi_1 \psi_2} = -\ket{\psi_2 \psi_1}
+\end{equation}
+However, in the occupation number representation, the state with $n_1 = n_2 = 2$ corresponds to a specific ordering of the spinorbitals
+\begin{equation}
+\ket{1 1 0 \cdots} = \ket{\psi_1 \psi_2}
+\end{equation}
+
+\section{Creation and annihilation operators}
+
+At the basis of the formalism of second quantization are creation and annihilation operators. To each spin orbital $\psi_p$ we associate a creation operator, written as $\cop{p}$.
+When a creation operator is applied to the vacuum it creates a Slater determinant with one electron:
+\begin{equation}
+\cop{p} \ket{-} = \ket{\psi_p}.
+\end{equation}
+By applying a sequence of creation operators we may create Slater determinants with multiple electrons:
+\begin{equation}
+\cop{p} \cop{q} \ket{} = \cop{p} \ket{\psi_q} = \ket{\psi_p \psi_q}.
+\end{equation}
+Note that if we reverse the order of the operators $\cop{p} \cop{q}$ we get a determinant with the opposite sign:
+\begin{equation}
+\cop{q} \cop{p} \ket{} = \cop{q} \ket{\psi_p} = \ket{\psi_q \psi_p} = -\ket{\psi_p \psi_q},
+\end{equation}
+where in the last step we have used the fact that determinants are antisymmetric with respect to permutations of spin orbitals.
+
+The action of a creation operator onto a determinant written in the occupation number representation is given by
+\begin{iequation}
+\cop{p} \ket{\mathbf{n}} = \cop{p} \ket{\cdots n_p \cdots} = (1 - n_p) (-1)^{\sum^{p-1}_k n_k} \ket{\cdots 1_p \cdots}
+\end{iequation}
+The factor $(1 - n_p)$ ensures that we can create an electron in spinorbital $\psi_p$ only if it is not contained in $\ket{\mathbf{n}}$. Note that if $\psi_p$ is occupied then we have
+\begin{equation}
+\cop{p} \ket{\cdots 1_p \cdots} = 0.
+\end{equation}
+The second factor 
+\begin{equation}
+(-1)^{\sum^{p-1}_k n_k}
+\end{equation}
+is the fermionic sign associated with permuting the spinorbital $\psi_p$ into its proper position. This factor accounts for a sign change every time $\psi_p$ is permuted with occupied spinorbitals that preceed it.
+The last term, $\ket{\cdots 1_p \cdots}$ is the state vector with an electron created in spinorbital $\psi_p$.
+
+Consider a generic state $\ket{\mathbf{n}}$ and the operators $\cop{p}$ and $\cop{q}$.
+If we apply the sum of $\cop{p}\cop{q}$ and $\cop{q}\cop{p}$ to $\ket{\mathbf{n}}$ we get the following result (which may be verified by considering all possible values of $n_p$ and $n_q$):
+\begin{equation}
+(\cop{p} \cop{q} + \cop{q} \cop{p}) \ket{\mathbf{n}} = [\cop{p}, \cop{q}]_{+}\ket{\mathbf{n}} = 0,
+\end{equation}
+where we have introduced the anticommutator $[\hat{A},\hat{B}]_{+}$, defined as:
+\begin{equation}
+[\hat{A},\hat{B}]_{+} = \hat{A}\hat{B} - \hat{B}\hat{A}.
+\end{equation}
+Since the state $\ket{\mathbf{n}}$ is arbitrary, the equation is equivalent to the following anticommutator property of the creation operators:
+\begin{equation}
+[\cop{p}, \cop{q}]_{+} = 0.
+\end{equation}
+Note that if we set $q = p$, then this implies:
+\begin{equation}
+\cop{p} \cop{p} = \frac{1}{2} [\cop{p}, \cop{p}]_{+} = 0,
+\end{equation}
+which is another way to state Pauli's exclusion principle.
+
+Similarly, we can define annihilation operators $\aop{p}$ that destroy electrons.
+Annihilation operators reverse the action of creation operators by removing spinorbitals from a determinant
+\begin{equation}
+\aop{p} \cop{p} \ket{-} = \aop{p} \ket{\psi_p} = \ket{-}.
+\end{equation}
+When applied to the vacuum, an annihilation operator gives zero
+\begin{equation}
+\aop{p} \ket{-} = 0.
+\end{equation}
+The action of an annihilation operator onto a determinant written in the occupation number representation is given by
+\begin{iequation}
+\aop{p} \ket{\mathbf{n}} = \aop{p} \ket{\cdots n_p \cdots} = n_p (-1)^{\sum^{p-1}_k n_k} \ket{\cdots 0_p \cdots}
+\end{iequation}
+Here we have a different factor ($n_p$) that ensures that we can annihilate an electron in spinorbital $\psi_p$ only if it is contained in $\ket{\mathbf{n}}$.
+
+As in the case of creation operators, the annihilation operators satisfy the following anticommutation condition:
+\begin{equation}
+[\aop{p}, \aop{q}]_{+} = \aop{p} \aop{q} + \aop{q} \aop{p} = 0.
+\end{equation}
+Creation and annihilation operators are the Hermitian conjugate of each other:
+\begin{equation}
+(\cop{p})^\dagger = \aop{p}.
+\end{equation}
+For expressions containing a product of operators remember to invert the order when taking the Hermitian conjugate, for example:
+\begin{equation}
+(\cop{p} \aop{q} \aop{r})^\dagger = \cop{r} \cop{q} \aop{p}.
+\end{equation}
+
+Finally, one can show that the commutator of a creation and one annihilation operator satisfy the condition:
+\begin{equation}
+\aop{p} \cop{q} + \cop{q} \aop{p} = [\aop{p},\cop{q}]_{+} = \delta_{pq}.
+\end{equation}
+
+\section{Operators in second quantization}
+
+We can use second quantization also to express any quantum mechanical operator.
+Let us consider the action of a general one-electron operator onto a single spinorbital
+\begin{equation}
+\hat{o}_1 \ket{\psi_r} = \ket{\psi'_r} = \sum_p \ket{\psi_p} \underbrace{\braket{\psi_p | \hat{o}_1 | \psi_r}}_{o_{pr}} = \sum_p \ket{\psi_p} o_{pr}
+\end{equation}
+What this operator accomplishes is replacing $\psi_q$ with the sum of all the spin orbitals multiplied by the matrix element $o_{pr}$.
+We can easily verify that the operator performs the same operation
+\begin{equation}
+\hat{o}_1 = \sum_{pq}^{2K} o_{pq} \cop{p} \aop{q}
+\end{equation}
+since
+\begin{equation}
+\sum_{pq} o_{pq} \cop{p} \aop{q} \ket{\psi_r} = \sum_{p} o_{pr} \cop{p} \ket{-} = \sum_{p} o_{pr} \ket{\psi_p}
+\end{equation}
+
+In the case of a two-body operator\mnote{Note how the sequence of indices in the list of creation and annihilation operators has $r$ and $s$ reversed: $pqsr$.}
+\begin{equation}
+\hat{O}_2 = \frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs} \cop{p}\cop{q}\aop{s}\aop{r}.
+\end{equation}
+Note that these expressions are generic, in the sense that they do not depend on the number of electrons contained in our system. This is an advantage when trying to describe problems with a variable number of particles, as for example in the theory of absorption or emission of radiation.
+
+The expectation value of a one-electron operator is computed in second quantization as:
+\begin{equation}
+\bra{\Phi} \hat{O}_1 \ket{\Phi} =
+\sum_{pq}^{2K} \bra{\psi_p} \hat{o}_1 \ket{\psi_q} \bra{\Phi} \cop{p} \aop{q} \ket{\Phi}.\label{eq:secquant:O1}
+\end{equation}
+The quantity $\bra{\Phi} \cop{p} \aop{q} \ket{\Phi}$ may be evaluated by grouping the second quantized operators as:
+\begin{equation}
+\bra{\Phi} \cop{p} \aop{q} \ket{\Phi} = \left(\bra{\Phi} \cop{p}\right) \left( \aop{q} \ket{\Phi} \right) = \braket{\Phi_p|\Phi_q}.
+\end{equation}
+The notation $\ket{\Phi_q} = \aop{q} \ket{\Phi}$ indicates a state with $N-1$ electrons.
+Note that the quantity $\bra{\Phi} \cop{p}$ may be written as
+\begin{equation}
+\bra{\Phi} \cop{p} = \left(\aop{p} \ket{\Phi}\right)^\dagger = \left(\ket{\Phi_p}\right)^\dagger,
+\end{equation}
+which shows that it is the bra corresponding to a state in which an electron in spin orbital $\psi_p$ is destroyed.
+The quantity $\braket{\Phi_p | \Phi_q}$ is zero if both $p$ or $q$ do not belong to the space of orbitals occupied in $\Phi$. Moreover, since $\braket{\Phi_p | \Phi_q}$ is the overlap of two determinants, this quantity will be one if the two determinants are the same ($p = q$) and zero if there is at least one orbital mismatch ($p \neq q$).
+These conditions may be expressed as
+\begin{equation}
+\braket{\Phi_p|\Phi_q} = \delta_{pq} \delta_{p \in \mathrm{occ}}.
+\end{equation}
+If we plug in this definition into Eq.~\eqref{eq:secquant:O1} we get
+\begin{equation}
+\bra{\Phi} \hat{O}_1 \ket{\Phi} =
+\sum_{pq}^{2K} \bra{\psi_p} \hat{o}_1 \ket{\psi_q} \delta_{pq} \delta_{p \in \mathrm{occ}}
+= \sum_{i}^\mathrm{occ} \bra{\psi_i} \hat{o}_1 \ket{\psi_i}.
+\end{equation}
+
+
+\section{Normal ordering}
+As we will see later, in several electron correlation methods write down the exact wave function starting from a reference Slater determinant $\Phi_0$.
+This determinant may come from Hartree--Fock theory, DFT, or other approaches.
+The reference $\Phi_0$ defines two orbital spaces: occupied and unoccupied (or virtual) spin orbitals.
+For convenience we will use a notation that reflects this partitioning of the orbitals.
+Occupied orbitals will be labeled with the indices $i,j,k,l,\ldots$, virtual orbitals with $a,b,c,d,\ldots$, and general orbitals as $p,q,r,s,\ldots$.
+
+Now let us classify creation and annihilation operators according to what happens when we apply them to the reference determinants.
+Operators that annihilate an occupied spin orbital remove one electron from the reference
+\begin{equation}
+\aop{i} \ket{\Phi} = \ket{\Phi_i}.
+\end{equation}
+We can think of this operations as creating a hole in the sea of electrons represented by the reference determinants. Therefore, we call $\aop{i}$ a \textit{hole creator}.
+Similarly, operators that create a virtual spin orbital add one electron to the reference
+\begin{equation}
+\cop{a} \ket{\Phi} = \ket{\Phi^a}.
+\end{equation}
+The operator $\cop{a}$ thus creates an electron (particle) in addition to the ones already in the reference determinant. Therefore, we call $\cop{a}$ a \textit{particle creator}.
+
+Operators that create an occupied spin orbital ($\cop{i}$) or annihilate a virtual orbital ($\aop{a}$) are called \textit{hole and particle annihilators}, respectively, because they both annihilate the reference state:
+\begin{align}
+\cop{i} \ket{\Phi} &= 0 \\
+\aop{a} \ket{\Phi} &= 0.
+\end{align}
+
+At this point we introduce the concept of a normal ordered sequence of operators.
+Given a product of operators
+\begin{equation}
+\hat{A} \hat{B} \hat{C} \cdots,
+\end{equation}
+we indicate its normal ordered form as
+\begin{equation}
+\no{\hat{A} \hat{B} \hat{C} \cdots}.
+\end{equation}
+The normal ordered form is an arrangement of the original operators such that all the second quantized operators that annihilate the reference $\Phi_0$ are at the right of all other operators. This expression contains a phase factor $(-1)^p$, where $p$ is the number of permutations necessary to rearrange the operators.
+
+Consider two different occupied spin orbitals $\phi_i$ and $\phi_j$. The product $\cop{i}\aop{j}$ written in normal ordered form is:
+\begin{equation}
+\no{\cop{i}\aop{j}} = - \aop{j}\cop{i}.
+\end{equation}
+Similarly for two virtual orbitals the product $\cop{a}\aop{b}$ written in normal ordered form is:
+\begin{equation}
+\no{\cop{a}\aop{b}} = \cop{a}\aop{b}.
+\end{equation}
+If there are more than two operators there might be more than one way to write a normal ordered form:
+\begin{equation}
+\no{\cop{i}\aop{j}\aop{k}} = \aop{j}\aop{k}\cop{i} = -\aop{k}\aop{j}\cop{i}.
+\end{equation}
+
+The reason why we introduce normal ordered products is because they have a special property. Since all the operators that annihilate the reference are placed to the right, the expectation value of a normal ordered product with respect to the reference wave function is always zero:
+\begin{equation}
+\bra{\Phi} \no{\cop{i}\aop{j}\aop{k}\cdots }\ket{\Phi} = 0.
+\end{equation}
+Note, however, that by definition the normal ordered form of no operators is equal to one, $\no{} = 1$, so that:
+\begin{equation}
+\bra{\Phi} \no{}\ket{\Phi} = \braket{\Phi|\Phi}= 1.
+\end{equation}
+
+Finally, we can introduce the concept of \textit{contractions}.
+We indicate the contraction of two operators with a line connecting two second quantized operators
+\begin{equation}
+\contraction{}{\hat{a}}{}{\hat{a}}
+\hat{a} \hat{a}.
+\end{equation}
+Contractions are defined as the difference between a product of operators and their expectation value. For a pair of creation/annihilation operators:
+\begin{equation}
+\contraction{}{\hat{a}}{_{c}}{\hat{a}}
+\cop{p}\aop{q}
+=
+\bra{\Phi}\cop{p}\aop{q}\ket{\Phi},
+\end{equation}
+and for a pair of annihilation/creation operators:
+\begin{equation}
+\contraction{}{\hat{a}}{_{c}}{\hat{a}}
+\aop{p}\cop{q}
+=
+\bra{\Phi}\aop{p}\cop{q}\ket{\Phi}.
+\end{equation}
+There are only two types of non-zero contractions:
+\begin{equation}
+\contraction{}{\hat{a}}{_{c}}{\hat{a}}
+\cop{i}\aop{j}
+=
+\bra{\Phi}\cop{i}\aop{j}\ket{\Phi} = \delta_{ij},
+\end{equation}
+and
+\begin{equation}
+\contraction{}{\hat{a}}{_{c}}{\hat{a}}
+\aop{a}\cop{b}
+=
+\bra{\Phi}\aop{a}\cop{b}\ket{\Phi} = \delta_{ab}.
+\end{equation}
+All other types of contractions like:
+\begin{equation}
+\contraction{}{\hat{a}}{_{c}}{\hat{a}}
+\aop{i}\cop{j}, \quad
+\contraction{}{\hat{a}}{_{c}}{\hat{a}}
+\cop{a}\aop{b}, \quad
+\contraction{}{\hat{a}}{_{c}}{\hat{a}}
+\aop{i}\cop{a}, \quad
+\contraction{}{\hat{a}}{_{c}}{\hat{a}}
+\aop{a}\cop{i}, 
+\end{equation}
+are null.
+
+\section{Wick's theorem 1}
+As we will see, the manipulation of second quantized operators is greatly simplified by the concept of normal ordered products.
+Wick's theorem tell us how to go from a product of operators to its normal ordered product and how to multiply two normal ordered products.
+
+The first theorem says that a product of operators may be written as a normal ordered product plus the sum of all possible contractions of operators:
+\begin{equation}
+\begin{split}
+\hat{A}\hat{B}\hat{C}\hat{D}\cdots
+=&
+\no{\hat{A}\hat{B}\hat{C}\hat{D}\cdots} \\
+&+
+\sum_\mathrm{single}
+\no{
+\contraction{}{\hat{A}}{\hat{B}}{\hat{C}}
+\hat{A}\hat{B}\hat{C}\hat{D}\cdots} \\
+&+
+\sum_\mathrm{double}
+\no{
+\contraction{}{\hat{A}}{\hat{B}}{\hat{C}}
+\contraction[2ex]{\hat{A}}{\hat{B}}{\hat{C}\hat{D}}{\hat{D}}
+\hat{A}\hat{B}\hat{C}\hat{D}\cdots}
++ \ldots \\
+&+\sum_\mathrm{full}
+\no{
+\contraction{}{\hat{A}}{\hat{B}}{\hat{C}}
+\contraction[1.75ex]{\hat{A}}{\hat{B}}{\hat{C}\hat{D}}{\hat{D}}
+\contraction[2.5ex]{\hat{A}\hat{B}\hat{C}}{\hat{D}}{\hat{D}}{}
+\hat{A}\hat{B}\hat{C}\hat{D}\cdots}.
+\end{split}
+\end{equation}
+
+For example, applying this theorem to the one-electron part of the Hamiltonian gives:
+\begin{equation}
+\begin{split}
+\hat{H}_1 =& \sum_{pq}^{2K} \bra{\psi_p} \hat{h} \ket{\psi_q} \cop{p} \aop{q} \\
+=& \sum_{pq}^{2K} \bra{\psi_p} \hat{h} \ket{\psi_q} \no{\cop{p} \aop{q}}
++ \sum_{pq}^{2K} \bra{\psi_p} \hat{h} \ket{\psi_q}
+\underbrace{\contraction{}{\hat{a}}{_{p}}{\hat{a}}
+\cop{p} \aop{q}}_{\delta_{pq}\delta_{p \in \mathrm{occ}}} \\
+=& \underbrace{\sum_{pq}^{2K} \bra{\psi_p} \hat{h} \ket{\psi_q} \no{\cop{p} \aop{q}}}_{\no{\hat{H}_1}}
++ \sum_{i}^\mathrm{occ} \bra{\psi_i} \hat{h} \ket{\psi_i}.
+\end{split}
+\end{equation}
+Note that the one-body Hamiltonian is a sum of a normal-ordered one-body operator plus a scalar term.
+The scalar is nothing else than the one-electron energy of the reference Slater determinant.
+
+If we apply Wick's theorem to the two-body part of the Hamiltonian we get the following contractions
+\begin{equation}
+\begin{split}
+\hat{H}_2 =& \frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs} \cop{p}\cop{q}\aop{s}\aop{r} \\
+=& \frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs} \no{\cop{p}\cop{q}\aop{s}\aop{r}} \\
+&+ 
+\frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs}
+\no{\contraction{}{\hat{a}}{_{p}\cop{q}}{\hat{a}}
+\cop{p}\cop{q}\aop{s}\aop{r}}
++
+\frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs}
+\no{\contraction{}{\hat{a}}{_{p}\cop{q}\aop{s}}{\hat{a}}
+\cop{p}\cop{q}\aop{s}\aop{r}} \\
+&+ 
+\frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs}
+\no{\contraction{\cop{p}}{\hat{a}}{_{q}}{\hat{a}}
+\cop{p}\cop{q}\aop{s}\aop{r}}
++ 
+\frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs}
+\no{\contraction{\cop{p}}{\hat{a}}{_{q}\aop{s}}{\hat{a}}
+\cop{p}\cop{q}\aop{s}\aop{r}} \\
+&+ 
+\frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs}
+\no{\contraction{}{\hat{a}}{_{p}\cop{q}}{\hat{a}}
+\contraction[2ex]{\cop{p}}{\hat{a}}{_{q}\aop{s}}{\hat{a}}
+\cop{p}\cop{q}\aop{s}\aop{r}}
++
+\frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs}
+\no{\contraction{}{\hat{a}}{_{p}\cop{q}\aop{s}}{\hat{a}}
+\contraction[2ex]{\cop{p}}{\hat{a}}{_{q}}{\hat{a}}
+\cop{p}\cop{q}\aop{s}\aop{r}}.
+\end{split}
+\end{equation}
+To evaluate the contractions we first rewrite them in such a way that all contractions are between contiguous pairs of operators, for example,
+\begin{equation}
+\no{\contraction{}{\hat{a}}{_{p}\cop{q}}{\hat{a}}
+\cop{p}\cop{q}\aop{s}\aop{r}}
+=
+-
+\no{\contraction{}{\hat{a}}{_{p}}{\hat{a}}
+\cop{p}\aop{s}\cop{q}\aop{r}}
+=-
+\contraction{}{\hat{a}}{_{p}}{\hat{a}}
+\cop{p}\aop{s} \no{\cop{q}\aop{r}}
+= -\delta_{ps} \delta_{p \in \mathrm{occ}} \no{\cop{q}\aop{r}},
+\end{equation}
+where we have used the fact that inside the normal-ordered product we can swap operators and each time we do so we introduce a minus factor.
+Note that for the fully contracted term,
+\begin{equation}
+\no{\contraction{}{\hat{a}}{_{p}\cop{q}}{\hat{a}}
+\contraction[2ex]{\cop{p}}{\hat{a}}{_{q}\aop{s}}{\hat{a}}
+\cop{p}\cop{q}\aop{s}\aop{r}}
+=
+- \contraction{}{\hat{a}}{_{p}}{\hat{a}}
+\contraction{\cop{p}\cop{q}}{\hat{a}}{_{s}}{\hat{a}}
+\cop{p}\aop{s}\cop{q}\aop{r},
+\end{equation}
+the overall sign may be computed by counting the number of times the contractions line cross. If this number is even the contraction has a $+$ sign, if it is odd then it has a minus sign $-$. In this example they cross once and we get a minus sign.
+
+After evaluating each contraction we arrive at:
+\begin{equation}
+\begin{split}
+=& \frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs} \no{\cop{p}\cop{q}\aop{s}\aop{r}} \\
+&-\frac{1}{4} \sum_{qr}^{2K} \sum_{i}^\mathrm{occ} \aphystei{iq}{ri}
+\no{\cop{q}\aop{r}}
++\frac{1}{4} \sum_{ps}^{2K} \sum_{i}^\mathrm{occ} \aphystei{iq}{is}
+\no{\cop{q}\aop{s}} \\
+&+\frac{1}{4} \sum_{pr}^{2K} \sum_{i}^\mathrm{occ} \aphystei{pi}{ri}
+\no{\cop{p}\aop{r}}
+- 
+\frac{1}{4} \sum_{ps}^{2K} \sum_{i}^\mathrm{occ} \aphystei{pi}{is}
+\no{\cop{p}\aop{s}} \\
+&- \frac{1}{4} \sum_{ij}^\mathrm{occ} \aphystei{ij}{ji}
++ \frac{1}{4} \sum_{ij}^\mathrm{occ} \aphystei{ij}{ij} \\
+=& \frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs} \no{\cop{p}\cop{q}\aop{s}\aop{r}}
++ \sum_{pq}^{2K} \aphystei{pi}{qi}
+\no{\cop{p}\aop{q}}
++ \frac{1}{2} \sum_{ij}^\mathrm{occ} \aphystei{ij}{ij}.
+\end{split}
+\end{equation}
+In the last step we relabeled the summation indices and collected identical terms.
+At the end of this calculation we find that the two-electron Hamiltonian may be written as the sum of one- and two-electron normal-ordered operators plus a scalar term.
+If we combine the one-electron normal-ordered operators of $\hat{H}_1$ and $\hat{H}_2$ we get:
+\begin{equation}
+\sum_{pq}^{2K} h_{pq} \no{\cop{p} \aop{q}}
++ \sum_{pq}^{2K} \sum_{i}^\mathrm{occ}\aphystei{pi}{qi} \no{\cop{p}\aop{q}}
+= \sum_{pq}^{2K} \left( h_{pq} + \sum_{i}^\mathrm{occ}\aphystei{pi}{qi}\right)\no{\cop{p}\aop{q}}.
+\end{equation}
+Now recall the definition of the Fock matrix:
+\begin{equation}
+f_{pq} = h_{pq} + \sum_{i}^\mathrm{occ}\aphystei{pi}{qi},
+\end{equation}
+where, as a reminder, ``occ'' stands for the occupied orbitals in the reference. 
+With this result we can write the full Hamiltonian as:
+\begin{equation}
+\hat{H} = E_0 + \hat{F} + \hat{V} = E_0 + \sum_{pq}^{2K} f_{pq} \no{\cop{p} \aop{q}} + 
+\frac{1}{4} \sum_{pqrs}^{2K} \aphystei{pq}{rs} \no{\cop{p}\cop{q}\aop{s}\aop{r}}.
+\end{equation}
+where the quantity $E_0$ is the energy of the reference determinant,
+\begin{equation}
+E_0 = \sum_{i}^\mathrm{occ} h_{ii} + \frac{1}{2} \sum_{ij}^\mathrm{occ} \aphystei{ij}{ij}.
+\end{equation}
+
+Note that since normal-ordered products have zero expectation value:
+\begin{equation}
+\bra{\Phi} \no{\hat{A} \hat{B} \hat{C} \hat{D}\cdots }\ket{\Phi} = 0
+\end{equation},
+when we evaluate the expectation value of a product of operators the only term that survives is the fully-contracted one:
+\begin{equation}
+\bra{\Phi} \hat{A} \hat{B} \hat{C} \hat{D}\cdots \ket{\Phi} = 
+\sum_\mathrm{full}
+\no{
+\contraction{}{\hat{A}}{\hat{B}}{\hat{C}}
+\contraction[1.75ex]{\hat{A}}{\hat{B}}{\hat{C}\hat{D}}{\hat{D}}
+\contraction[2.5ex]{\hat{A}\hat{B}\hat{C}}{\hat{D}}{\hat{D}}{}
+\hat{A}\hat{B}\hat{C}\hat{D}\cdots}.
+\end{equation}
+Indeed, if we take the expectation value of the Hamiltonian we find:
+\begin{equation}
+\bra{\Phi} \hat{H} \ket{\Phi} = E_0,
+\end{equation}
+which is the sum of the fully-contracted terms.
+
+\section{Wick's theorem 2}
+There is a second form of Wick's theorem that deals with computing products of normal-ordered operators:
+\begin{equation}
+\no{\hat{A} \hat{B} \hat{C} \hat{D}\cdots } \no{\hat{W} \hat{X} \hat{Y} \hat{Z}\cdots }.
+\end{equation}
+This product can be written as a sum of contractions that pair operators from the first normal ordered product with those in the second product:
+\begin{equation}
+\begin{split}
+\no{\hat{A} \hat{B} \cdots } \no{\hat{X} \hat{Y} \cdots }
+=&
+\no{\hat{A} \hat{B} \cdots \hat{X} \hat{Y} \cdots } \\
+&+
+\sum_\mathrm{single}
+\no{
+\contraction{}{\hat{A}}{\hat{B}\cdots}{\hat{X}}
+\hat{A} \hat{B} \cdots \hat{X} \hat{Y} \cdots } \\
+&+
+\sum_\mathrm{double}
+\no{
+\contraction{}{\hat{A}}{\hat{B}\cdots}{\hat{X}}
+\contraction[1.75ex]{\hat{A}}{\hat{B}}{\cdots\hat{X}}{\hat{Y}}
+\hat{A} \hat{B} \cdots \hat{X} \hat{Y} \cdots }
++ \ldots \\
+&+ \sum_\mathrm{full}
+\no{
+\contraction{}{\hat{A}}{\hat{B}\cdots}{\hat{X}}
+\contraction[1.75ex]{\hat{A}}{\hat{B}}{\cdots\hat{X}}{\hat{Y}}
+\contraction[2.5ex]{\hat{A}\hat{B}}{\hat{B}}{\cdots\hat{X}}{\hat{Y}}
+\hat{A} \hat{B} \cdots \hat{X} \hat{Y} \cdots }.
+\end{split}
+\end{equation}
+
+\section{Representation of excited determinants}
+
+One of the major reasons for introducing second quantization is the need to evaluate matrix elements between determinants.
+Determinants in which electrons are excited from occupied to virtual orbitals may be conveniently represented using creation and annihilation operators.
+A singly excited determinant may be expressed as the excitation operator, $\cop{a} \aop{i}$, applied to the reference determinant:
+\begin{equation}
+\cop{a} \aop{i} \ket{\Phi} = \no{\cop{a} \aop{i}} \ket{\Phi} \equiv \ket{\Phi_{i}^{a}}.
+\end{equation}
+Here we have written the product $\cop{a} \aop{i}$ in normal ordered form.
+Notice that there are no contributions from contracted terms since there is no nonzero contraction between $\cop{a}$ and $\aop{i}$.
+Double and higher excitations may be represented in a similar way:
+\begin{equation}
+\cop{a}\cop{b} \aop{j} \aop{i} \ket{\Phi} = \no{\cop{a}\cop{b} \aop{j} \aop{i}} \ket{\Phi}
+\equiv \ket{\Phi_{ij}^{ab}},
+\end{equation}
+and
+\begin{equation}
+\cop{a}\cop{b}\cop{c} \cdots \aop{k} \aop{j} \aop{i} \ket{\Phi} \equiv \ket{\Phi_{ijk\cdots}^{abc\cdots}}.
+\end{equation}
+
+As an example, let us compute the matrix element $\bra{\Phi} \hat{H} \ket{\Phi_{i}^{a}}$.
+\begin{equation}
+\begin{split}
+\bra{\Phi} \hat{H} \ket{\Phi_{i}^{a}} 
+=& \bra{\Phi} \left( E_0 + \hat{F} + \hat{V}\right) \no{\cop{a} \aop{i}} \ket{\Phi} \\
+=& E_0 \bra{\Phi}\no{\cop{a} \aop{i}} \ket{\Phi}
++ \bra{\Phi}\hat{F}\no{\cop{a} \aop{i}} \ket{\Phi}
++ \bra{\Phi}\hat{V}\no{\cop{a} \aop{i}} \ket{\Phi} \\
+=& \bra{\Phi}\hat{F}\no{\cop{a} \aop{i}} \ket{\Phi}.
+\end{split}
+\end{equation}
+Only the second term survives because by definition $\bra{\Phi}\no{\cop{a} \aop{i}} \ket{\Phi} = 0$, while in the case of the matrix element $\bra{\Phi}\hat{V}\no{\cop{a} \aop{i}} \ket{\Phi}$ it is not possible to find a fully contracted term with no second quantized operator. 
+The remaining term is:
+\begin{equation}
+\begin{split}
+\bra{\Phi}\hat{F}\no{\cop{a} \aop{i}} \ket{\Phi} =&
+\sum_{pq}^{2K} f_{pq} 
+\bra{\Phi}\no{\cop{p} \aop{q}}\no{\cop{a} \aop{i}} \ket{\Phi} \\
+=&
+\sum_{pq}^{2K} f_{pq} 
+\bra{\Phi}\no{
+\contraction[1.75ex]{}{\hat{a}}{_{p}\aop{q}\cop{a}}{\hat{a}}
+\contraction{\cop{p}}{\hat{a}}{}{\hat{a}}
+\cop{p} \aop{q}\cop{a} \aop{i}} \ket{\Phi}\\
+=&
+\sum_{pq}^{2K} f_{pq} 
+\delta_{pi} \delta_{qa} \delta_{p\in\mathrm{occ}}\delta_{q\in\mathrm{vir}}\\
+=& f_{ia}.
+\end{split}
+\end{equation}
+This is one of the main results of Slater rules and can be conveniently derived using second quantization.
+
+\end{document}
+
