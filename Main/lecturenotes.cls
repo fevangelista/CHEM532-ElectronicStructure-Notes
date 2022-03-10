@@ -271,3 +271,9 @@ linewidth=2pt]{eBox}
 		\setstretch{0.9}\themnotecount\textmd{\footnotesize{#1}}
 	}
 }
+
+\newcommand{\mo}[2][black]{
+\draw (1.5,#2) -- (2.0,#2);
+\filldraw[fill=#1, draw=#1] (1.65,#2) circle (0.04);
+\filldraw[fill=#1, draw=#1] (1.85,#2) circle (0.04);
+}
