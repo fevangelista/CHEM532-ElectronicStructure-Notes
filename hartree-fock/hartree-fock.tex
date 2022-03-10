@@ -508,7 +508,7 @@ Alternatively, in the canonical orthogonalization procedure, $\mathbf{X}$ is be 
 \begin{equation}
 \mathbf{X} = \mathbf{U} \mathbf{s}^{-\frac{1}{2}}.
 \end{equation}
-This form of $\mathbf{X}$ also does the job: 
+This form of $\mathbf{X}$ also does the job since: 
 \begin{equation}
 \mathbf{s}^{-\frac{1}{2}} \mathbf{U}^\dagger \mathbf{S} \mathbf{U} \mathbf{s}^{-\frac{1}{2}} = \mathbf{s}^{-\frac{1}{2}} \mathbf{s} \mathbf{s}^{-\frac{1}{2}} = \mathbf{1}.
 \end{equation}
@@ -590,5 +590,21 @@ are used to determine if the Hartree--Fock equation have converged.
 If $|\Delta E^{(k+1)}| \leq \eta_{E}$ and $\|\Delta \mathbf{P}^{(k+1)}\| \leq \eta_{\mathbf{P}}$, where $\eta_{E}$ and $\eta_{\mathbf{P}}$ are user-provided convergence thresholds, then the HF procedure is terminated.
 Otherwise, we go back to step 5 and build the matrix $\mathbf{G}$ using the updated density matrix. This procedure is iterated until convergence.
 \end{enumerate}
+
+\section*{Study Questions}
+\begin{myenumerate}
+\item What are the basic assumptions of the Hartree--Fock method?
+\item What mathematical condition is imposed on the wave function in the Hartree--Fock method?
+\item How are the Fock, Coulomb, and exchange operators defined?
+\item What is the energy expression of the Hartree--Fock wave function?
+\item What is the Hartree--Fock Lagrangian?
+\item What does the Hartree--Fock equation in canonical form look like?
+\item What is the meaning of the Hartree--Fock orbital energies?
+\item What approximations are made in Koopman's theorem?
+\item What is the difference between generalized, unrestricted, and restricted HF?
+\item What are the Roothan equations?
+\item What is the mathematical expression of the Roothan equations?
+\item What is the overlap matrix?
+\end{myenumerate}
 
 \end{document}

@@ -123,6 +123,83 @@ which reduces to the two-electron density when the primed coordinates are equal 
 \end{equation}
 
 
+\section{Atomic charges and bond order}
+
+In the case of a single Slater determinant, we can perform a simple analysis of the distribution of electrons following an approach developed by Mulliken.
+Recall that $i$-th MO can be expanded in terms of the AOs ($\chi_\mu$ = AO) and the coefficient matrix ($C_{\mu i}$) as:
+\begin{equation}
+\phi_i(\mathbf{r}) = \sum_\mu^{N} \chi_\mu(\mathbf{r}) C_{\mu i}.
+\end{equation}
+Since each MO is normalized we can write:\mnote{Recall that in quantum mechanics $|\Psi|^2 = \Psi^* \Psi$ is a probability density.}
+\begin{equation}
+\begin{split}
+N =\int d\mathbf{r} \; \rho(\mathbf{r}) =  & \sum_i^{\mathrm{occ}} \braket{\psi_i | \psi_i} = 
+\sum_i^{\mathrm{occ}} \sum_{\mu \nu}^N C_{\mu i}^*  \underbrace{\braket{\chi_\mu | \chi_\nu}}_{S_{\mu\nu}} C_{\nu i} \\
+= & \sum_{\mu \nu}^N  S_{\mu\nu} \underbrace{\sum_i^{\mathrm{occ}}  C_{\mu i} C_{\mu i}^*}_{D_{\nu\mu}} 
+= \sum_{\mu \nu}^N  S_{\mu\nu} D_{\nu\mu} = \sum_{\mu}^N  (SD)_{\mu\mu}
+\end{split}
+\end{equation}
+\mnote{To simplify the notation we will write $\sum_{\mu} \sum_{\substack{\nu\\ \nu \neq \mu}}$ as $\sum_{\mu \neq \nu}$ and omit the superscript $N$.}
+
+
+%\begin{example}[Electron density for the first and second MOs of the allyl radical]
+%
+%\begin{center}
+%\includegraphics[width=1in]{../huckel/c2_allyl_ediagram.png}
+%\end{center}
+%
+%For $\psi_1$
+%\begin{center}
+%\begin{tabular}{@{} lcr @{}} % Column formatting, @{} suppresses leading/trailing space
+%\toprule
+%AO & MO Coefficient ($C_{\mu i}$) & Electron density ($q^i_\mu = |C_{\mu i}|^2$)\\
+%\midrule
+%1 & $C_{11} = -0.5$ & $q_{1}^{1} = 0.25$ \\
+%2 & $C_{21} = -0.7071$ & $q_{2}^{1} = 0.5$ \\
+%3 & $C_{31} = -0.5$ & $q_{3}^{1} = 0.25$ \\
+%\midrule
+%Sum & & $\displaystyle \sum_{\mu = 1}^{N} q^1_\mu = 1.0$ \\
+%\bottomrule
+%\end{tabular}
+%\end{center}
+%
+%For $\psi_2$
+%\begin{center}
+%\begin{tabular}{@{} lcr @{}} % Column formatting, @{} suppresses leading/trailing space
+%\toprule
+%AO & MO Coefficient ($C_{\mu i}$) & Electron density ($q^i_\mu = |C_{\mu i}|^2$)\\
+%\midrule
+%1 & $C_{12} = 0.7071$ & $q_{1}^{2} = 0.5$ \\
+%2 & $C_{22} = 0$ & $q_{2}^{2} = 0$ \\
+%3 & $C_{32} = -0.7071$ & $q_{3}^{2} = 0.5$ \\
+%\midrule
+%Sum & & $\displaystyle \sum_{\mu = 1}^{N} q^2_\mu = 1.0$ \\
+%\bottomrule
+%\end{tabular}
+%\end{center}
+%\end{example}
+
+
+Using these quantities we define:
+\begin{itemize}
+\item \textbf{Total density on atom} $\mu$ ($q_\mu$):
+\begin{equation}
+q_\mu = \sum_{i}^{\rm MO} n_i |C_{\mu i}|^2 = \sum_{i}^{\rm MO} n_i q_\mu^i \quad n_i \text{ = occupation (2, 1, or 0)} 
+\end{equation}
+
+\item \textbf{Total charge on atom} $\mu$ ($N_\mu$):
+\begin{equation}
+N_\mu = (\text{number of $\pi$ electrons donated by atom $\mu$}) - q_\mu
+\end{equation}
+
+\item \textbf{Total bond order between atoms  $\mu$ and  $\nu$} ($p_{\mu \nu}$):
+\begin{equation}
+p_{\mu \nu}= \sum_{i}^{\rm MO} n_i C_{\mu i}^* C_{\nu i} = \sum_{i}^{\rm MO} n_i p_{\mu\nu}^i
+\end{equation}
+\end{itemize}
+
+
+
 \section{Energy gradients}
 Another useful property that we would like to extract from quantum chemistry computations is the gradient of the energy with respect to the position of the nuclei ($R_\alpha$):
 \begin{equation}
