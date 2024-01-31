@@ -9,7 +9,7 @@
 
 \setcounter{chapter}{-1}
 
-\chapter{Background}
+\chapter{Mathematical Background}
 
 \section{Complex vector spaces}
 
@@ -107,7 +107,7 @@ and \textbf{anti-linear} in the left-hand-side argument
 \end{equation}
 
 
-With the notion of the inner product we can define the 2-norm of a vector
+With the notion of the inner product, we can define the 2-norm of a vector
 \begin{equation}
 \| \ket{a} \| = \sqrt{ \braket{a|a} } \in \mathbb{R} 
 \end{equation}
@@ -118,7 +118,7 @@ This norm satisfies the following conditions
 \| \ket{a} \| = 0 \text{ if } \ket{a} = \ket{0}
 \end{split}
 \end{equation}
-We call a vector $\ket{a}$ with unit norm ($\braket{a|a} = 0$) \textbf{normalized}.
+We call a vector $\ket{a}$ with unit norm ($\braket{a|a} = 1$) \textbf{normalized}.
 
 \subsection{Bases}
 A basis of an $N$-dimensional complex vector space $S$ is a set of vectors $\{ \ket{\phi_i}, i = 1,\ldots,N \}$ of dimension $N$ such that each vector $\ket{a} \in S$ can be expressed as a linear combination of the elements of the basis
@@ -129,7 +129,7 @@ A basis of an $N$-dimensional complex vector space $S$ is a set of vectors $\{ \
 where the coefficients $a_i$ are unique.
 Note at times it might also be convenient to think of the state $\ket{a}$ as the dot product of the row vector of basis functions $\ket{\boldsymbol \phi} =  (\ket{\phi_1}, \ket{\phi_2}, \ldots, \ket{\phi_N})$ with the column vector of coefficients $\mathbf{a}  = (a_1,a_2,\ldots,a_N)^T$
 \begin{equation}
-\label{eq:bg:basis}
+%\label{eq:bg:basis}
 \ket{a} = (\ket{\phi_1}, \ket{\phi_2}, \ldots, \ket{\phi_N})
 \begin{pmatrix}
 a_1 \\
@@ -275,8 +275,8 @@ When the outer product is multiplied to the right with a ket vector, we take the
 \begin{equation}
 (\ket{a}\bra{b}) \ket{c} = \ket{a} \braket{b|c}
 \end{equation}
-and similarly if we multiply on the left with a bra vector.
-We can now see that the operator $\hat{A}$ that applied to the state $\ket{a}$ gives $\ket{b}$, that is $\hat{A}\ket{a} = \ket{b}$ can be expressed as
+and similarly, if we multiply on the left with a bra vector.
+We can now see that the operator $\hat{A}$ applied to the state $\ket{a}$ gives $\ket{b}$, that is $\hat{A}\ket{a} = \ket{b}$ can be expressed as
 \begin{equation}
 \hat{A} = \ket{b}\bra{a}
 \end{equation}
@@ -306,7 +306,11 @@ This result shows that the outer product representation of the operator $\hat{A}
 \subsection{Connection between different representations}
 The formalism we are setting up encompasses quantum mechanics as formulated in terms of wave functions.
 To see this point, we will consider the position basis $\{ \ket{x}, -\infty < x < \infty \}$.
-This basis is orthogonal, that is, $\braket{x | x'} = 0$ if $x \neq x'$, but its normalized to a delta
+The position basis is the set of eigenfunctions of the position operator $\hat{x}$
+\begin{equation}
+\hat{x} \ket{x} = x \ket{x}.
+\end{equation}
+This basis is orthogonal, that is, $\braket{x | x'} = 0$ if $x \neq x'$, but it is normalized to a delta function
 \begin{equation}
 \braket{x | x'} = \delta(x - x')
 \end{equation}
@@ -315,30 +319,42 @@ so that its integral is equal to one
 \int dx \braket{x | x'} = 1
 \end{equation}
 
-The common wave function of quantum mechanics is then nothing else that the representation of a vector $\ket{\Psi}$ on the position basis
+The common wave function of quantum mechanics is then nothing else that the representation of a vector $\ket{\psi}$ on the position basis
 \begin{equation}
-\Psi(x) \equiv \braket{x | \Psi}
+\psi(x) \equiv \braket{x | \psi}
 \end{equation}
 The resolution of the identity in the position basis is written as
 \begin{equation}
 \hat{1} = \int dx \ket{x} \bra{x} 
 \end{equation}
-Using this definition we can express the inner product $\braket{\Psi|\Psi}$ in the way you first learned it in quantum mechanics
+Using this definition we can express the inner product $\braket{\psi|\psi}$ in the way you first learned it in quantum mechanics
 \begin{equation}
-\braket{\Psi|\Psi} = \bra{\Psi} \left( \int dx \ket{x} \bra{x} \right) \ket{\Psi}
-= \int dx  \braket{\Psi|x} \braket{x|\Psi} = \int dx  \Psi(x)^* \Psi(x) = \int dx  |\Psi(x)|^2
+\braket{\psi|\psi} = \bra{\psi} \left( \int dx \ket{x} \bra{x} \right) \ket{\psi}
+= \int dx  \braket{\psi|x} \braket{x|\psi} = \int dx  \psi(x)^* \psi(x) = \int dx  |\psi(x)|^2
 \end{equation}
 
-
+Similarly, one can introduce the momentum basis $\{ \ket{p}, -\infty < p < \infty \}$, the eigenbasis of the momentum operator $\hat{p}$
+\begin{equation}
+\hat{p} \ket{p} = p \ket{p},
+\end{equation}
+and the corresponding resolution of the identity
+\begin{equation}
+\hat{1} = \int dp \ket{p} \bra{p}.
+\end{equation}
+Converting from the position and momentum representation is possible via the following result
+\begin{equation}
+\braket{x | p}  \equiv p(x) = \frac{1}{\sqrt{2 \pi \hbar}}e^{ixp/\hbar}.
+\end{equation}
 
 
 \subsection{The Hermitian conjugate of an operator}
 
-Given an operator $\hat{A}$, we defined its Hermitian conjugate $\hat{A}^\dagger$ as the corresponding operator that acts on the dual vectors.
-By this we mean that the dual of the vector $\hat{A} \ket{a}$ is the vector $\bra{a} \hat{A}^\dagger$. As a consequence, for any two vectors $\ket{a}$ and $\ket{b}$, the Hermitian conjugate satisfies the condition
+Given an operator $\hat{A}$, we define its Hermitian conjugate $\hat{A}^\dagger$ as the corresponding operator that acts on the dual vectors.
+By this we mean that the dual of the vector $\hat{A} \ket{a}$ is the vector $\bra{a} \hat{A}^\dagger$.
+By definition, for any two vectors $\ket{a}$ and $\ket{b}$, the Hermitian conjugate satisfies the condition
 \begin{iequation}
 \label{eq:bg:braAket_conjugate}
-\bra{a} \hat{A} \ket{b} = \bra{b} \hat{A}^\dagger \ket{a}^*
+\bra{a} \hat{A} \ket{b} = \braket{a|\hat{A}b} = \braket{\hat{A}b|a}^*  =  \bra{b} \hat{A}^\dagger \ket{a}^*
 \end{iequation}
 
 An important property of the Hermitian conjugation is that the Hermitian conjugate of a product of two operators is the product of the Hermitian conjugate in reverse order
@@ -424,7 +440,11 @@ The tensor product is linear in the vectors $\ket{a}$ and $\ket{b}$, meaning, fo
 \ket{a} \otimes \ket{b} = (\sum_{i} \ket{\phi_i} a_i) \otimes (\sum_{j} \ket{\phi_j} b_j)
 = \sum_{ij} a_i b_j \ket{\phi_i} \otimes \ket{\phi_j} 
 \end{iequation}
-In the space of tensor product of two vectors, we can think of the quantities $\ket{\phi_i} \otimes \ket{\phi_j}$ as a \textbf{basis for the tensor product space}. In this basis, the elements $\ket{\phi_i} \otimes \ket{\phi_j}$ and $\ket{\phi_j} \otimes \ket{\phi_i}$ are considered to be distinct.
+We can think of the quantities $\ket{\phi_i} \otimes \ket{\phi_j}$ as a \textbf{basis for the tensor product space}. In this basis, the elements $\ket{\phi_i} \otimes \ket{\phi_j}$ and $\ket{\phi_j} \otimes \ket{\phi_i}$ are considered to be distinct.
+Therefore, if the dimension of the single particle basis is $N$, the dimension of the tensor product basis is $N^2$, that is
+\begin{equation}
+\text{dim} \{ \ket{\phi_i} \otimes \ket{\phi_j} | i,j = 1,\ldots, N \} = N^2.
+\end{equation}
 Once we have a tensor product, we can also define a corresponding inner product. Consider the two states
 \begin{equation}
 \begin{split}

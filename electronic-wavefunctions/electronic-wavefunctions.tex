@@ -32,7 +32,7 @@ The total spin operator $\hat{\vec{s}}$ is a vector operator with components
 \begin{equation}
 \hat{\vec{s}} = (\hat{s}_x, \hat{s}_y, \hat{s}_z).
 \end{equation}
-We also define the angular momentum squared operator ($\hat{s}^2$) as
+We also define the spin squared operator ($\hat{s}^2$) as
 \begin{equation}
 \hat{s}^2 = \hat{\vec{s}} \cdot \hat{\vec{s}} = \hat{s}_x^2 + \hat{s}_y^2 + \hat{s}_z^2.
 \end{equation}
@@ -58,6 +58,55 @@ These functions are normalized and orthogonal:
 \braket{\alpha | \alpha} &= \braket{\beta | \beta} = 1, \\
 \braket{\alpha | \beta} &= 0. \label{eq:spin_orthogonality}
 \end{align}
+
+A general spin state of an electron $\ket{\sigma}$ can be represented in the basis of states $\{ \ket{\alpha}, \ket{\beta} \}$ as
+\begin{equation}
+\ket{\sigma} = c_\alpha \ket{\alpha} + c_\beta \ket{\beta} = ( \ket{\alpha}, \ket{\beta})
+\begin{pmatrix}
+c_\alpha \\
+c_\beta
+\end{pmatrix}.
+\end{equation}
+When written in this way, then the basis states are represented by the vectors
+\begin{equation}
+\ket{\alpha} \leftrightarrow 
+\begin{pmatrix}
+1 \\
+0
+\end{pmatrix}
+\quad \quad
+\ket{\beta} \leftrightarrow 
+\begin{pmatrix}
+0 \\
+1
+\end{pmatrix}.
+\end{equation}
+In this representation, the operators $\hat{s}_x$, $\hat{s}_y$, and $\hat{s}_z$ can be represented by the matrices
+\begin{equation}
+\mathbf{s}_x = \frac{\hbar}{2} \boldsymbol{\sigma}_x, \quad
+\mathbf{s}_y = \frac{\hbar}{2} \boldsymbol{\sigma}_y, \quad
+\mathbf{s}_z = \frac{\hbar}{2} \boldsymbol{\sigma}_z,
+\end{equation}
+where $\boldsymbol{\sigma}_x$, $\boldsymbol{\sigma}_y$, and $\boldsymbol{\sigma}_z$ are called Pauli matrices.
+The Pauli matrices are defined as
+\begin{equation}
+\boldsymbol{\sigma}_x = 
+\begin{pmatrix}
+0 & 1 \\
+1 & 0
+\end{pmatrix}, \quad
+\boldsymbol{\sigma}_z = 
+\begin{pmatrix}
+0 & -i \\
+i & 0
+\end{pmatrix}, \quad
+\boldsymbol{\sigma}_z = 
+\begin{pmatrix}
+1 & 0 \\
+0 & -1
+\end{pmatrix}.
+\end{equation}
+
 At times, we might write these functions as
 \begin{align}
 \alpha(\omega) &= \braket{\omega|\alpha} \\
@@ -117,18 +166,46 @@ f(\vec{r}) = \sum_{i}^{\infty} a_i \phi_i(\vec{r}).
 \end{iequation}
 In practice, we use finite sets, so that $\dim \{ \phi_i(\vec{r}) \} = K < \infty$.
 
-\textbf{Spin orbitals} are the product of a spatial orbital and a spin function:\mnote{We will abbreviate the spatial and spin coordinates with the symbol $x \equiv (\vec{r},\omega)$.}
+By combining spin functions with spatial orbitals we get \textbf{spin orbitals}. The most general form of a spin orbital is\mnote{We will abbreviate the spatial and spin coordinates with the symbol $x \equiv (\vec{r},\omega)$.}
 \begin{equation}
-\psi_{i,\sigma} (x) = \psi_{i,\sigma} (\vec{r},\omega) = \phi_i(\vec{r}) \sigma(\omega),
+\psi (x) \equiv \psi(\vec{r},\sigma) = \psi^{\alpha}(\vec{r}) \alpha(\omega) + \psi^{\beta}(\vec{r}) \beta(\omega),
+\end{equation}
+which we can represent equivalently in terms of a wave function that looks like a vector multiplied by the spin basis:
+\begin{equation}
+\psi (x) = (\ket{\alpha}, \ket{\beta})
+\begin{pmatrix}
+\psi^{\alpha}(\vec{r})  \\
+  \psi^{\beta}(\vec{r})
+\end{pmatrix}.
+\end{equation}
+This representation of a spin orbital is the most general and often it is not used in practice. 
+More commonly, we take spin orbitals to be specific combination of a spatial orbital with either the $\alpha$ or $\beta$ spin function.
+That is, we write
+\begin{equation}
+\psi_{\sigma} (x) = \psi_{\sigma} (\vec{r},\omega) = \phi^\sigma(\vec{r}) \sigma(\omega),
 \end{equation}
 where $\sigma(\omega) \in \{\alpha(\omega),\beta(\omega)\}$ indicates a generic spin function.
-Note that if the spatial orbitals are orthonormal, then the spin orbital basis is also orthonormal in the following sense
+Here the functions $\phi^\alpha(\vec{r})$ and $\phi^\beta(\vec{r})$ can be different.
+
+This notation can be extended to a basis of spin orbitals, which in the most general case will consists of two groups of functions, one for each spin case, $\{ \psi_{i,\alpha}(x) \}$ and $\{\psi_{i,\beta}(x)\}$, each expressed using a basis of spatial orbitals $\{ \phi_{i}^{\alpha}(\vec{r}) \}$ and $\{\phi_{i}^{\beta}(\vec{r})\}$ (note that these two bases can be different!)
+\begin{equation}
+\psi_{i,\sigma} (x) = \psi_{i,\sigma} (\vec{r},\omega) = \phi_i^\sigma(\vec{r}) \sigma(\omega).
+\end{equation}
+Note that if each set of spatial orbitals is orthonormal, that is
+\begin{equation}
+\int d\vec{r} \, \phi_{i}^{\alpha}(\vec{r})^* \phi_{j}^{\alpha}(\vec{r}) = \delta_{ij},
+\end{equation}
+and
+\begin{equation}
+\int d\vec{r} \, \phi_{i}^{\beta}(\vec{r})^* \phi_{j}^{\beta}(\vec{r}) = \delta_{ij},
+\end{equation}
+then the spin orbital basis is also orthonormal in the following sense
 \begin{iequation}
 \begin{split}
 \braket{\psi_{i,\sigma} | \psi_{j,\sigma'}} = & 
 \int d\vec{r} \,d\omega \, \psi_{i,\sigma}^*(\vec{r},\omega) \psi_{j,\sigma'}(\vec{r},\omega) \\
 = &
-\int d\vec{r} \,\phi_{i}^*(\vec{r}) \phi_{j}(\vec{r})
+\int d\vec{r} \, \phi_{i}^{\sigma}(\vec{r})^* \phi_{j}^{\sigma'}(\vec{r})
 \int d\omega \, 
 \sigma^*(\omega)  \sigma'(\omega) \\
  = &\delta_{ij} \delta_{\sigma \sigma'}.
@@ -136,23 +213,23 @@ Note that if the spatial orbitals are orthonormal, then the spin orbital basis i
 \end{iequation}
 Note that even if the spatial part of a spin orbital is the same ($\psi_i = \psi_j$) the overlap integral can still be zero if the spin functions $\sigma$ and $\sigma'$ are different.
 
-To avoid having to write the two subscripts $i$ and $\sigma$ every time we indicated a spin orbital, we will often collect the indices $(i,\sigma)$ into one index $k$ and specify an ordering of the spin orbitals.
+To avoid having to write the two subscripts $i$ and $\sigma$ every time, we will use a shorthand notation and collect the indices $(i,\sigma)$ into one index $k$ and specify the way spin orbitals are ordered.
 For example, for basis of $K$ spatial orbitals we can define $2K$ spin orbitals as:
 \begin{align}
-\psi_{2i - 1}(x) &= \phi_i(\vec{r}) \alpha(\omega), \\
-\psi_{2i}(x) &= \phi_i(\vec{r}) \beta(\omega),
+\psi_{2i - 1}(x) &= \phi_i^\alpha(\vec{r}) \alpha(\omega), \\
+\psi_{2i}(x) &= \phi_i^\beta(\vec{r}) \beta(\omega),
 \end{align}
 which is equivalent to ordering the spin orbitals in the following way
 \begin{equation}
 (\psi_1, \psi_2, \psi_3, \psi_4, \ldots) =  
-(\phi_1\alpha, \phi_1\beta, \phi_2\alpha, \phi_2\beta,\ldots) .
+(\phi^\alpha_1\alpha, \phi^\beta_1\beta, \phi^\alpha_2\alpha, \phi^\beta_2\beta,\ldots) .
 \end{equation}
 
 
 
 
 \section{$N$-electron wave functions}
-How can we build a wave function for $N$ electrons $\Phi(x_1,x_2,\ldots,x_N)$ from a basis of spin orbitals? Pauli's principle requires that $\Phi$ is antisymmetric with respect to odd permutations of the coordinates (spatial and spin) of any two electrons $i$ and $j$:
+How can we build a wave function for $N$ electrons $\Phi(x_1,x_2,\ldots,x_N)$ from a basis of spin orbitals? Pauli's principle requires that $\Phi$ is antisymmetric with respect to odd permutations of the coordinates (both spatial and spin) of any two electrons $i$ and $j$:
 \begin{equation}
 \Phi(\ldots,x_i,\ldots,x_j,\ldots,x_N) = - \Phi(\ldots,x_j,\ldots,x_i,\ldots,x_N).
 \end{equation}
@@ -237,6 +314,11 @@ Hence we discover that $\Phi(x_1,x_2)$ must be a linear combination of determina
 \psi_j(x_1) & \psi_j(x_2)
 \end{vmatrix}.
 \end{equation}
+Recall that using the wedge product notation this quantity can be written also as
+\begin{equation}
+\ket{\Phi}= \sum_{i<j}^{\infty} a_{ij} 
+\ket{\psi_i} \wedge \ket{\psi_j}.
+\end{equation}
 \end{example}
 
 A convenient way to represent antisymmetric wave functions for $N$ electrons is to expand it into a basis of functions that is automatically antisymmetric with respect to particle permutations. Such functions are known as \textbf{Slater determinants} and are defined as
@@ -252,7 +334,7 @@ A convenient way to represent antisymmetric wave functions for $N$ electrons is 
 Slater determinants automatically satisfy the antisymmetry requirement of fermionic wave functions because the determinant of a matrix changes sign when two columns are swapped. This operation is equivalent to permuting particle indices.
 For convenience we will write a Slater determinant, \textbf{including its normalization factor}, with the compact notation
 \begin{equation}
-\ket{\Phi_{ijk\cdots}} =\ket{
+\ket{\Phi_{ijk\cdots}} = \ket{\psi_i} \wedge \ket{\psi_j} \wedge \ket{\psi_k} \wedge \cdots = \ket{
 \psi_i \psi_j \psi_k \cdots},
 \end{equation}
 omitting the labels of the electrons.

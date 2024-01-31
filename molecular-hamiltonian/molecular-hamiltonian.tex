@@ -19,8 +19,9 @@ The most common units used in quantum chemistry are \textbf{atomic units} (abbre
 \text{action} & = \hbar = \frac{h}{2\pi} = 1\\
 \text{Coulomb's constant} & = k_e = \frac{1}{4\pi \epsilon_0} = 1
 \end{align}
+where $\epsilon_0$ is the vacuum permittivity.
 
-The following table report conversion factors between atomic units and other units 
+The following table reports conversion factors between atomic units and other units 
 \begin{table}[htbp]
 \centering
 \begin{tabular}{lll}
@@ -43,12 +44,33 @@ Time & & $2.41889 \times 10^{-17}$ s $\approx 1/41.3$ fs\\
 \label{tab:atomicunits}
 \end{table}
 
-The speed of light in atomic units is $\alpha^{-1}\approx 137$ a.u.\mnote{$\alpha$ is the fine-structure constant.}
+The speed of light in atomic units is $c = \alpha^{-1}\approx 137$ a.u.\mnote{$\alpha$ is the fine-structure constant $\alpha = \frac{e^2}{4\pi \epsilon_0 \hbar c}$ = 0.007 297 352 562 8(6), which in atomic units reduces to $\alpha = \frac{1}{c}$.}
 
+\newpage
 
 \section{The molecular Hamiltonian}
 Consider a molecule containing $N$ electrons and $M$ nuclei.
-We will indicate the position of the nuclei with $\vec{R}_A = \mathbf{R}_A = (x_A,y_A,z_A)$ and that of electrons with $\vec{r}_i = \mathbf{r}_i = (x_i,y_i,z_i)$.
+
+\begin{center}
+\includegraphics[width=2.5in]{../molecular-hamiltonian/coordinates.pdf}
+\end{center}
+
+We will start by introducing the notation used to define the molecular Hamiltonian.
+The position of the nuclei will be indicated with $\vec{R}_A = \mathbf{R}_A = (x_A,y_A,z_A)$ and that of electrons with $\vec{r}_i = \mathbf{r}_i = (x_i,y_i,z_i)$.
+The remaining quantities are summarized in the table below.
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+& Nuclei & Electrons \\
+\hline
+Total number & N & M \\
+Index & $A, B, \ldots$ & $i, j, \ldots$ \\
+Position & $\vec{R}_A$ & $\vec{r}_i$ \\
+Mass & $M_A$ & $1$ \\
+Charge & $Z_A$ & $-1$ \\
+\end{tabular}
+\end{table}
+
 In the absence of external potentials or fields, the total Hamiltonian is given by
 \begin{equation}
 \hat{H} = \hat{T}_\mathrm{e} +\hat{T}_\mathrm{N} +  \hat{V}_\mathrm{ee} + \hat{V}_\mathrm{eN} + \hat{V}_\mathrm{NN},
@@ -91,6 +113,31 @@ The terms that make this Hamiltonian difficult to solve are those that couple el
 What does the spectrum of $\hat{H}$ look like for a diatomic molecule?
 \end{problem}
 
+
+\section{Average value of the kinetic and potential energy}
+
+The virial theorem can provide some useful constraints on the properties of stationary states.
+%For the Hamiltonian
+%\begin{equation}
+%\hat{H} = \hat{T} + \hat{V}
+%= \sum_i \frac{-1}{2 m_i} \nabla_i^2 + \hat{V}
+%\end{equation}
+Starting from the condition
+\begin{equation}
+\frac{d}{dt} \braket{\sum_p \vec{r}_p \hat{\vec{p}}_p} = 0,
+\end{equation}
+it is possible to show that if the potential $\hat{V} =  \hat{V}_\mathrm{ee} + \hat{V}_\mathrm{eN} + \hat{V}_\mathrm{NN}$ is a homogeneous function of order $k$,\mnote{A homogeneous function of order $k$, $f(\mathbf{x})$ is such that if we scale the argument by $s$ the function is scaled by $s^k$, that is $f(s \mathbf{x}) = s^k f(\mathbf{x})$.} then the expectation value of the kinetic and potential operators are related by
+\begin{equation}
+2 \braket{\hat{T}} -k \braket{\hat{V}} = 0.
+\end{equation}
+For Coulombic interactions $k = -1$ and so we have
+\begin{equation}
+\braket{\hat{V}} = -2 \braket{\hat{T}}.
+\end{equation}
+And
+\begin{equation}
+E = \braket{\hat{T}} + \braket{\hat{V}} = - \braket{\hat{T}} = \frac{\braket{\hat{V}}}{2} < 0.
+\end{equation}
 
 
 \section{The Born--Oppenheimer approximation}
@@ -136,7 +183,16 @@ The nuclear kinetic energy operator complicates things a bit, because when we ap
 \end{split}
 \end{equation}
 The first and second terms on the right hand side of this equation couple the electronic and nuclear degrees of freedom.
-If we neglect them and keep only the last term, we can rewrite the Schr\"{o}dinger equation as
+If we neglect them and keep only the last term,
+\begin{equation}
+\begin{split}
+\hat{T}_\mathrm{N}  \Phi_{\mathrm{el}}(\mathbf{r};\mathbf{R}) \chi_{\mathrm{nuc}}(\mathbf{R})
+\approx 
+ -\frac{1}{2} \sum_A^M \frac{1}{M_A}
+ \Phi_{\mathrm{el}}(\mathbf{r};\mathbf{R})  \nabla^2_A \chi_{\mathrm{nuc}}(\mathbf{R}).
+\end{split}
+\end{equation}
+ we can rewrite the Schr\"{o}dinger equation as
 \begin{equation}
 \begin{split}
 \Phi_{\mathrm{el}}(\mathbf{r};\mathbf{R})   \hat{T}_\mathrm{N} \chi_{\mathrm{nuc}}(\mathbf{R}) + \chi_{\mathrm{nuc}}(\mathbf{R}) (\hat{T}_\mathrm{e} + \hat{V}_\mathrm{ee} + \hat{V}_\mathrm{eN} +\hat{V}_\mathrm{NN}) \Phi_{\mathrm{el}}(\mathbf{r};\mathbf{R}) 

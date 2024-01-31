@@ -23,12 +23,13 @@ F[\rho(x)] = \int_a^b dx |\rho(x)|^2,
 takes a generic function $\rho(x)$ and returns the integral of its modulus square integrated in the range $[a,b]$.
 We will often encounter functionals of the form:
 \begin{equation}
-F[\rho(x)] = \int_a^b dx\,f(\rho(x),\rho'(x)),
+\label{eq:functional_f}
+F[\rho(x)] = \int_a^b dx\,f(\rho(x),\rho'(x),x),
 \end{equation}
-where $\rho'(x)$ is the derivative of $\rho(x)$.
+where $\rho'(x) = \frac{d\rho(x)}{dx}$ is the derivative of $\rho(x)$.
 
 As in the case of functions, we may define the derivative of a functional.
-Consider a function $\rho(x)$ and an arbitrary small variation $\delta\rho(x) = \epsilon \phi(x)$.
+Consider a function $\rho(x)$ and an arbitrary small variation of $\rho(x)$, $\delta\rho(x) = \epsilon \phi(x)$.
 We define the functional derivative $\frac{\delta F[\rho]}{\delta \rho}$ as the function that satisfies the following condition:
 \begin{equation}
 \lim_{\epsilon \rightarrow 0} \frac{F[\rho + \epsilon \phi] - F[\rho]}{\epsilon}
@@ -37,6 +38,27 @@ We define the functional derivative $\frac{\delta F[\rho]}{\delta \rho}$ as the 
 In other words, for a small variation in the function $\rho(x)$, $\delta \rho(x)$, the difference in the value of the functional is linear in the functional derivative:
 \begin{equation}
 \delta F[\rho] = F[\rho + \delta\rho] - F[\rho] = \int dx \,\frac{\delta F[\rho]}{\delta \rho(x)} \delta\rho(x) + \text{ terms of order } [\delta\rho(x)]^2 \text{ and higher}.
+\end{equation}
+
+For functionals of the form \eqref{eq:functional_f}, we can write
+\begin{equation}
+\delta F[\rho]  = F[\rho + \delta\rho] - \delta F[\rho] =  \int_a^b dx\, f(\rho + \epsilon \phi, \rho' + \epsilon \phi', x) - f(\rho,\rho',x).
+\end{equation}
+Expanding $f(\rho + \epsilon \phi, \rho' + \epsilon \phi, x)$ in a Taylor series and \textbf{ignoring terms quadratic and higher} we can write
+\begin{equation}
+f(\rho + \epsilon \phi, \rho' + \epsilon \phi, x) = f(\rho,\rho',x) + \frac{\partial f(\rho,\rho',x)}{\partial \rho} \epsilon \phi + \frac{\partial f(\rho,\rho',x)}{\partial \rho'} \epsilon \phi'
++ \mathcal{O}(\delta\rho^2)
+\end{equation}
+so that
+\begin{equation}
+\delta F[\rho] = \int dx \, \left[ \frac{\partial f(\rho,\rho',x)}{\partial \rho} \epsilon \phi + \frac{\partial f(\rho,\rho',x)}{\partial \rho'} \epsilon \phi' \right].
+\end{equation}
+We can integrate the second contribution by parts
+\begin{equation}
+\int dx \, \frac{\partial f(\rho,\rho',x)}{\partial \rho'} \epsilon \phi' = \left. \frac{\partial f(\rho,\rho',x)}{\partial \rho'} \epsilon \phi \right|_\text{boundary} - \int dx \, \frac{d}{dx} \frac{\partial f(\rho,\rho',x)}{\partial \rho'} \epsilon \phi.
+\end{equation}
+\begin{equation}
+\delta F[\rho] = \int dx \, \left[ \frac{\partial f(\rho,\rho',x)}{\partial \rho} - \frac{d}{dx} \frac{\partial f(\rho,\rho',x)}{\partial \rho'} \right] \delta\rho + \mathcal{O}(\delta\rho^2)
 \end{equation}
 
 \section{Early developments in DFT}

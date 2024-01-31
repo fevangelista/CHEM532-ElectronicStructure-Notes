@@ -3,7 +3,7 @@
 % or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{lecturenotes}[2019/01/12 Lecture notes class]
+\ProvidesClass{lecturenotesstyle}[2023/01/10 Lecture notes class]
 \LoadClass{book}
 
 % Page size and margins
@@ -17,9 +17,9 @@
 
 % Scientific packages
 \RequirePackage{siunitx}
-\RequirePackage{amsmath}
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
+\RequirePackage{amsmath}
 \RequirePackage{tikz} % Required for drawing custom shapes
 \RequirePackage{tikzsymbols}
 \RequirePackage{../Main/latex_qc_notation}
@@ -30,7 +30,7 @@
 \RequirePackage{cancel}
 
 % Typography
-\RequirePackage{fontspec}
+\RequirePackage[no-math]{fontspec}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{titling}
