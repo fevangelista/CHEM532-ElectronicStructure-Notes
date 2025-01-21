@@ -3,13 +3,22 @@
 import os
 from shutil import copy
 
-chapters = ['background',
-            'molecular-hamiltonian',
-            'huckel',
+chapters = ['advice',
+            'background',
+            'basis-sets',
+            'dft',
             'electronic-wavefunctions',
-            'slater-rules',
+            'excited-state-methods',
             'hartree-fock',
-            'properties']
+            'huckel',
+            'molecular-hamiltonian',
+            'multireference-methods',
+            'properties',
+            'relativistic',
+            'slater-rules',
+            'second-quantization',
+            'symmetry',
+            'wavefunction-methods']
 
 root_dir = os.getcwd()
 

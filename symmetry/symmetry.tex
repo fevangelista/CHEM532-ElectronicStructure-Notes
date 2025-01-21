@@ -1,0 +1,152 @@
+% This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+% or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% !TEX TS-program = xelatex
+
+\documentclass[../Main/chem532-notes.tex]{subfiles}
+\begin{document}
+
+\chapter{Symmetry}
+
+\section{Symmetry Groups}
+
+In this section we will discuss applications of symmetry to electronic structure computations.
+Symmetry is not only useful to classify solutions of the Schr{\"o}dinger equation, it also plays an important role in reducing the computational cost of computations.
+
+Let us start by considering symmetry in a very simple context, that of functions of one variable, $f(x)$.
+Consider the transformation $\hat{I}$ that replaces $x$ with $-x$, that is $\hat{I} x = -x$.
+This operator plus the identity operator $\hat{E}$ (defined as $\hat{E} x = x$) form a group because any sequence of operations chosen from $\{\hat{E},\hat{I}\}$ either acts as $\hat{E}$ or $\hat{I}$.
+In other words, a group is closed under the multiplication operation.
+We can see this if we apply $\hat{I}$ twice to $x$:
+\begin{equation}
+\hat{I}^2x = \hat{I}(\hat{I}x) = \hat{I} (-x) = -\hat{I}x = x = \hat{E} x,
+\end{equation}
+which shows that $\hat{I}^2 = \hat{E}$. Similarly one can show that $\hat{I} \hat{E}=\hat{E} \hat{I} = \hat{I}$, and $\hat{E}^2 = \hat{E}$.
+We can summarize this information with a group multiplication table
+\begin{equation}
+   \begin{array}{c|cc} % brackets may be (...), [...], \{...\}, or left out
+        \times  & \hat{E} & \hat{I} \\
+   \hline
+     \hat{E} & \hat{E} & \hat{I} \\
+      \hat{I} & \hat{I} & \hat{E}
+   \end{array}
+\end{equation}
+
+Groups can be used to classify the symmetry properties of functions. When functions ``behave'' like groups, we say that they represent a group.
+For example, among all possible functions $f(x)$ we can identify two special type of functions that are transformed by the group $\{\hat{E},\hat{I}\}$
+\begin{enumerate}
+\item Symmetric functions ($f_{+}$) that satisfy 
+\begin{equation}
+\begin{split}
+\hat{E} f_{+}(x) & = f_{+}(x) \\
+\hat{I} f_{+}(x) & = f_{+}(-x) = f_{+}(x)
+\end{split}
+\end{equation}
+Examples of symmetric functions are $\exp(-x^2)$, $\cos(x)$, $x^4$, etc.
+
+\item Antisymmetric functions ($f_{-}$) that satisfy 
+\begin{equation}
+\begin{split}
+\hat{E} f_{-}(x) & = f_{-}(x) \\
+\hat{I} f_{-}(x) & = f_{-}(-x) = -f_{-}(x)
+\end{split}
+\end{equation}
+Examples of antisymmetric functions are $x \exp(-x^2)$, $\sin(x)$, $x^3$, etc
+\end{enumerate}
+Under the operations of the group, these two functions remain the same up to a phase factor ($\pm$).
+These function are a representation of the group in the sense that the functions $f_{+}$ and $f_{-}$ satisfy the same product operations of the group elements $\hat{E}$ and $\hat{I}$, respectively. For example, the product of two symmetric functions $f_{+}(x)$ and $g_{+}(x)$ is a symmetric function
+\begin{equation}
+\label{eq:sym:prod1}
+f_{+}(x) g_{+}(x) = h_{+}(x),
+\end{equation}
+and this relationship reflects the group property $\hat{E} \hat{E} = \hat{E}$.
+To verify that Eq.~\eqref{eq:sym:prod1} is a symmetric function we just apply $\hat{I}$ to the left hand side of this expression\mnote{Note that when we apply a transformation like $\hat{I}$ to a product of functions $f(x)g(x)$ the result is the product of the original functions all transformed by $\hat{I}$, that is, $[\hat{I}f(x)] [\hat{I}g(x)]$.}
+\begin{equation}
+\hat{I} \left[ f_{+}(x) g_{+}(x) \right] = 
+\hat{I} f_{+}(x)  \hat{I} g _{+}(x) = f_{+}(x) g_{+}(x).
+\end{equation}
+Since $\hat{I}$ acting on $f_{+}(x) g_{+}(x)$ gives us back $f_{+}(x) g_{+}(x)$, this product is a symmetric function $h_{+}(x)$.
+Similarly we can verify that the product of a symmetric function $f_{+}(x)$ and an antisymmetric function $g_{-}(x)$ is an antisymmetric function
+\begin{equation}
+\label{eq:sym:prod2}
+f_{+}(x) g_{-}(x) = h_{-}(x),
+\end{equation}
+again by testing what happens when we apply the inversion operator to this product
+\begin{equation}
+\hat{I} \left[ f_{+}(x) g_{-}(x) \right] = 
+\hat{I} f_{+}(x)  \hat{I} g _{-}(x) = - f_{+}(x) g_{-}(x).
+\end{equation}
+The final result is multiplied by a minus sign and so $f_{+}(x) g_{-}(x)$ is an antisymmetric function.
+
+Representations of group operations (like $f_{+}$ and $f_{-}$) can be classified according to their \textbf{character}, that is, the way they transform under equivalent classes of symmetry operations.
+The following table shows the character table for the inversion group, which classifies all the \textbf{irreducible representations} (irreps) of the inversion group
+\begin{equation}
+   \begin{array}{c|cccc} % brackets may be (...), [...], \{...\}, or left out
+          & \hat{E} & \hat{I} & \text{linear functions} &  \text{quadratic functions} \\
+   \hline
+     \mathrm{A_g} & +1 & +1 & - & x^2\\
+     \mathrm{A_u} & +1 & -1 & x & -
+   \end{array}
+\end{equation}
+The symbols $\mathrm{A_g}$ and $\mathrm{A_u}$ indicate the two irreps of the inversion group. The first representation ($\mathrm{A_g}$) is symmetric (to which $f_{+}$ belongs) and it is labeled with a ``g'' after the German word \textit{gerade} (even).
+The second representation is antisymmetric (to which $f_{-}$ belongs) and it is labeled with a ``u'' after the German word \textit{ungerade} (odd).
+The numbers under each symmetry operation shows how functions that belong to these two representations transform.
+In addition, the last two columns classify the linear and quadratic functions in $x$ according to the irreps of this group.
+
+\section{Point groups}
+When dealing with molecular problems, we are concerned with so-called \textbf{point groups}.
+These are transformations that leave at least one point unchanged (typically chosen to be the origin of a Cartesian coordinate system).
+If all the elements of a group \textbf{commute}, that is, given two elements $A$ and $B$ 
+
+
+\section{Examples of point groups}
+\subsection{$\mathrm{C_s}$ --- Plane symmetry}
+The $\mathrm{C_s}$ point group contains two elements: the identity and a plane of reflection ($sigma_\mathrm{h}$).
+This group is Abelian and has only two irreducible representations.
+Its character table is very similar to the one of the inversion group
+\begin{equation}
+   \begin{array}{c|cccc}
+          \text{irrep} & E & \sigma_\mathrm{h} & \text{linear, rotations} &  \text{quadratic} \\
+   \hline
+     \mathrm{A}' & +1 & +1 & x,y, R_z & x^2, y^2, z^2, xy\\
+     \mathrm{A}'' & +1 & -1 & z, R_x, R_y, & yz, xz
+   \end{array}
+\end{equation}
+The product table for the $\mathrm{C_s}$ group is
+\begin{equation}
+   \begin{array}{c|cc} % brackets may be (...), [...], \{...\}, or left out
+        \times  &\mathrm{A}'  & \mathrm{A}'' \\
+   \hline
+     \mathrm{A}'  & \mathrm{A}' & \mathrm{A}'' \\
+      {A}'' & \mathrm{A}'' & \mathrm{A}' 
+   \end{array}
+\end{equation}
+This group is isomorphic to the inversion group, the $\mathrm{C_i}$ group, and the $\mathrm{C_2}$ group.
+
+\subsection{The $\mathrm{C_{2v}}$ group}
+The $\mathrm{C_{2v}}$ point group contains four symmetry operations: the identity, a rotation around the $z$ axis ($\mathrm{C_{2}}$), and two   reflection planes $sigma_\mathrm{v}(xz)$ and $sigma_\mathrm{v}(yz)$.
+This group is Abelian and has only two irreducible representations.
+Its character table is very similar to the one of the inversion group
+\begin{equation}
+   \begin{array}{c|cccc}
+          \text{irrep} & E & \sigma_\mathrm{h} & \text{linear, rotations} &  \text{quadratic} \\
+   \hline
+     \mathrm{A}' & +1 & +1 & x,y, R_z & x^2, y^2, z^2, xy\\
+     \mathrm{A}'' & +1 & -1 & z, R_x, R_y, & yz, xz
+   \end{array}
+\end{equation}
+The product table for the $\mathrm{C_s}$ group is
+\begin{equation}
+   \begin{array}{c|cc} % brackets may be (...), [...], \{...\}, or left out
+        \times  &\mathrm{A}'  & \mathrm{A}'' \\
+   \hline
+     \mathrm{A}'  & \mathrm{A}' & \mathrm{A}'' \\
+      {A}'' & \mathrm{A}'' & \mathrm{A}' 
+   \end{array}
+\end{equation}
+This group is isomorphic to the inversion group, the $\mathrm{C_i}$ group, and the $\mathrm{C_2}$ group.
+
+
+\end{document}
+

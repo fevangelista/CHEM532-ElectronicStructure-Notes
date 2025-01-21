@@ -1,0 +1,79 @@
+% This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+% or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% !TEX TS-program = xelatex	
+
+\documentclass[../Main/chem532-notes.tex]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{9}
+
+\chapter{Excited state methods}
+
+In this chapter we will go over the main approaches used to compute electronically excited states.
+The problem of describing excited states is similar to that of computing ground states with pronounced static correlation effects.
+However, in many cases one can assume that the ground state is well described by a single Slater determinants or by ground state DFT, and this allows us to employ the formalism of single-reference methods as a way to build excited state methods.
+In other cases, both the ground and its excited states may display static correlation, in which case it is necessary to use a multireference method to describe both the ground and the excited states.
+This is particularly important when one is interested in computing states near a conical intersection, where two states become degenerate.
+
+\section{Configuration interaction singles}
+The simplest excited state method is configuration interaction with singles (CIS).
+The CIS wave function is a linear combination of the Hartree--Fock determinant plus all of its singly excited determinants
+\begin{equation}
+\ket{\Psi_\mathrm{CIS}} = c_0 \ket{\Phi_0}  + \sum_{i}^{\mathrm{occ}}\sum_{a}^{\mathrm{vir}} c_i^a \cop{a}\aop{i} \ket{\Phi_0}.
+\end{equation}
+
+\section{Time-dependent DFT}
+
+\section{Equation-of-motion coupled cluster methods}
+
+\section{Equation-of-motion coupled cluster theory}
+\begin{equation}
+\hat{H} \rightarrow \bar{H} = e^{-\hat{T}} \hat{H} e^{\hat{T}} 
+\end{equation}
+If 
+\begin{equation}
+\hat{H}  \ket{\Psi_\alpha} = E_\alpha \ket{\Psi_\alpha}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\hat{H}  e^{\hat{T}} e^{-\hat{T}} \ket{\Psi_\alpha} = & E_\alpha \ket{\Psi_\alpha} \\
+e^{-\hat{T}} \hat{H}  e^{\hat{T}} e^{-\hat{T}} \ket{\Psi_\alpha} = & E_\alpha e^{-\hat{T}} \ket{\Psi_\alpha} \\
+\bar{H} e^{-\hat{T}} \ket{\Psi_\alpha} = & E_\alpha e^{-\hat{T}} \ket{\Psi_\alpha} \\
+\bar{H} \ket{\bar{\Psi}_\alpha} = & E_\alpha \ket{\bar{\Psi}_\alpha} \\
+\end{split}
+\end{equation}
+
+
+\section{Multireference methods for excited states}
+
+
+
+
+\section{CASSCF methods for excited states}
+State-specific CASSCF
+
+\begin{equation}
+\ket{\Psi_\text{SS-CASSCF}^{(\alpha)}} 
+= \sum_I C_I^{(\alpha)} \ket{\Phi^{(\alpha)}_I}
+\end{equation}
+where
+\begin{equation}
+\ket{\Phi^{(\alpha)}_I} =  \ket{\psi^{(\alpha)}_{i_1} \cdots \psi^{(\alpha)}_{i_N}}
+\end{equation}
+
+
+\begin{equation}
+\ket{\Psi_\text{SA-CASSCF}^{(\alpha)}} 
+= \sum_I C_I^{(\alpha)} \ket{\Phi_I}
+\end{equation}
+
+\begin{equation}
+\bar{E} = \min_{C_I^{\alpha}, \{ \psi_i \}} \sum_{\alpha = 1}^{d}
+w_\alpha \braket{\Psi_\text{SA-CASSCF}^{(\alpha)} | \hat{H} | \Psi_\text{SA-CASSCF}^{(\alpha)}} 
+\end{equation}
+
+\end{document}
