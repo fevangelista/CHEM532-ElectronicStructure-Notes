@@ -23,7 +23,7 @@
 \RequirePackage{tikz} % Required for drawing custom shapes
 \RequirePackage{tikzsymbols}
 \RequirePackage{../Main/latex_qc_notation}
-\RequirePackage{topcapt}
+%\RequirePackage{topcapt}
 \RequirePackage{booktabs}
 \RequirePackage{braket}
 \RequirePackage[version=4]{mhchem}

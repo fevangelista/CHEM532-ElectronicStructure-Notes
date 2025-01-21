@@ -213,7 +213,7 @@ we can express their inner product as
 \begin{split}
 \braket{a|b} &= \braket{\sum_{i = 1}^N a_i \phi_i | \sum_{j = 1}^N b_j \phi_j }
 = \sum_{i = 1}^N  \sum_{j = 1}^N a_i^*  \underbrace{\braket{ \phi_i | \phi_j }}_{\delta_{ij}} b_j \\
-&= \sum_{i = 1}^N a_i^* b_i = (\alpha^*_1, \alpha^*_2,\ldots)
+&= \sum_{i = 1}^N a_i^* b_i = (a^*_1, a^*_2,\ldots)
 \begin{pmatrix}
 b_1 \\
 b_2 \\
@@ -225,12 +225,12 @@ b_2 \\
 In the rightmost part of this equation we have written the inner product in terms of a vector-vector dot product ($\mathbf{a}^\dagger \mathbf{b}$). The superscript symbol ``${}^\dagger$'' indicates the \textbf{conjugate transpose of a vector} (transpose and take the complex conjugate of each element). This shows that in an orthonormal basis, we can express the inner product of two vectors with the inner product of the corresponding coefficient vectors (remembering to take the complex conjugate of the left vector). 
 
 \subsection{Linear operators}
-Operators are mathematical objects that transform a vector into another vector, for example:
+Operators are mathematical objects that transform a vector into another vector. For example, this expression represents the operator $\hat{A}$ transforming the vector $\ket{a}$ into $\ket{b}$:
 \begin{equation}
 \label{eq:bg:operator}
 \hat{A} \ket{a} = \ket{b}
 \end{equation}
-In this course we are particularly concerned with \textbf{linear operators}, which satisfy the following condition
+In this course, we are particularly concerned with \textbf{linear operators}, which satisfy the following condition
 \begin{equation}
 \hat{A} (\alpha \ket{a} + \beta \ket{b}) = \alpha \hat{A} \ket{a} + \beta \hat{A} \ket{b}
 \end{equation}
