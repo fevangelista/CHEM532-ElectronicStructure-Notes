@@ -47,11 +47,12 @@ The spin eigenfunctions satisfy:
 \hat{s}_z \ket{s,m_s} &= \hbar m_s \ket{s,m_s}.
 \end{align}
 
-In the case of electrons we have that $s = \frac{1}{2}$, and so we label the two spin functions as $\alpha$ and $\beta$\mnote{Other notations are common. For example $\ket{0}$ and $\ket{1}$ is commonly used in quantum computing and $\ket{\uparrow}$ and $\ket{\downarrow}$ in physics.}
+In the case of electrons we have that $s = \frac{1}{2}$, and so we label the two spin functions as $\alpha$ and $\beta$
 \begin{align}
 \ket{\alpha} &= \ket{\frac{1}{2},\frac{1}{2}}, \\
 \ket{\beta} &= \ket{\frac{1}{2},-\frac{1}{2}}.
 \end{align}
+Other notations are common. For example $\ket{0}$ and $\ket{1}$ are commonly used in quantum computing and $\ket{\uparrow}$ and $\ket{\downarrow}$ in physics.
 
 These functions are normalized and orthogonal:
 \begin{align}
@@ -59,13 +60,14 @@ These functions are normalized and orthogonal:
 \braket{\alpha | \beta} &= 0. \label{eq:spin_orthogonality}
 \end{align}
 
-A general spin state of an electron $\ket{\sigma}$ can be represented in the basis of states $\{ \ket{\alpha}, \ket{\beta} \}$ as
+A general spin state of an electron can be represented in the basis of states $\{ \ket{\alpha}, \ket{\beta} \}$ as
 \begin{equation}
-\ket{\sigma} = c_\alpha \ket{\alpha} + c_\beta \ket{\beta} = ( \ket{\alpha}, \ket{\beta})
+c_\alpha \ket{\alpha} + c_\beta \ket{\beta} = ( \ket{\alpha}, \ket{\beta})
 \begin{pmatrix}
 c_\alpha \\
 c_\beta
-\end{pmatrix}.
+\end{pmatrix}
+= \sum_{\sigma = \alpha, \beta} c_\sigma \ket{\sigma}
 \end{equation}
 When written in this way, then the basis states are represented by the vectors
 \begin{equation}
@@ -81,7 +83,7 @@ When written in this way, then the basis states are represented by the vectors
 1
 \end{pmatrix}.
 \end{equation}
-In this representation, the operators $\hat{s}_x$, $\hat{s}_y$, and $\hat{s}_z$ can be represented by the matrices
+In this basis, the operators $\hat{s}_x$, $\hat{s}_y$, and $\hat{s}_z$ can be represented by the matrices
 \begin{equation}
 \mathbf{s}_x = \frac{\hbar}{2} \boldsymbol{\sigma}_x, \quad
 \mathbf{s}_y = \frac{\hbar}{2} \boldsymbol{\sigma}_y, \quad
@@ -168,7 +170,7 @@ In practice, we use finite sets, so that $\dim \{ \phi_i(\vec{r}) \} = K < \inft
 
 By combining spin functions with spatial orbitals we get \textbf{spin orbitals}. The most general form of a spin orbital is\mnote{We will abbreviate the spatial and spin coordinates with the symbol $x \equiv (\vec{r},\omega)$.}
 \begin{equation}
-\psi (x) \equiv \psi(\vec{r},\sigma) = \psi^{\alpha}(\vec{r}) \alpha(\omega) + \psi^{\beta}(\vec{r}) \beta(\omega),
+\psi (x) \equiv \psi(\vec{r},\omega) = \psi^{\alpha}(\vec{r}) \alpha(\omega) + \psi^{\beta}(\vec{r}) \beta(\omega),
 \end{equation}
 which we can represent equivalently in terms of a wave function that looks like a vector multiplied by the spin basis:
 \begin{equation}
